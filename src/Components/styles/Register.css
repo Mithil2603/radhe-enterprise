@@ -1,0 +1,8 @@
+.custom-bg-register {
+    background-image: url("https://static.wixstatic.com/media/55d98a_bf8ecd3f0c4b470796c407aa7be1d168~mv2.jpg/v1/fill/w_950,h_600,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Light%20-%20Big%20Vertical.jpg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    width: 100%;
+}

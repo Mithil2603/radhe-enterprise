@@ -1,0 +1,189 @@
+.custom-img-bg {
+    width: 100%;
+    min-height: 70svh;
+    /* height: calc(100vw * 9 / 16); */
+    background-image: url("https://image1.jdomni.in/banner/28112022/20/FD/E4/8DD8A1EEC14B4452A145CA58CC_1669632976342.jpg?output-format=webp");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    font-family: "Roboto Slab";
+    font-family: "Poppins";
+}
+
+.container-fluid h2 {
+    color: white;
+    font-size: xx-large;
+    font-weight: bolder;
+    text-shadow: 1px 1px 2px black, 0 0 1rem black, 0 0 0.2rem black;
+    text-align: center;
+    padding: 2rem;
+}
+
+@media (max-width: 389px) {
+    .buttons{
+        flex-wrap: wrap;
+        width: 100%;
+        padding: 0%;
+        flex-shrink: 1;
+    }
+}
+
+
+.custom-btn {
+    background-color: #39749f;
+    color: white;
+    border: none;
+    margin: 0;
+}
+
+.first-hr {
+    margin: 0;
+    border: 5px solid #111;
+    margin-bottom: 5rem;
+}
+
+.card {
+    width: 38rem;
+    z-index: 0;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 28rem;
+    object-fit: cover;
+}
+
+.row>* {
+    padding: 0;
+}
+
+.row {
+    gap: 5%;
+}
+
+.custome-color {
+    color: #224761;
+}
+
+.text-xl {
+    font-weight: bolder;
+    font-size: xx-large;
+}
+
+.carousel {
+    position: relative;
+    width: 100%;
+    height: 50vh;
+    overflow: hidden;
+}
+
+.carousel-slide {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.carousel-text {
+    color: white;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bold;
+    padding: 1rem;
+    text-shadow: 2px 0 1px #111, -2px 0 1px #111, 0 2px 1px #111, 0 -2px 1px #111;
+}
+
+.carousel-text h2 {
+    font-family: "Roboto Slab";
+}
+
+.carousel-text p {
+    font-family: Lora;
+}
+
+@media (min-width: 500px) {
+    .carousel-text h2 {
+        font-size: 3rem;
+    }
+
+    .carousel-text p {
+        font-size: 1.5rem;
+        font-weight: 900;
+    }
+}
+
+.carousel-control {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    border: none;
+    padding: 1rem;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.carousel-control.left {
+    left: 10px;
+}
+
+.carousel-control.right {
+    right: 10px;
+}
+
+@media (max-width: 768px) {
+    .carousel-text {
+        font-size: 1.2rem;
+    }
+
+    .carousel-control {
+        padding: 0.5rem;
+    }
+}
+
+.page2 {
+    width: 100%;
+    padding: 1vw 0;
+    background-color: #224761;
+}
+
+.move {
+    color: #fff;
+    display: flex;
+    padding: 1vw 0;
+    overflow: hidden;
+    gap: 2rem;
+    overflow-x: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.move::-webkit-scrollbar {
+    display: none;
+}
+
+.marque {
+    display: flex;
+    flex-shrink: 0;
+    justify-content: left;
+    align-items: center;
+    flex-wrap: nowrap;
+    gap: 3vw;
+    padding: 0 1.5vw;
+    text-align: center;
+}
+
+.marque>h3 {
+    text-transform: uppercase;
+}
+
+/* .marque img{
+    height: 4vw;
+} */

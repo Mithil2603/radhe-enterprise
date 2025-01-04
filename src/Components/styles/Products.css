@@ -1,0 +1,12 @@
+.custom-bg-product {
+    background-image: url("https://images.pexels.com/photos/1939485/pexels-photo-1939485.jpeg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.filter-bg {
+    backdrop-filter: blur(5px);
+    /* background-color: white; */
+}

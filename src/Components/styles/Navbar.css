@@ -1,0 +1,60 @@
+:root {
+    --primary-color: #4084b4;
+    --dark-color: #171d24;
+    --nav-link: #224761;
+}
+
+.custom-font-family {
+    font-family: "Montserrat";
+    font-weight: bolder;
+}
+
+.custom-bg {
+    background-color: #212529;
+    z-index: 10;
+}
+
+.main-logo {
+    width: 12rem;
+}
+
+.nav-link {
+    font-family: "Roboto Slab";
+    /* font-family: "Lora"; */
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #39749f;
+
+    :hover {
+        color: var(--dark-color);
+    }
+}
+
+.menu {
+    border: 0px;
+}
+
+.menu:focus {
+    box-shadow: none;
+}
+
+.nav-btn:hover {
+    background-color: transparent;
+    color: white;
+}
+
+.dropdown-menu {
+    background-color: #39749f;
+}
+
+.dropdown-item:hover {
+    background-color: #4084b4;
+}
+
+.nav-link:hover {
+    color: white;
+}
+
+.nav-link:active {
+    color: white;
+}

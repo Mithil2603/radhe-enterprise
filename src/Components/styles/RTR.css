@@ -1,0 +1,26 @@
+.carousel-item .rtr-img {
+    height: 70vh;
+    width: 100%;
+    object-fit: contain;
+}
+
+.carousel {
+    height: 70vh;
+}
+
+.Description {
+    margin: 2rem 0;
+}
+
+.custom-bg-RTR {
+    background-image: url("https://images.pexels.com/photos/2078271/pexels-photo-2078271.jpeg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.rcb-img {
+    max-height: 100vh;
+    object-fit: contain;
+}
