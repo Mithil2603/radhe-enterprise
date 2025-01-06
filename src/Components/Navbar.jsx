@@ -1,11 +1,35 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/Navbar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo from "./images/RadheEnterprise.svg";
 import menu from "./images/menu.svg";
-// import gsap from "gsap";
+import axios from "axios";
 
 export default function Navbar() {
+  const [auth, setAuth] = useState(false);
+  const [message, setMessage] = useState("");
+  const [name, setName] = useState("");
+  const navigate = useNavigate();
+
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/")
+      .then((res) => {
+        if (res.data.status === "Success") {
+          setAuth(true);
+          setName(res.data.name);
+        } else {
+          setAuth(false);
+          setMessage(res.data.Error);
+          navigate("/login");
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [navigate]);
   return (
     <>
       <nav className="navbar navbar-expand-lg text-light position-sticky top-0 custom-bg z-5">
@@ -82,9 +106,18 @@ export default function Navbar() {
                   Contact Us
                 </Link>
               </li>
-              <Link className="nav-link" to="/login">
-                <button className="btn custom-btn nav-btn">Login</button>
-              </Link>
+              {auth ? (
+                <Link className="nav-link" to="/login">
+                  <button className="btn custom-btn nav-btn">{name}</button>
+                </Link>
+              ) : (
+                <>
+                <h3>{message}</h3>
+                <Link className="nav-link" to="/login">
+                  <button className="btn custom-btn nav-btn">Login</button>
+                </Link>
+                </>
+              )}
             </ul>
           </div>
         </div>
