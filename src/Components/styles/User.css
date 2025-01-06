@@ -1,0 +1,7 @@
+.custom-bg-user {
+    background-image: url("https://images.pexels.com/photos/950241/pexels-photo-950241.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}

@@ -6,6 +6,22 @@ import { Link } from "react-router-dom";
 // import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Main() {
+  const [auth, setAuth] = useState(false);
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/")
+      .then((res) => {
+        if (res.data.status === "Success") {
+          setAuth(true);
+        } else {
+          setAuth(false);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, []);
 
   const [products, setProducts] = useState([]);
 
@@ -14,7 +30,7 @@ export default function Main() {
     axios
       .get("http://localhost:9000/products")
       .then((response) => setProducts(response.data))
-      .catch((error) => console.error("Error fetching products:", error))
+      .catch((error) => console.error("Error fetching products:", error));
   }, []);
 
   const slides = [
@@ -58,9 +74,15 @@ export default function Main() {
           </h2>
           <div className="buttons d-flex justify-content-center align-items-center gap-4 px-5">
             <Link to="/contact" className="btn btn-light custom-btn w-50">
-                Enquire Now
+              Enquire Now
             </Link>
-            <Link to="/register" className="btn btn-light custom-btn w-50">Register</Link>
+            {auth ? (
+              <></>
+            ) : (
+              <Link to="/register" className="btn btn-light custom-btn w-50">
+                Register
+              </Link>
+            )}
           </div>
         </div>
       </div>
@@ -73,7 +95,9 @@ export default function Main() {
             {products.map((product) => {
               // Safely access the first image or fallback to a default placeholder
               const productImage =
-              product.product_img?.[1] || product.product_img?.[0] || product.product_img[0];
+                product.product_img?.[1] ||
+                product.product_img?.[0] ||
+                product.product_img[0];
 
               return (
                 <div

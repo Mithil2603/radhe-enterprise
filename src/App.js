@@ -27,7 +27,7 @@ function App() {
         <Route path="/products" element={<Products />}></Route>
         <Route path="/products/:productId" element={<RTR />}></Route>
         <Route path={`/creels`} element={<Creels />}></Route>
-        <Route path="/user/:id" element={<User />}/>
+        <Route path="/profile" element={<User />}/>
 
         <Route path="*" element={<NotFound />}/>
       </Routes>
