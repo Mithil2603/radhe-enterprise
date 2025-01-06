@@ -1,57 +1,48 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import "./styles/Register.css";
+import axios from "axios";
 
-export default function Login({ setUser }) {
-  const [formValues, setFormValues] = useState({
+export default function Login() {
+  const [values, setValues] = useState({
     email: "",
     user_password: "",
   });
 
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
   const navigate = useNavigate();
 
-  // Handle dropdown and other inputs dynamically
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormValues({
-      ...formValues,
-      [name]: value,
-    });
-    setError("");
-  };
+  axios.defaults.withCredentials = true;
 
-  // Handle form submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form submission
 
-    try {
-      const response = await axios.post(
-        "http://localhost:4000/auth/login",
-        formValues
-      );
-      console.log(response.data);
-      if (response.status === 201) {
-        setSuccessMessage(response.data.message);
-        setError("");
-        setFormValues({
-          email: "",
-          user_password: "",
-        });
-        localStorage.setItem("token", response.data.token);
-        setUser(response.data.user);
+    setError(""); // Clear error if passwords match
+    console.log("Form submitted:", values);
 
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
-      }
-    } catch (error) {
-      setError(
-        error.response?.data?.message || "An error occurred. Please try again."
-      );
-    }
+    axios
+      .post("http://localhost:8080/login", values)
+      .then((res) => {
+        if(res.data.status === "Success"){
+          setSuccessMessage("Login successful! Redirecting to HomePage...");
+          setTimeout(() => {
+            navigate("/")
+          }, 3000);
+        }
+        else {
+          setError(res.data.message);
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 409) {
+          setError(err.response.data.message); 
+        } else {
+          setError("Login failed. Please try again."); 
+        }
+        console.error(err);
+      });
   };
 
   return (
@@ -67,12 +58,12 @@ export default function Login({ setUser }) {
               <input
                 type="email"
                 name="email"
-                value={formValues.email}
-                onChange={handleInputChange}
                 className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 required
+
+                onChange={(e) => setValues({ ...values, email: e.target.value })}
               />
             </div>
             <div className="mb-3">
@@ -82,11 +73,13 @@ export default function Login({ setUser }) {
               <input
                 type="password"
                 name="user_password"
-                value={formValues.user_password}
-                onChange={handleInputChange}
                 className="form-control"
                 id="exampleInputPassword1"
                 required
+
+                onChange={(e) =>
+                  setValues({ ...values, user_password: e.target.value })
+                }
               />
             </div>
             <div className="mb-3 form-check">

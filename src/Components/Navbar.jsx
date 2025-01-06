@@ -5,14 +5,7 @@ import logo from "./images/RadheEnterprise.svg";
 import menu from "./images/menu.svg";
 // import gsap from "gsap";
 
-export default function Navbar({ user, setUser }) {
-  console.log("User in Navbar:", user);
-
-  const handleLogout = () => {
-    localStorage.removeItem("token"); // Clear the token from localStorage
-    setUser(null); // Clear the user state
-  };
-
+export default function Navbar() {
   return (
     <>
       <nav className="navbar navbar-expand-lg text-light position-sticky top-0 custom-bg z-5">
@@ -89,25 +82,9 @@ export default function Navbar({ user, setUser }) {
                   Contact Us
                 </Link>
               </li>
-              {user ? (
-                <>
-                  <Link to="/profile" className="nav-link">
-                    <button className="btn custom-btn nav-btn">Profile</button>
-                  </Link>
-                  <button
-                    onClick={handleLogout}
-                    className="btn custom-btn nav-btn"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link className="nav-link" to="/login">
-                    <button className="btn custom-btn nav-btn">Login</button>
-                  </Link>
-                </>
-              )}
+              <Link className="nav-link" to="/login">
+                <button className="btn custom-btn nav-btn">Login</button>
+              </Link>
             </ul>
           </div>
         </div>

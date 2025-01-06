@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
 import "./styles/Register.css";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function Register() {
-  const [formValues, setFormValues] = useState({
-    user_type: "Customer", // Default value
+  const [values, setValues] = useState({
+    user_type: "",
     first_name: "",
     last_name: "",
     email: "",
@@ -23,114 +23,41 @@ export default function Register() {
 
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
+
   const navigate = useNavigate();
 
-  // Handle input change dynamically for all fields
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
+  const handleSubmit = (e) => {
+    e.preventDefault(); // Prevent form submission
 
-    setFormValues((prevValues) => ({
-      ...prevValues,
-      [name]: value, // Update the specific field based on its name
-    }));
-
-    setError(""); // Clear error message when the user starts typing
-  };
-
-  const [formErrors, setFormErrors] = useState({});
-
-  const validateForm = () => {
-    const errors = {}
-
-    if(!formValues.first_name){
-      errors.first_name = "First Name is required";
-    }
-    else if(!formValues.last_name){
-      errors.last_name = "Last Name is required";
-    }
-
-    if(!formValues.email) {
-      errors.email = "Email is required";
-    } else if (!/\S+@\S+\.\S+/.test(formValues.email)){
-      errors.email = "Please enter a valid email address";
-    }
-
-    if(!formValues.phone_number) {
-      errors.phone_number = "Phone Number is required";
-    } else if (!/^\d{10}$/.test(formValues.phone_number)){
-      errors.email = "Please enter a valid Phone Number";
-    }
-
-    if(!formValues.user_password) {
-      errors.user_password = "Phone Number is required";
-    } else if (!/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/.test(formValues.user_password)){
-      errors.email = "Password must be at least 8 characters long, contain at least one letter and one number";
-    }
-
-    return errors;
-  }
-
-  // Handle form submission with validation and success/error handling
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    const errors = validateForm();
-    if(Object.keys(errors).length === 0){
-      alert("Form Submitted!");
-      setFormErrors(errors);
-    }
-
-    // Validate passwords match
-    if (formValues.user_password !== formValues.confirmPassword) {
+    if (values.user_password !== values.confirmPassword) {
       setError("Passwords do not match!");
       return;
     }
+    setError(""); // Clear error if passwords match
+    console.log("Form submitted:", values);
 
-    try {
-      // Send form data to the backend
-      const response = await axios.post(
-        "http://localhost:4000/auth/register",
-        formValues
-      );
-
-      console.log(response);
-
-      if (response.status === 201) {
-        // Success: Set success message and navigate to login after delay
-        setSuccessMessage(response.data.message);
-        setError(""); // Clear any previous errors
-        setTimeout(() => {
-          navigate("/login"); // Redirect to login page
-        }, 2000);
-
-        // Reset form fields to initial state
-        setFormValues({
-          user_type: "Customer", // Default value
-          first_name: "",
-          last_name: "",
-          email: "",
-          phone_number: "",
-          company_name: "",
-          company_address: "",
-          address_city: "",
-          address_state: "",
-          address_country: "",
-          pincode: "",
-          GST_no: "",
-          user_password: "",
-          confirmPassword: "",
-        });
-      }
-    } catch (error) {
-      // Handle error from backend or any other issue
-      setError(
-        error.response?.data?.message || "An error occurred. Please try again."
-      );
-      setSuccessMessage(""); // Clear success message on error
-    }
+    axios
+      .post("http://localhost:8080/register", values)
+      .then((res) => {
+        if(res.data.status === "Success"){
+          setSuccessMessage("Registration successful! Redirecting to login...");
+          setTimeout(() => {
+            navigate("/login")
+          }, 3000);
+        }
+        else {
+          setError(res.data.message || "Registration failed. Please try again.");
+        }
+      })
+      .catch((err) => {
+        if (err.response && err.response.status === 409) {
+          setError(err.response.data.message); 
+        } else {
+          setError("Registration failed. Please try again."); 
+        }
+        console.error(err);
+      });
   };
-
-  
 
   return (
     <div className="container-fluid p-5 custom-bg-register">
@@ -138,14 +65,15 @@ export default function Register() {
         <h1 className="text-center mb-4">Register</h1>
 
         <form onSubmit={handleSubmit}>
-          {/* Dropdown for User Type */}
           <select
             name="user_type"
-            value={formValues.user_type}
-            onChange={handleInputChange}
             className="form-select mb-3"
             aria-label="Default select example"
+            onChange={(e) =>
+              setValues({ ...values, user_type: e.target.value })
+            }
           >
+            <option value="">Select User Type</option>
             <option value="Customer">Customer</option>
             <option value="Owner">Owner</option>
           </select>
@@ -159,16 +87,13 @@ export default function Register() {
               <input
                 type="text"
                 name="first_name"
-                value={formValues.first_name}
-                onChange={handleInputChange}
                 className="form-control"
                 id="first_name"
-                
+                required
+                onChange={(e) =>
+                  setValues({ ...values, first_name: e.target.value })
+                }
               />
-              {
-                formErrors.first_name ? <span className="text-danger">{formErrors.first_name}</span> : ""
-              }
-              
             </div>
             <div className="mb-3 w-50">
               <label htmlFor="last_name" className="form-label">
@@ -177,11 +102,12 @@ export default function Register() {
               <input
                 type="text"
                 name="last_name"
-                value={formValues.last_name}
-                onChange={handleInputChange}
                 className="form-control"
                 id="last_name"
                 required
+                onChange={(e) =>
+                  setValues({ ...values, last_name: e.target.value })
+                }
               />
             </div>
           </div>
@@ -192,11 +118,10 @@ export default function Register() {
             <input
               type="email"
               name="email"
-              value={formValues.email}
-              onChange={handleInputChange}
               className="form-control"
               id="email"
               required
+              onChange={(e) => setValues({ ...values, email: e.target.value })}
             />
           </div>
           <div className="mb-3">
@@ -206,12 +131,13 @@ export default function Register() {
             <input
               type="text"
               name="phone_number"
-              value={formValues.phone_number}
-              onChange={handleInputChange}
               className="form-control"
               placeholder="+91"
               id="phone_number"
               required
+              onChange={(e) =>
+                setValues({ ...values, phone_number: e.target.value })
+              }
             />
           </div>
           <div className="mb-3">
@@ -221,10 +147,11 @@ export default function Register() {
             <input
               type="text"
               name="company_name"
-              value={formValues.company_name}
-              onChange={handleInputChange}
               className="form-control"
               id="company_name"
+              onChange={(e) =>
+                setValues({ ...values, company_name: e.target.value })
+              }
             />
           </div>
           <div className="mb-3">
@@ -234,10 +161,11 @@ export default function Register() {
             <input
               type="text"
               name="company_address"
-              value={formValues.company_address}
-              onChange={handleInputChange}
               className="form-control"
               id="company_address"
+              onChange={(e) =>
+                setValues({ ...values, company_address: e.target.value })
+              }
             />
           </div>
           <div className="d-flex w-100 gap-4">
@@ -248,10 +176,11 @@ export default function Register() {
               <input
                 type="text"
                 name="address_city"
-                value={formValues.address_city}
-                onChange={handleInputChange}
                 className="form-control"
                 id="address_city"
+                onChange={(e) =>
+                  setValues({ ...values, address_city: e.target.value })
+                }
               />
             </div>
             <div className="mb-3 w-50">
@@ -261,10 +190,11 @@ export default function Register() {
               <input
                 type="text"
                 name="address_state"
-                value={formValues.address_state}
-                onChange={handleInputChange}
                 className="form-control"
                 id="address_state"
+                onChange={(e) =>
+                  setValues({ ...values, address_state: e.target.value })
+                }
               />
             </div>
           </div>
@@ -276,10 +206,11 @@ export default function Register() {
               <input
                 type="text"
                 name="address_country"
-                value={formValues.address_country}
-                onChange={handleInputChange}
                 className="form-control"
                 id="address_country"
+                onChange={(e) =>
+                  setValues({ ...values, address_country: e.target.value })
+                }
               />
             </div>
             <div className="mb-3 w-50">
@@ -289,10 +220,11 @@ export default function Register() {
               <input
                 type="text"
                 name="pincode"
-                value={formValues.pincode}
-                onChange={handleInputChange}
                 className="form-control"
                 id="pincode"
+                onChange={(e) =>
+                  setValues({ ...values, pincode: e.target.value })
+                }
               />
             </div>
           </div>
@@ -303,10 +235,9 @@ export default function Register() {
             <input
               type="text"
               name="GST_no"
-              value={formValues.GST_no}
-              onChange={handleInputChange}
               className="form-control"
               id="GST_no"
+              onChange={(e) => setValues({ ...values, GST_no: e.target.value })}
             />
           </div>
           <div className="mb-3">
@@ -316,11 +247,12 @@ export default function Register() {
             <input
               type="password"
               name="user_password"
-              value={formValues.user_password}
-              onChange={handleInputChange}
               className="form-control"
               id="user_password"
               required
+              onChange={(e) =>
+                setValues({ ...values, user_password: e.target.value })
+              }
             />
           </div>
           <div className="mb-3">
@@ -330,11 +262,12 @@ export default function Register() {
             <input
               type="password"
               name="confirmPassword"
-              value={formValues.confirmPassword}
-              onChange={handleInputChange}
               className="form-control"
               id="confirmPassword"
               required
+              onChange={(e) =>
+                setValues({ ...values, confirmPassword: e.target.value })
+              }
             />
           </div>
           {error && <div className="alert alert-danger">{error}</div>}
@@ -342,7 +275,7 @@ export default function Register() {
             Submit
           </button>
           {successMessage && (
-            <div className="alert alert-success" role="alert">
+            <div className="alert alert-success mt-3" role="alert">
               {successMessage}
             </div>
           )}

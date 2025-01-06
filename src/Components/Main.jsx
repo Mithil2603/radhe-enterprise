@@ -19,24 +19,18 @@ export default function Main() {
 
   const slides = [
     {
-      // image:
-      //   "https://static.wixstatic.com/media/baac51_a1800801553a41e4b95e214079fef63e~mv2.jpg/v1/fill/w_938,h_625,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Light%20-%20Big%20Horizontal%20image%204.jpg",
       image:
         "https://res.cloudinary.com/drpcouvle/image/upload/v1735539093/Machinery_3_ofsl2x.jpg",
       heading: "Creel Manufacturing",
       text: "Our machinery modification solutions are customized to enhance your equipment's performance.",
     },
     {
-      // image:
-      //   "https://static.wixstatic.com/media/baac51_75bee60420a04efa98d7a51a9633b329~mv2.jpg/v1/fill/w_938,h_625,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Light%20-%20Item%20(alternative).jpg",
       image:
         "https://res.cloudinary.com/drpcouvle/image/upload/v1735539093/Machinery_2_rskqva.jpg",
       heading: "Machinery Modifications",
       text: "Tailored product support to ensure optimal machinery performance and client satisfaction.",
     },
     {
-      // image:
-      //   "https://static.wixstatic.com/media/baac51_b95211f3857f46728836341a026d31a4~mv2.jpg/v1/fill/w_938,h_625,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Light%20-%20Big%20Horizontal%20image%206.jpg",
       image:
         "https://res.cloudinary.com/drpcouvle/image/upload/v1735539093/Machinery_1_didbqw.jpg",
       heading: "Customized Support",
@@ -67,7 +61,6 @@ export default function Main() {
                 Enquire Now
             </Link>
             <Link to="/register" className="btn btn-light custom-btn w-50">Register</Link>
-            <Link to="/user/4" className="btn btn-light custom-btn w-50">User</Link>
           </div>
         </div>
       </div>
