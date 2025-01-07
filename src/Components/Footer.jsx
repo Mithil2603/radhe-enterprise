@@ -18,9 +18,9 @@ export default function Footer() {
               </Link>
               <ul className="list-unstyled small">
                 <li className="mb-2 text-light">
-                  Designed and built with all the love in the world by the{" "}
+                  Designed and built with all the love in the world by {" "}
                   our developer Mr.{" "}
-                  <Link to="https://github.com/twbs/bootstrap/graphs/contributors">
+                  <Link to="https://linkedin.com/in/sutharmithil">
                     Mithil Suthar
                   </Link>
                   .

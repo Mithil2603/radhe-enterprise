@@ -49,8 +49,8 @@ export default function Login() {
     <>
       <div className="container-fluid p-5 custom-bg-register">
         <div className="container">
-          <h1 className="text-center mb-4">Login</h1>
-          <form onSubmit={handleSubmit}>
+          <h1 className="text-center mb-5 font-bold-2xl">Login</h1>
+          <form onSubmit={handleSubmit} className="form-container font-bold register">
             <div className="mb-3">
               <label htmlFor="exampleInputEmail1" className="form-label">
                 Email address
@@ -82,7 +82,7 @@ export default function Login() {
                 }
               />
             </div>
-            <div className="mb-3 form-check">
+            {/* <div className="mb-3 form-check">
               <input
                 type="checkbox"
                 className="form-check-input"
@@ -91,14 +91,14 @@ export default function Login() {
               <label className="form-check-label" htmlFor="exampleCheck1">
                 Remember Me
               </label>
-            </div>
+            </div> */}
             {successMessage && (
-              <div class="alert alert-success" role="alert">
+              <div className="alert alert-success mt-3 mb-3" role="alert">
                 {successMessage}
               </div>
             )}
             {error && <p className="text-danger">{error}</p>}
-            <button type="submit" className="btn custom-btn">
+            <button type="submit" className="btn custom-btn mt-3 mb-3">
               Submit
             </button>
             <div className="login-option d-flex gap-1 mt-2">

@@ -62,9 +62,9 @@ export default function Register() {
   return (
     <div className="container-fluid p-5 custom-bg-register">
       <div className="container">
-        <h1 className="text-center mb-4">Register</h1>
+        <h1 className="text-center mb-5 font-bold-2xl">Register</h1>
 
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="form-container font-bold register">
           <select
             name="user_type"
             className="form-select mb-3"
@@ -270,12 +270,12 @@ export default function Register() {
               }
             />
           </div>
-          {error && <div className="alert alert-danger">{error}</div>}
-          <button type="submit" className="btn custom-btn">
+          {error && <div className="alert alert-danger mt-3 mb-3">{error}</div>}
+          <button type="submit" className="btn custom-btn mt-3 mb-3">
             Submit
           </button>
           {successMessage && (
-            <div className="alert alert-success mt-3" role="alert">
+            <div className="alert alert-success mt-3 mb-3" role="alert">
               {successMessage}
             </div>
           )}

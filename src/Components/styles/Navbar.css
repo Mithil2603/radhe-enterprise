@@ -47,8 +47,13 @@
     background-color: #39749f;
 }
 
+.dropdown-item {
+    font-weight: bolder;
+}
+
 .dropdown-item:hover {
     background-color: #4084b4;
+    color: #171d24;
 }
 
 .nav-link:hover {

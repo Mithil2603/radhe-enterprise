@@ -56,13 +56,8 @@ export default function Navbar() {
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
               <li className="nav-item">
-                <Link className="nav-link active" aria-current="page" to="/">
+                <Link className="nav-link" aria-current="page" to="/">
                   Home
-                </Link>
-              </li>
-              <li className="nav-item">
-                <Link className="nav-link" to="/products">
-                  Products
                 </Link>
               </li>
               <li className="nav-item dropdown">
@@ -97,6 +92,11 @@ export default function Navbar() {
                 </ul>
               </li>
               <li className="nav-item">
+                <Link className="nav-link" to="/products">
+                  Products
+                </Link>
+              </li>
+              <li className="nav-item">
                 <Link className="nav-link" to="/about">
                   About Us
                 </Link>
@@ -114,11 +114,11 @@ export default function Navbar() {
                       width="16"
                       height="16"
                       fill="currentColor"
-                      class="bi bi-person-fill"
+                      className="bi bi-person-fill"
                       viewBox="0 0 16 16"
                     >
                       <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                    </svg>{" "}{name}</button>
+                    </svg>{" Hello "}{name}</button>
                   </Link>
                 </div>
               ) : (
