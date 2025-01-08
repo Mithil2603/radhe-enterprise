@@ -20,8 +20,6 @@ export default function Login() {
     e.preventDefault(); // Prevent form submission
 
     setError(""); // Clear error if passwords match
-    console.log("Form submitted:", values);
-
     axios
       .post("http://localhost:8080/login", values)
       .then((res) => {
@@ -29,7 +27,7 @@ export default function Login() {
           setSuccessMessage("Login successful! Redirecting to HomePage...");
           setTimeout(() => {
             navigate("/")
-          }, 3000);
+          }, 1000);
         }
         else {
           setError(res.data.message);
@@ -59,7 +57,7 @@ export default function Login() {
                 type="email"
                 name="email"
                 className="form-control"
-                id="exampleInputEmail1"
+                id="emaillogin"
                 aria-describedby="emailHelp"
                 required
 
@@ -74,7 +72,7 @@ export default function Login() {
                 type="password"
                 name="user_password"
                 className="form-control"
-                id="exampleInputPassword1"
+                id="user_passwordlogin"
                 required
 
                 onChange={(e) =>
@@ -97,7 +95,7 @@ export default function Login() {
                 {successMessage}
               </div>
             )}
-            {error && <p className="text-danger">{error}</p>}
+            {error && <div className="alert alert-danger" role="alert">{error}</div>}
             <button type="submit" className="btn custom-btn mt-3 mb-3">
               Submit
             </button>

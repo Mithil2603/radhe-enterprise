@@ -23,7 +23,6 @@ export default function Navbar() {
         } else {
           setAuth(false);
           setMessage(res.data.Error);
-          navigate("/login");
         }
       })
       .catch((err) => {
