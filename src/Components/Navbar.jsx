@@ -7,7 +7,6 @@ import axios from "axios";
 
 export default function Navbar() {
   const [auth, setAuth] = useState(false);
-  const [message, setMessage] = useState("");
   const [name, setName] = useState("");
   const navigate = useNavigate();
 
@@ -22,7 +21,6 @@ export default function Navbar() {
           setName(res.data.name);
         } else {
           setAuth(false);
-          setMessage(res.data.Error);
         }
       })
       .catch((err) => {
@@ -122,8 +120,6 @@ export default function Navbar() {
                 </div>
               ) : (
                 <>
-                  {/* <h3>{message}</h3> */}
-                  {console.log(message)}
                   <Link className="nav-link" to="/login">
                     <button className="btn custom-btn nav-btn">Login</button>
                   </Link>

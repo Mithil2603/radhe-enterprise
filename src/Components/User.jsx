@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./styles/User.css";
 
 export default function User() {
   const [profileData, setProfileData] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [message, setMessage] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Fetch user profile data from the backend
@@ -23,7 +25,8 @@ export default function User() {
   const handleLogout = () => {
     axios
       .get("http://localhost:8080/logout", { withCredentials: true })
-      .then(() => {
+      .then((res) => {
+        navigate("/");
         window.location.reload(); // Refreshes the page
       })
       .catch((err) => console.error("Logout Error:", err));
@@ -56,7 +59,7 @@ export default function User() {
           <>
             <div className="d-flex w-100 gap-4 w-50 m-auto ">
               <div className="mb-3 w-50">
-                <label htmlhtmlFor="first_name" className="form-label">
+                <label htmlFor="first_name" className="form-label">
                   First Name
                 </label>
                 <input
@@ -70,7 +73,7 @@ export default function User() {
                 />
               </div>
               <div className="mb-3 w-50">
-                <label htmlhtmlFor="last_name" className="form-label">
+                <label htmlFor="last_name" className="form-label">
                   Last Name
                 </label>
                 <input
@@ -85,7 +88,7 @@ export default function User() {
               </div>
             </div>
             <div className="mb-3">
-              <label htmlhtmlFor="email" className="form-label">
+              <label htmlFor="email" className="form-label">
                 Email address
               </label>
               <input
@@ -99,7 +102,7 @@ export default function User() {
               />
             </div>
             <div className="mb-3">
-              <label htmlhtmlFor="phone_number" className="form-label">
+              <label htmlFor="phone_number" className="form-label">
                 Phone No.
               </label>
               <input
@@ -114,7 +117,7 @@ export default function User() {
               />
             </div>
             <div className="mb-3">
-              <label htmlhtmlFor="company_name" className="form-label">
+              <label htmlFor="company_name" className="form-label">
                 Company Name
               </label>
               <input
@@ -127,7 +130,7 @@ export default function User() {
               />
             </div>
             <div className="mb-3">
-              <label htmlhtmlFor="company_address" className="form-label">
+              <label htmlFor="company_address" className="form-label">
                 Company Address
               </label>
               <input
@@ -141,7 +144,7 @@ export default function User() {
             </div>
             <div className="d-flex w-100 gap-4">
               <div className="mb-3 w-50">
-                <label htmlhtmlFor="address_city" className="form-label">
+                <label htmlFor="address_city" className="form-label">
                   City
                 </label>
                 <input
@@ -154,7 +157,7 @@ export default function User() {
                 />
               </div>
               <div className="mb-3 w-50">
-                <label htmlhtmlFor="address_state" className="form-label">
+                <label htmlFor="address_state" className="form-label">
                   State
                 </label>
                 <input
@@ -169,7 +172,7 @@ export default function User() {
             </div>
             <div className="d-flex w-100 gap-4">
               <div className="mb-3 w-50">
-                <label htmlhtmlFor="address_country" className="form-label">
+                <label htmlFor="address_country" className="form-label">
                   Country
                 </label>
                 <input
@@ -182,7 +185,7 @@ export default function User() {
                 />
               </div>
               <div className="mb-3 w-50">
-                <label htmlhtmlFor="pincode" className="form-label">
+                <label htmlFor="pincode" className="form-label">
                   Pincode
                 </label>
                 <input
@@ -196,7 +199,7 @@ export default function User() {
               </div>
             </div>
             <div className="mb-3">
-              <label htmlhtmlFor="GST_no" className="form-label">
+              <label htmlFor="GST_no" className="form-label">
                 GST No
               </label>
               <input
@@ -209,8 +212,15 @@ export default function User() {
               />
             </div>
             <div className="d-flex align-items-center justify-content-center gap-3">
-                <button className="btn custom-btn nav-btn" onClick={handleSave}>Save</button>
-                <button className="btn custom-btn nav-btn" onClick={() => setEditMode(false)}>Cancel</button>
+              <button className="btn custom-btn nav-btn" onClick={handleSave}>
+                Save
+              </button>
+              <button
+                className="btn custom-btn nav-btn"
+                onClick={() => setEditMode(false)}
+              >
+                Cancel
+              </button>
             </div>
           </>
         ) : (
@@ -220,91 +230,86 @@ export default function User() {
                 <input
                   type="text"
                   className="form-control"
-                  id="floatingInputDisabled"
-                  placeholder="name@example.com"
+                  id="first_name"
                   value={profileData.first_name}
                   disabled
                 />
-                <label htmlFor="floatingInputDisabled">First Name</label>
+                <label htmlFor="first_name">First Name</label>
               </div>
               <div className="form-floating mb-3 w-50">
                 <input
                   type="text"
                   className="form-control"
-                  id="floatingInputDisabled"
-                  placeholder="name@example.com"
+                  id="last_name"
                   value={profileData.last_name}
                   disabled
                 />
-                <label htmlFor="floatingInputDisabled">Last Name</label>
+                <label htmlFor="last_name">Last Name</label>
               </div>
             </div>
             <div className="form-floating mb-3">
               <input
                 type="email"
                 className="form-control"
-                id="floatingInputDisabled"
-                placeholder="name@example.com"
+                id="email"
                 value={profileData.email}
                 disabled
               />
-              <label htmlFor="floatingInputDisabled">Email</label>
+              <label htmlFor="email">Email</label>
             </div>
             <div className="form-floating mb-3">
               <input
                 type="text"
                 className="form-control"
-                id="floatingInputDisabled"
-                placeholder="name@example.com"
+                id="phone_number"
                 value={profileData.phone_number}
                 disabled
               />
-              <label htmlFor="floatingInputDisabled">Phone Number</label>
+              <label htmlFor="phone_number">Phone Number</label>
             </div>
             <div className="form-floating mb-3">
               <input
                 type="text"
                 className="form-control"
-                id="floatingInputDisabled"
-                placeholder="name@example.com"
+                id="company_name"
                 value={profileData.company_name}
                 disabled
               />
-              <label htmlFor="floatingInputDisabled">Company Name</label>
+              <label htmlFor="company_name">Company Name</label>
             </div>
             <div className="form-floating mb-3">
               <input
                 type="text"
                 className="form-control"
-                id="floatingInputDisabled"
+                id="company_address"
                 placeholder="name@example.com"
                 value={profileData.company_address}
                 disabled
               />
-              <label htmlFor="floatingInputDisabled">Address</label>
+              <label htmlFor="company_address">Address</label>
             </div>
             <div className="d-flex align-items-center justify-content-center gap-2">
               <div className="form-floating mb-3 w-50">
                 <input
                   type="text"
                   className="form-control"
-                  id="floatingInputDisabled"
+                  id="city"
                   placeholder="name@example.com"
                   value={profileData.address_city}
                   disabled
                 />
-                <label htmlFor="floatingInputDisabled">City</label>
+                <label htmlFor="city">City</label>
               </div>
               <div className="form-floating mb-3 w-50">
                 <input
                   type="text"
                   className="form-control"
-                  id="floatingInputDisabled"
+                  id="state"
                   placeholder="name@example.com"
                   value={profileData.address_state}
                   disabled
                 />
-                <label htmlFor="floatingInputDisabled">State</label>
+                <label htmlFor="state">State</label>
               </div>
             </div>
             <div className="d-flex align-items-center justify-content-center gap-2">
@@ -312,36 +317,38 @@ export default function User() {
                 <input
                   type="text"
                   className="form-control"
-                  id="floatingInputDisabled"
+                  id="country"
                   placeholder="name@example.com"
                   value={profileData.address_country}
                   disabled
                 />
-                <label htmlFor="floatingInputDisabled">Country</label>
+                <label htmlFor="country">Country</label>
               </div>
               <div className="form-floating mb-3 w-50">
                 <input
                   type="text"
                   className="form-control"
-                  id="floatingInputDisabled"
+                  id="pincode"
                   placeholder="name@example.com"
                   value={profileData.pincode}
                   disabled
                 />
-                <label htmlFor="floatingInputDisabled">Pincode</label>
+                <label htmlFor="pincode">Pincode</label>
               </div>
             </div>
             <div className="form-floating mb-3">
               <input
                 type="text"
                 className="form-control"
-                id="floatingInputDisabled"
+                id="GST_no"
                 placeholder="name@example.com"
                 value={profileData.GST_no}
                 disabled
               />
-              <label htmlFor="floatingInputDisabled">GST Number</label>
+              <label htmlFor="GST_no">GST Number</label>
             </div>
+
+            {message && <div className="alert alert-success">{message}</div>}
             <div className="d-flex align-items-center justify-content-center gap-3">
               <Link className="nav-link" to="/logout" onClick={handleLogout}>
                 <button className="btn custom-btn nav-btn">Logout</button>
@@ -352,8 +359,6 @@ export default function User() {
             </div>
           </>
         )}
-
-        {message && <p className="message">{message}</p>}
       </div>
     </div>
   );
