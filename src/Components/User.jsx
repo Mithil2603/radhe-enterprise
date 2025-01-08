@@ -19,8 +19,11 @@ export default function User() {
       })
       .catch((error) => {
         console.error("Error fetching profile data:", error);
+        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+          navigate("/login"); // Use navigate to redirect
+        }
       });
-  }, []);
+  }, [navigate]);
 
   const handleLogout = () => {
     axios
