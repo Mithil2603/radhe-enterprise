@@ -19,6 +19,8 @@ export default function Login() {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent form submission
 
+    window.localStorage.setItem("isLoggedIn", true);
+
     setError(""); // Clear error if passwords match
     axios
       .post("http://localhost:8080/login", values)

@@ -12,9 +12,10 @@ import RTR from "./Components/RTR";
 import Creels from "./Components/Creels";
 import NotFound from "./Components/NotFound";
 import User from "./Components/User";
+import PlaceOrder from "./Components/PlaceOrder";
+import Orders from "./Components/Orders";
 
 function App() {
-
   return (
     <>
       <Navbar/>
@@ -28,6 +29,8 @@ function App() {
         <Route path="/products/:productId" element={<RTR />}></Route>
         <Route path={`/creels`} element={<Creels />}></Route>
         <Route path="/profile" element={<User />}/>
+        <Route path="/placeorder" element={<PlaceOrder />}/>
+        <Route path="/orders" element={<Orders />}/>
 
         <Route path="*" element={<NotFound />}/>
       </Routes>
