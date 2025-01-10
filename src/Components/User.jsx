@@ -15,11 +15,18 @@ export default function User() {
     axios
       .get("http://localhost:8080/profile", { withCredentials: true })
       .then((response) => {
-        setProfileData(response.data.data); // Populate the data
+        if (response.data.status === "Success") {
+          setProfileData(response.data.data); // Populate the data
+        } else {
+          setMessage("Error fetching profile data.");
+        }
       })
       .catch((error) => {
         console.error("Error fetching profile data:", error);
-        if (error.response && (error.response.status === 401 || error.response.status === 403)) {
+        if (
+          error.response &&
+          (error.response.status === 401 || error.response.status === 403)
+        ) {
           navigate("/login"); // Use navigate to redirect
         }
       });
@@ -40,6 +47,30 @@ export default function User() {
   };
 
   const handleSave = () => {
+     // Validate phone number format
+     const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+     if (!phoneRegex.test(profileData.phone_number)) {
+       setMessage("Invalid phone number format. Please include the country code.");
+       return;
+     }
+ 
+     // Validate email format
+     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+     if (!emailRegex.test(profileData.email)) {
+       setMessage("Invalid email format.");
+       return;
+     }
+
+    // Additional validation checks for other fields, if necessary
+    if (
+      !profileData.first_name ||
+      !profileData.last_name ||
+      !profileData.email
+    ) {
+      setMessage("Please fill in all required fields.");
+      return;
+    }
+
     axios
       .put("http://localhost:8080/updateProfile", profileData, {
         withCredentials: true,
@@ -112,7 +143,6 @@ export default function User() {
                 type="text"
                 name="phone_number"
                 className="form-control"
-                placeholder="+91"
                 id="phone_number"
                 required
                 value={profileData.phone_number || ""}
@@ -214,6 +244,9 @@ export default function User() {
                 onChange={handleChange}
               />
             </div>
+            {message && message.includes("Invalid phone number") && (
+              <div className="text-danger">{message}</div>
+            )}
             <div className="d-flex align-items-center justify-content-center gap-3">
               <button className="btn custom-btn nav-btn" onClick={handleSave}>
                 Save
@@ -285,7 +318,6 @@ export default function User() {
                 type="text"
                 className="form-control"
                 id="company_address"
-                placeholder="name@example.com"
                 value={profileData.company_address}
                 disabled
               />
@@ -297,7 +329,6 @@ export default function User() {
                   type="text"
                   className="form-control"
                   id="city"
-                  placeholder="name@example.com"
                   value={profileData.address_city}
                   disabled
                 />
@@ -308,7 +339,6 @@ export default function User() {
                   type="text"
                   className="form-control"
                   id="state"
-                  placeholder="name@example.com"
                   value={profileData.address_state}
                   disabled
                 />
@@ -321,7 +351,6 @@ export default function User() {
                   type="text"
                   className="form-control"
                   id="country"
-                  placeholder="name@example.com"
                   value={profileData.address_country}
                   disabled
                 />
@@ -332,7 +361,6 @@ export default function User() {
                   type="text"
                   className="form-control"
                   id="pincode"
-                  placeholder="name@example.com"
                   value={profileData.pincode}
                   disabled
                 />
@@ -344,14 +372,13 @@ export default function User() {
                 type="text"
                 className="form-control"
                 id="GST_no"
-                placeholder="name@example.com"
                 value={profileData.GST_no}
                 disabled
               />
               <label htmlFor="GST_no">GST Number</label>
             </div>
 
-            {message && <div className="alert alert-success">{message}</div>}
+            {message && <div className={`alert ${message.includes("Error") ? "alert-danger" : "alert-success"}`}>{message}</div>}
             <div className="d-flex align-items-center justify-content-center gap-3">
               <Link className="nav-link" to="/logout" onClick={handleLogout}>
                 <button className="btn custom-btn nav-btn">Logout</button>

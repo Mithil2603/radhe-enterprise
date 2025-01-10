@@ -5,7 +5,6 @@ import axios from "axios";
 
 export default function Register() {
   const [values, setValues] = useState({
-    user_type: "",
     first_name: "",
     last_name: "",
     email: "",
@@ -29,6 +28,31 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault(); // Prevent form submission
 
+    const phoneNumberRegex = /^\+[1-9]\d{1,14}$/; // Basic regex to validate international phone number format
+
+    // Validate phone number format (e.g., +919876543210, +1 234 567 8901)
+    if (!phoneNumberRegex.test(values.phone_number)) {
+        setError("Invalid phone number format. Please include country code."
+      );
+    }
+
+    // Email validation (simple regex for now)
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(values.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+
+    // Password validation (at least 6 characters, at least one number and special character)
+    const passwordRegex =
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(values.user_password)) {
+      setError(
+        "Password must be at least 8 characters long, contain a number and a special character."
+      );
+      return;
+    }
+
     if (values.user_password !== values.confirmPassword) {
       setError("Passwords do not match!");
       return;
@@ -39,21 +63,22 @@ export default function Register() {
     axios
       .post("http://localhost:8080/register", values)
       .then((res) => {
-        if(res.data.status === "Success"){
+        if (res.data.status === "Success") {
           setSuccessMessage("Registration successful! Redirecting to login...");
           setTimeout(() => {
-            navigate("/login")
+            navigate("/login");
           }, 3000);
-        }
-        else {
-          setError(res.data.message || "Registration failed. Please try again.");
+        } else {
+          setError(
+            res.data.message || "Registration failed. Please try again."
+          );
         }
       })
       .catch((err) => {
         if (err.response && err.response.status === 409) {
-          setError(err.response.data.message); 
+          setError(err.response.data.message);
         } else {
-          setError("Registration failed. Please try again."); 
+          setError("Registration failed. Please try again.");
         }
         console.error(err);
       });
@@ -64,20 +89,10 @@ export default function Register() {
       <div className="container">
         <h1 className="text-center mb-5 font-bold-2xl">Register</h1>
 
-        <form onSubmit={handleSubmit} className="form-container font-bold register">
-          <select
-            name="user_type"
-            className="form-select mb-3"
-            aria-label="Default select example"
-            onChange={(e) =>
-              setValues({ ...values, user_type: e.target.value })
-            }
-          >
-            <option value="">Select User Type</option>
-            <option value="Customer">Customer</option>
-            <option value="Owner">Owner</option>
-          </select>
-
+        <form
+          onSubmit={handleSubmit}
+          className="form-container font-bold register"
+        >
           {/* Input fields */}
           <div className="d-flex w-100 gap-4">
             <div className="mb-3 w-50">
@@ -132,7 +147,7 @@ export default function Register() {
               type="text"
               name="phone_number"
               className="form-control"
-              placeholder="+91"
+              placeholder="+91 9876543210"
               id="phone_number"
               required
               onChange={(e) =>
