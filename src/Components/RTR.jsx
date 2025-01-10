@@ -12,7 +12,7 @@ export default function RTR() {
     const fetchProductDetails = async () => {
       try {
         const response = await fetch(
-          `http://localhost:9000/products/${productId}`
+          `http://localhost:8080/products/${productId}`
         );
         if (!response.ok) {
           throw new Error(`HTTP Error: ${response.status}`);

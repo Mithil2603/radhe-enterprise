@@ -5,21 +5,12 @@ import "./styles/Products.css";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  const [products1, setProducts1] = useState([]);
 
   useEffect(() => {
     // Fetch products from the backend
     axios
-      .get(`http://localhost:9000/products/category/3`)
+      .get(`http://localhost:8080/products/category/3`)
       .then((response) => setProducts(response.data))
-      .catch((error) => console.error("Error fetching products:", error));
-  }, []);
-
-  useEffect(() => {
-    // Fetch products from the backend
-    axios
-      .get(`http://localhost:9000/products/category/4`)
-      .then((response) => setProducts1(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
   return (
@@ -35,33 +26,6 @@ export default function Products() {
                 product.product_img?.[1] ||
                 product.product_img?.[0] ||
                 product.product_img[0];
-
-              return (
-                <div
-                  className="card text-center flex-shrink-2"
-                  key={product.product_id}
-                >
-                  <img
-                    src={productImage}
-                    className="card-img-top"
-                    alt={product.product_name || "Product Image"}
-                  />
-                  <div className="card-body">
-                    <h5 className="card-title">{product.product_name}</h5>
-                    <Link
-                      to={`/products/${product.product_id}`}
-                      className="btn btn-light custom-btn w-100"
-                    >
-                      View Details
-                    </Link>
-                  </div>
-                </div>
-              );
-            })}
-
-            {products1.map((product) => {
-              // Safely access the first image or fallback to a default placeholder
-              const productImage = product.product_img?.[0];
 
               return (
                 <div
