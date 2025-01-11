@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 const PlaceOrder = () => {
   const location = useLocation();
   const { product, name } = location.state || {}; // Extracting product and name from state
+
   const [formData, setFormData] = useState({
     quantity: "",
     no_of_ends: "",
@@ -44,7 +45,7 @@ const PlaceOrder = () => {
   // Handle order submission
   const handlePlaceOrder = async () => {
     // Check if product and product.id are available
-    if (!product?.id) {
+    if (!product?.productId) {
       alert("Product ID is missing.");
       return;
     }
@@ -55,7 +56,7 @@ const PlaceOrder = () => {
           "Content-Type": "application/json",
         },
         credentials: "include", // Include cookies for authentication
-        body: JSON.stringify({ product_id: product.id, ...formData }),
+        body: JSON.stringify({ product_id: product.productId, ...formData }),
       });
 
       if (!orderResponse.ok) {
