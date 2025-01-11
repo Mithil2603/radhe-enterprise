@@ -44,3 +44,29 @@
 .card-manual-width {
     max-width: 25rem;
 }
+
+.user-table {
+    overflow-x: scroll;
+}
+
+.user-table {
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
+.user-table::-webkit-scrollbar {
+    width: 8px;
+}
+
+.user-table::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.user-table::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    /* Color of the scrollbar thumb */
+    border-radius: 10px;
+    /* Rounded corners for the scrollbar thumb */
+    border: 2px solid #f1f1f1;
+    /* Optional: adds space around thumb */
+}

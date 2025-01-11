@@ -57,9 +57,7 @@ function App() {
         <Route
           path="/admin"
           element={
-            <PrivateRoute
-              allowedRoles={["Owner"]}
-            >
+            <PrivateRoute allowedRoles={["Owner"]}>
               {" "}
               <Admin />
             </PrivateRoute>
