@@ -14,6 +14,8 @@ import NotFound from "./Components/NotFound";
 import User from "./Components/User";
 import PlaceOrder from "./Components/PlaceOrder";
 import Orders from "./Components/Orders";
+import ResetPassword from "./Components/ResetPassword";
+import ForgotPassword from "./Components/ForgotPassword";
 
 function App() {
   return (
@@ -31,6 +33,8 @@ function App() {
         <Route path="/profile" element={<User />}/>
         <Route path="/placeorder" element={<PlaceOrder />}/>
         <Route path="/orders" element={<Orders />}/>
+        <Route path="/forgot-password" element={<ForgotPassword />}/>
+        <Route path="/reset-password" element={<ResetPassword />}/>
 
         <Route path="*" element={<NotFound />}/>
       </Routes>
