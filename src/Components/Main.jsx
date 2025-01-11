@@ -66,7 +66,7 @@ export default function Main() {
 
   return (
     <>
-      <div className="container-fluid custom-img-bg mb-5">
+      <div className="container-fluid custom-img-bg">
         <div className="banner text-center">
           <h2>
             Textile Machine Parts & Service,
@@ -103,7 +103,7 @@ export default function Main() {
         </div>
       </div>
 
-      <div className="container-fluid">
+      <div className="container-fluid custom-bg-main pt-5 pb-5">
         {/* <hr className="first-hr" /> */}
         <div className="container mb-5">
           <h1 className="mb-5 custome-color text-xl">Our Famous Products</h1>
@@ -167,7 +167,7 @@ export default function Main() {
         </div>
 
         {/* Scroller */}
-        <div className="page2 mb-5">
+        <div className="page2">
           <h2>Why Us</h2>
           <div className="move animate-me">
             <div className="marque d-block">

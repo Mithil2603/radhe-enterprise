@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import "./styles/Orders.css";
 
 const PlaceOrder = () => {
   const location = useLocation();
@@ -80,9 +81,9 @@ const PlaceOrder = () => {
   };
 
   return (
-    <div className="container-fluid">
+    <div className="container-fluid custom-bg-placeorder">
       <div className="container pt-5 pb-5">
-        <h1 className="text-center mb-5">Place Order</h1>
+        <h1 className="text-center mb-5 fw-bolder">Place Order</h1>
         <p className="fs-5 text-center">
           Product Name: <strong>{name}</strong>
         </p>
@@ -159,7 +160,7 @@ const PlaceOrder = () => {
           </div>
           <button
             type="button"
-            className="btn btn-primary"
+            className="btn custom-btn mt-3"
             onClick={handlePlaceOrder}
           >
             Place Order

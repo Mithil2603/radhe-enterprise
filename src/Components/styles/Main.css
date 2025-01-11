@@ -24,7 +24,7 @@
 }
 
 @media (max-width: 389px) {
-    .buttons{
+    .buttons {
         flex-wrap: wrap;
         width: 100%;
         padding: 0%;
@@ -92,23 +92,26 @@
 }
 
 .carousel-text {
-    color: white;
+    color: #fff;
     text-align: center;
     font-size: 2rem;
     font-weight: bold;
     padding: 1rem;
-    text-shadow: 2px 0 1px #111, -2px 0 1px #111, 0 2px 1px #111, 0 -2px 1px #111;
+    text-shadow: 2px 0 1px #000, -2px 0 1px #000, 0 2px 1px #000, 0 -2px 1px #000;
 }
 
 .carousel-text h2 {
     font-family: "Roboto Slab";
+    font-size: 5rem;
+    font-weight: bolder;
 }
 
 .carousel-text p {
     font-family: Lora;
+    font-size: 3rem;
 }
 
-@media (min-width: 500px) {
+@media (max-width: 578px) {
     .carousel-text h2 {
         font-size: 3rem;
     }
@@ -165,8 +168,26 @@
     scrollbar-width: none;
 }
 
+.move {
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+}
+
 .move::-webkit-scrollbar {
-    display: none;
+    width: 8px;
+}
+
+.move::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.move::-webkit-scrollbar-thumb {
+    background-color: #ccc;
+    /* Color of the scrollbar thumb */
+    border-radius: 10px;
+    /* Rounded corners for the scrollbar thumb */
+    border: 2px solid #f1f1f1;
+    /* Optional: adds space around thumb */
 }
 
 .marque {
@@ -184,6 +205,10 @@
     text-transform: uppercase;
 }
 
-/* .marque img{
-    height: 4vw;
-} */
+.custom-bg-main {
+    background-image: url("https://images.pexels.com/photos/1166643/pexels-photo-1166643.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}

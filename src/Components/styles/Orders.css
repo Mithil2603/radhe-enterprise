@@ -5,3 +5,11 @@
     background-size: cover;
     background-attachment: fixed;
 }
+
+.custom-bg-placeorder {
+    background-image: url("https://images.pexels.com/photos/358904/pexels-photo-358904.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+}
