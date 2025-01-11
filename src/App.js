@@ -30,6 +30,7 @@ import ManageFeedback from "./Components/Admin/ManageFeedback";
 import ManageServices from "./Components/Admin/ManageServices";
 import PrivateRoute from "./PrivateRoute";
 import Unauthorized from "./Components/Unauthorized";
+import AdminHome from "./Components/Admin/AdminHome";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
             </PrivateRoute>
           }
         >
+          <Route path="" element={<AdminHome />} />
           <Route path="users" element={<ManageUsers />} />
           <Route path="categories" element={<ManageCategories />} />
           <Route path="products" element={<ManageProducts />} />
