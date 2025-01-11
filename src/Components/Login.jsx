@@ -22,10 +22,20 @@ export default function Login() {
       .post("http://localhost:8080/login", values)
       .then((res) => {
         if (res.data.status === "Success") {
-          setSuccessMessage("Login successful! Redirecting to HomePage...");
-          setTimeout(() => {
-            navigate("/");
-          }, 1000);
+          const { user_type } = res.data;
+          if (user_type === "Owner") {
+            setSuccessMessage(
+              "Login Successful! Redirecting to Admin Dashboard..."
+            );
+            setTimeout(() => {
+              navigate("/admin");
+            }, 1000);
+          } else if (user_type === "Customer") {
+            setSuccessMessage("Login successful! Redirecting to HomePage...");
+            setTimeout(() => {
+              navigate("/");
+            }, 1000);
+          }
         } else {
           setError(res.data.message);
         }
@@ -54,9 +64,7 @@ export default function Login() {
               name="email"
               className="form-control"
               required
-              onChange={(e) =>
-                setValues({ ...values, email: e.target.value })
-              }
+              onChange={(e) => setValues({ ...values, email: e.target.value })}
             />
           </div>
           <div className="mb-3">

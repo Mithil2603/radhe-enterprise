@@ -17,6 +17,18 @@ import Orders from "./Components/Orders";
 import ResetPassword from "./Components/ResetPassword";
 import ForgotPassword from "./Components/ForgotPassword";
 
+// Admin Dashboard
+import Admin from "./Components/Admin/Admin";
+
+import ManageUsers from "./Components/Admin/ManageUsers";
+import ManageCategories from "./Components/Admin/ManageCategories";
+import ManageProducts from "./Components/Admin/ManageProducts";
+import ManageOrders from "./Components/Admin/ManageOrders";
+import ManageDelivery from "./Components/Admin/ManageDelivery";
+import ManagePayments from "./Components/Admin/ManagePayments";
+import ManageFeedback from "./Components/Admin/ManageFeedback";
+import ManageServices from "./Components/Admin/ManageServices";
+
 function App() {
   return (
     <>
@@ -35,6 +47,19 @@ function App() {
         <Route path="/orders" element={<Orders />}/>
         <Route path="/forgot-password" element={<ForgotPassword />}/>
         <Route path="/reset-password" element={<ResetPassword />}/>
+
+        {/* Admin Dashboard */}
+        {/* Admin Routes */}
+        <Route path="/admin" element={<Admin />}>
+          <Route path="users" element={<ManageUsers />} />
+          <Route path="categories" element={<ManageCategories />} />
+          <Route path="products" element={<ManageProducts />} />
+          <Route path="orders" element={<ManageOrders />} />
+          <Route path="delivery" element={<ManageDelivery />} />
+          <Route path="payments" element={<ManagePayments />} />
+          <Route path="feedback" element={<ManageFeedback />} />
+          <Route path="services" element={<ManageServices />} />
+        </Route>
 
         <Route path="*" element={<NotFound />}/>
       </Routes>
