@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import logo from "./images/RadheEnterprise.svg"
+import logo from "./images/RadheEnterprise.svg";
 
 export default function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <>
       <footer className="bd-footer py-4 py-md-5 bg-dark text-light">
@@ -14,37 +15,18 @@ export default function Footer() {
                 to="/"
                 aria-label="Radhe Enterprise"
               >
-                <img src={logo} alt="main-logo" className="main-logo"/>
+                <img src={logo} alt="main-logo" className="main-logo" />
               </Link>
               <ul className="list-unstyled small">
                 <li className="mb-2 text-light">
-                  Designed and built with all the love in the world by {" "}
-                  our developer Mr.{" "}
+                  We are greatly thankful to the person who developed this
+                  website our developer{" "}
                   <Link to="https://linkedin.com/in/sutharmithil">
                     Mithil Suthar
                   </Link>
                   .
                 </li>
-                <li className="mb-2 text-light">
-                  Code licensed{" "}
-                  <Link
-                    href="https://github.com/twbs/bootstrap/blob/main/LICENSE"
-                    target="_blank"
-                    rel="license noopener"
-                  >
-                    MIT
-                  </Link>
-                  , docs{" "}
-                  <Link
-                    href="https://creativecommons.org/licenses/by/3.0/"
-                    target="_blank"
-                    rel="license noopener"
-                  >
-                    CC BY 3.0
-                  </Link>
-                  .
-                </li>
-                <li className="mb-2 text-light">Currently v5.3.3.</li>
+                <li className="text-light">&copy; From 2024 to {currentYear} - Radhe Enterprise Pvt. Ltd.</li>
               </ul>
             </div>
             <div className="col-6 col-lg-2 offset-lg-1 mb-3 text-light">
@@ -54,113 +36,27 @@ export default function Footer() {
                   <Link to="/">Home</Link>
                 </li>
                 <li className="mb-2">
-                  <Link href="/docs/5.3/">Docs</Link>
+                  <Link to="/about">About Us</Link>
                 </li>
                 <li className="mb-2">
-                  <Link href="/docs/5.3/examples/">Examples</Link>
-                </li>
-                <li className="mb-2">
-                  <Link href="https://icons.getbootstrap.com/">Icons</Link>
-                </li>
-                <li className="mb-2">
-                  <Link href="https://themes.getbootstrap.com/">Themes</Link>
-                </li>
-                <li className="mb-2">
-                  <Link href="https://blog.getbootstrap.com/">Blog</Link>
-                </li>
-                <li className="mb-2">
-                  <Link
-                    href="https://cottonbureau.com/people/bootstrap"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Swag Store
-                  </Link>
+                  <Link to="/contact">Contact Us</Link>
                 </li>
               </ul>
             </div>
             <div className="col-6 col-lg-2 mb-3 text-light">
-              <h5>Guides</h5>
+              <h5>Our Products</h5>
               <ul className="list-unstyled">
                 <li className="mb-2">
-                  <Link href="/docs/5.3/getting-started/">Getting started</Link>
-                </li>
-                <li className="mb-2">
-                  <Link href="/docs/5.3/examples/starter-template/">
-                    Starter template
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <Link href="/docs/5.3/getting-started/webpack/">Webpack</Link>
-                </li>
-                <li className="mb-2">
-                  <Link href="/docs/5.3/getting-started/parcel/">Parcel</Link>
-                </li>
-                <li className="mb-2">
-                  <Link href="/docs/5.3/getting-started/vite/">Vite</Link>
+                  <Link to="/creels">Creels</Link>
                 </li>
               </ul>
             </div>
             <div className="col-6 col-lg-2 mb-3 text-light">
-              <h5>Projects</h5>
+              <h5>Our Developers</h5>
               <ul className="list-unstyled">
                 <li className="mb-2">
-                  <Link
-                    href="https://github.com/twbs/bootstrap"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Bootstrap 5
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <Link
-                    href="https://github.com/twbs/bootstrap/tree/v4-dev"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Bootstrap 4
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <Link
-                    href="https://github.com/twbs/icons"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Icons
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <Link
-                    href="https://github.com/twbs/rfs"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    RFS
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <Link
-                    href="https://github.com/twbs/examples/"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Examples repo
-                  </Link>
-                </li>
-              </ul>
-            </div>
-            <div className="col-6 col-lg-2 mb-3 text-light">
-              <h5>Community</h5>
-              <ul className="list-unstyled">
-                <li className="mb-2">
-                  <Link
-                    href="https://github.com/twbs/bootstrap/issues"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Issues
+                  <Link to="https://wa.me/qr/6VCWQV5SDRP3C1">
+                    Mithil Suthar
                   </Link>
                 </li>
                 <li className="mb-2">
@@ -169,7 +65,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener"
                   >
-                    Discussions
+                    Raza Devjani
                   </Link>
                 </li>
                 <li className="mb-2">
@@ -178,25 +74,7 @@ export default function Footer() {
                     target="_blank"
                     rel="noopener"
                   >
-                    Corporate sponsors
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <Link
-                    href="https://opencollective.com/bootstrap"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Open Collective
-                  </Link>
-                </li>
-                <li className="mb-2">
-                  <Link
-                    href="https://stackoverflow.com/questions/tagged/bootstrap-5"
-                    target="_blank"
-                    rel="noopener"
-                  >
-                    Stack Overflow
+                    Jiya Baria
                   </Link>
                 </li>
               </ul>

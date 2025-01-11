@@ -5,45 +5,45 @@ import "./styles/Admin.css";
 export default function Admin() {
   return (
     <>
-      <div className="d-flex">
+      <div className="d-flex custom-bg-admin">
         <ul className="nav flex-column custom-bg-sidebar width-30">
           <li className="nav-item">
-            <Link className="nav-link active custom-color pt-5" aria-current="page" to="/admin">
+            <Link className="nav-link active custom-color border-bottom pt-5" aria-current="page" to="/admin">
               Home
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link custom-color" to="/admin/users">
+            <Link className="nav-link custom-color border-bottom" to="/admin/users">
               Manage Users
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link custom-color" to="/admin/categories">
+            <Link className="nav-link custom-color border-bottom" to="/admin/categories">
               Manage Categories
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link custom-color" to="/admin/products">
+            <Link className="nav-link custom-color border-bottom" to="/admin/products">
               Manage Products
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link custom-color" to="/admin/orders">
+            <Link className="nav-link custom-color border-bottom" to="/admin/orders">
               Manage Orders
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link custom-color" to="/admin/delivery">
+            <Link className="nav-link custom-color border-bottom" to="/admin/delivery">
               Manage Delivery
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link custom-color" to="/admin/payments">
+            <Link className="nav-link custom-color border-bottom" to="/admin/payments">
               Manage Payments
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link custom-color" to="/admin/feedback">
+            <Link className="nav-link custom-color border-bottom" to="/admin/feedback">
               Manage Feedback
             </Link>
           </li>

@@ -10,15 +10,28 @@
 }
 
 .custom-bg-sidebar {
-    background-color: #4084b4;
+    background-color: #171d24;
+    /* background: transparent; */
 }
 
 .custom-color {
-    color: #171d24;
-    border-bottom: 2px solid #171d24;
+    color: #4084b4;
+}
+
+.border-bottom {
+    border-bottom: 2px solid #4084b4;
 }
 
 .width-30 {
     width: 20vw;
     z-index: 0;
+}
+
+.custom-bg-admin {
+    /* background-image: url("https://images.pexels.com/photos/355872/pexels-photo-355872.jpeg"); */
+    background-image: url("https://images.pexels.com/photos/7412072/pexels-photo-7412072.jpeg");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
 }

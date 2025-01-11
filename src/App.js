@@ -28,11 +28,13 @@ import ManageDelivery from "./Components/Admin/ManageDelivery";
 import ManagePayments from "./Components/Admin/ManagePayments";
 import ManageFeedback from "./Components/Admin/ManageFeedback";
 import ManageServices from "./Components/Admin/ManageServices";
+import PrivateRoute from "./PrivateRoute";
+import Unauthorized from "./Components/Unauthorized";
 
 function App() {
   return (
     <>
-      <Navbar/>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Main />}></Route>
         <Route path="/about" element={<About />}></Route>
@@ -42,15 +44,26 @@ function App() {
         <Route path="/products" element={<Products />}></Route>
         <Route path="/products/:productId" element={<RTR />}></Route>
         <Route path={`/creels`} element={<Creels />}></Route>
-        <Route path="/profile" element={<User />}/>
-        <Route path="/placeorder" element={<PlaceOrder />}/>
-        <Route path="/orders" element={<Orders />}/>
-        <Route path="/forgot-password" element={<ForgotPassword />}/>
-        <Route path="/reset-password" element={<ResetPassword />}/>
+        <Route path="/profile" element={<User />} />
+        <Route path="/placeorder" element={<PlaceOrder />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/unauthorized" element={<Unauthorized />} />
 
         {/* Admin Dashboard */}
         {/* Admin Routes */}
-        <Route path="/admin" element={<Admin />}>
+        <Route
+          path="/admin"
+          element={
+            <PrivateRoute
+              allowedRoles={["Owner"]}
+            >
+              {" "}
+              <Admin />
+            </PrivateRoute>
+          }
+        >
           <Route path="users" element={<ManageUsers />} />
           <Route path="categories" element={<ManageCategories />} />
           <Route path="products" element={<ManageProducts />} />
@@ -61,7 +74,7 @@ function App() {
           <Route path="services" element={<ManageServices />} />
         </Route>
 
-        <Route path="*" element={<NotFound />}/>
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </>

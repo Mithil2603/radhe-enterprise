@@ -23,6 +23,11 @@ export default function Login() {
       .then((res) => {
         if (res.data.status === "Success") {
           const { user_type } = res.data;
+
+          // Save the role in local storage
+          localStorage.setItem("role", user_type);
+          localStorage.setItem("token", res.data.token);
+          
           if (user_type === "Owner") {
             setSuccessMessage(
               "Login Successful! Redirecting to Admin Dashboard..."
