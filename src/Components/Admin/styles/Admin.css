@@ -27,6 +27,108 @@
     z-index: 0;
 }
 
+.welcome {
+    font-size: larger;
+}
+
+.shiny-box {
+    position: relative;
+    display: inline-block;
+    padding: 20px;
+    background-color: #fff;
+    /* Box background color */
+    border-radius: 10px;
+    z-index: 1;
+    overflow: hidden;
+    /* To ensure the shine effect stays within the box */
+}
+
+.shiny-box::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg,
+            rgba(255, 0, 0, 0.4),
+            rgba(255, 255, 0, 0.4),
+            rgba(0, 255, 0, 0.4),
+            rgba(0, 255, 255, 0.4),
+            rgba(0, 0, 255, 0.4),
+            rgba(255, 0, 255, 0.4),
+            rgba(255, 0, 0, 0.4));
+    background-size: 300%;
+    z-index: -1;
+    animation: shine 3s linear infinite;
+}
+
+@keyframes shine {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.shiny-border-box {
+    position: relative;
+    display: inline-block;
+    padding: 20px;
+    background-color: #fff;
+    /* Box background color */
+    border-radius: 10px;
+    z-index: 1;
+    overflow: hidden;
+    /* To ensure the shine effect stays within the box */
+}
+
+.shiny-border-box::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    /* Adjust based on border width */
+    left: -2px;
+    /* Adjust based on border width */
+    right: -2px;
+    /* Adjust based on border width */
+    bottom: -2px;
+    /* Adjust based on border width */
+    background: linear-gradient(45deg,
+            rgba(255, 0, 0, 0.4),
+            rgba(255, 255, 0, 0.4),
+            rgba(0, 255, 0, 0.4),
+            rgba(0, 255, 255, 0.4),
+            rgba(0, 0, 255, 0.289),
+            rgba(255, 0, 255, 0.123),
+            rgba(255, 0, 0, 0.4));
+    background-size: 300%;
+    z-index: -1;
+    animation: shine 3s both infinite;
+    border-radius: 10px;
+    /* Match the border radius of the box */
+    border: 4px solid transparent;
+    /* Adjust based on desired border width */
+    pointer-events: none;
+    /* Ensure the border doesn't interfere with content */
+}
+
+/* @keyframes shine {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+} */
+
 .custom-bg-admin {
     /* background-image: url("https://images.pexels.com/photos/355872/pexels-photo-355872.jpeg"); */
     background-image: url("https://images.pexels.com/photos/7412072/pexels-photo-7412072.jpeg");
