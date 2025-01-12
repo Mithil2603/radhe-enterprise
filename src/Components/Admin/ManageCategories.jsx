@@ -109,7 +109,7 @@ const ManageCategories = () => {
 
   return (
     <div className="container-fluid pt-5 pb-5">
-      <h1 className="text-center pb-4">Manage Categories</h1>
+      <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center">Manage Categories</h1>
       <div className="container pb-4">
         <input
           type="text"
@@ -173,16 +173,16 @@ const ManageCategories = () => {
         <p>Loading categories...</p>
       ) : (
         <div className="container-fluid user-table w-100">
-          <table className="table table-bordered table-hover">
+          <table className="table table-bordered table-hover table-striped rounded overflow-hidden">
             <thead className="bg-dark text-white">
               <tr>
-                <th>Id</th>
-                <th>Category Name</th>
-                <th>Description</th>
-                <th>Images</th>
-                <th>Created At</th>
-                <th>Updated At</th>
-                <th>Actions</th>
+                <th className="bg-dark text-white">Id</th>
+                <th className="bg-dark text-white">Category Name</th>
+                <th className="bg-dark text-white">Description</th>
+                <th className="bg-dark text-white">Images</th>
+                <th className="bg-dark text-white">Created At</th>
+                <th className="bg-dark text-white">Updated At</th>
+                <th className="bg-dark text-white">Actions</th>
               </tr>
             </thead>
             <tbody>
