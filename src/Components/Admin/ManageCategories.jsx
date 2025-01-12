@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
 
 const ManageCategories = () => {
   const [categories, setCategories] = useState([]);
@@ -207,8 +208,8 @@ const ManageCategories = () => {
                           ))
                         : "No images"}
                     </td>
-                    <td>{category.created_at}</td>
-                    <td>{category.update_at}</td>
+                    <td>{format(new Date(category.created_at), "dd/MM/yyyy HH:mm:ss")}</td>
+                    <td>{format(new Date(category.update_at), "dd/MM/yyyy HH:mm:ss")}</td>
                     <td>
                       <button
                         className="btn btn-warning btn-sm me-2"
