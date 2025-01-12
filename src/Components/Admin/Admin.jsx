@@ -105,17 +105,17 @@ export default function Admin() {
                 <li className="nav-item w-100">
                   <Link
                     className="nav-link custom-color border-bottom"
-                    to="/admin/delivery"
+                    to="/admin/payments"
                   >
-                    Manage Delivery
+                    Manage Payments
                   </Link>
                 </li>
                 <li className="nav-item w-100">
                   <Link
                     className="nav-link custom-color border-bottom"
-                    to="/admin/payments"
+                    to="/admin/delivery"
                   >
-                    Manage Payments
+                    Manage Delivery
                   </Link>
                 </li>
                 <li className="nav-item w-100">
