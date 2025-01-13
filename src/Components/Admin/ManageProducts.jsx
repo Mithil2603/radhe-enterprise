@@ -7,8 +7,8 @@ const ManageProducts = () => {
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [productName, setProductName] = useState("");
-  const [productDescription, setProductDescription] = useState("");
-  const [productImg, setProductImg] = useState([]); // Initialize as an array
+  const [productDescription, setProductDescription] = useState([""]);
+  const [productImg, setProductImg] = useState([""]);
   const [categoryId, setCategoryId] = useState("");
   const [editingProduct, setEditingProduct] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -65,13 +65,14 @@ const ManageProducts = () => {
   const handleEditProduct = (product) => {
     setEditingProduct(product);
     setProductName(product.product_name);
-    setProductDescription(product.product_description);
-    setProductImg(product.product_img || []); // Ensure it's an array
+    setProductDescription(product.product_description || []);
+    setProductImg(product.product_img || []);
     setCategoryId(product.category_id);
   };
 
   const handleUpdateProduct = async () => {
     if (!editingProduct) return;
+
     try {
       await axios.put(
         `http://localhost:8080/products/${editingProduct.product_id}`,
@@ -102,6 +103,20 @@ const ManageProducts = () => {
     }
   };
 
+  const handleAddDescriptionField = () => {
+    setProductDescription([...productDescription, ""]);
+  };
+
+  const handleRemoveDescriptionField = (index) => {
+    setProductDescription(productDescription.filter((_, i) => i !== index));
+  };
+
+  const handleDescriptionChange = (index, value) => {
+    const updatedDescriptions = [...productDescription];
+    updatedDescriptions[index] = value;
+    setProductDescription(updatedDescriptions);
+  };
+
   const handleAddImageField = () => {
     setProductImg([...productImg, ""]);
   };
@@ -119,14 +134,16 @@ const ManageProducts = () => {
   const resetForm = () => {
     setEditingProduct(null);
     setProductName("");
-    setProductDescription("");
+    setProductDescription([]);
     setProductImg([]);
     setCategoryId("");
   };
 
   return (
     <div className="container-fluid pt-5 pb-5">
-      <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center">Manage Products</h1>
+      <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center">
+        Manage Products
+      </h1>
       <div className="container pb-4">
         <input
           type="text"
@@ -135,12 +152,30 @@ const ManageProducts = () => {
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
         />
-        <textarea
-          className="form-control my-2"
-          placeholder="Enter product description"
-          value={productDescription}
-          onChange={(e) => setProductDescription(e.target.value)}
-        />
+        <h5 className="pt-3">Product Description</h5>
+        {productDescription.map((desc, index) => (
+          <div key={index} className="d-flex align-items-center mb-2">
+            <input
+              type="text"
+              className="form-control me-2"
+              placeholder="Enter description point"
+              value={desc}
+              onChange={(e) => handleDescriptionChange(index, e.target.value)}
+            />
+            <button
+              className="btn btn-danger"
+              onClick={() => handleRemoveDescriptionField(index)}
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+        <button
+          className="btn btn-primary mt-3 mx-2"
+          onClick={handleAddDescriptionField}
+        >
+          Add Description Point
+        </button>
         <select
           className="form-control my-2"
           value={categoryId}
@@ -205,14 +240,14 @@ const ManageProducts = () => {
           <table className="table table-bordered table-hover table-striped rounded overflow-hidden">
             <thead className="bg-dark text-white">
               <tr>
-                <th className="bg-dark text-white">Id</th>
-                <th className="bg-dark text-white">Category</th>
-                <th className="bg-dark text-white">Product Name</th>
-                <th className="bg-dark text-white">Description</th>
-                <th className="bg-dark text-white">Images</th>
-                <th className="bg-dark text-white">Created At</th>
-                <th className="bg-dark text-white">Updated At</th>
-                <th className="bg-dark text-white">Actions</th>
+                <th>Id</th>
+                <th>Category</th>
+                <th>Product Name</th>
+                <th>Description</th>
+                <th>Images</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -222,7 +257,18 @@ const ManageProducts = () => {
                     <td>{product.product_id}</td>
                     <td>{product.category_id}</td>
                     <td>{product.product_name}</td>
-                    <td>{product.product_description}</td>
+                    <td>
+                      {product.product_description &&
+                      product.product_description.length > 0 ? (
+                        <ul>
+                          {product.product_description.map((desc, i) => (
+                            <li key={i}>{desc}</li>
+                          ))}
+                        </ul>
+                      ) : (
+                        "No description"
+                      )}
+                    </td>
                     <td>
                       {product.product_img
                         ? product.product_img.map((img, i) => (
@@ -239,8 +285,18 @@ const ManageProducts = () => {
                           ))
                         : "No images"}
                     </td>
-                    <td>{format(new Date(product.created_at), "dd/MM/yyyy HH:mm:ss")}</td>
-                    <td>{format(new Date(product.update_at), "dd/MM/yyyy HH:mm:ss")}</td>
+                    <td>
+                      {format(
+                        new Date(product.created_at),
+                        "dd/MM/yyyy HH:mm:ss"
+                      )}
+                    </td>
+                    <td>
+                      {format(
+                        new Date(product.update_at),
+                        "dd/MM/yyyy HH:mm:ss"
+                      )}
+                    </td>
                     <td>
                       <button
                         className="btn btn-warning btn-sm me-2"
@@ -250,9 +306,7 @@ const ManageProducts = () => {
                       </button>
                       <button
                         className="btn btn-danger btn-sm"
-                        onClick={() =>
-                          handleDeleteProduct(product.product_id)
-                        }
+                        onClick={() => handleDeleteProduct(product.product_id)}
                       >
                         Delete
                       </button>
@@ -261,7 +315,7 @@ const ManageProducts = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="9" className="text-center">
+                  <td colSpan="8" className="text-center">
                     No products found.
                   </td>
                 </tr>
