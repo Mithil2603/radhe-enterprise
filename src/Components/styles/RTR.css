@@ -24,3 +24,11 @@
     max-height: 100vh;
     object-fit: contain;
 }
+
+.custom-width {
+    max-height: 20%;
+}
+
+.child {
+    z-index: -1;
+}

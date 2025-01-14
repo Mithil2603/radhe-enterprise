@@ -63,3 +63,7 @@
 .nav-link:active {
     color: white;
 }
+
+.z-index-full {
+    z-index: 100;
+}

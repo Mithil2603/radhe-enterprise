@@ -29,7 +29,7 @@ export default function Navbar() {
   }, [navigate]);
   return (
     <>
-      <nav className="navbar navbar-expand-lg text-light position-sticky top-0 custom-bg z-5">
+      <nav className="navbar navbar-expand-lg text-light position-sticky top-0 custom-bg z-index-full">
         <div className="container d-flex justify-content-between align-items-center">
           {/* Logo */}
           <Link className="navbar-brand custom-font-family" to="/">

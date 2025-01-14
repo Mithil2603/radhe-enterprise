@@ -5,20 +5,33 @@ import { Link, useParams } from "react-router-dom";
 export default function RTR() {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const [feedbacks, setFeedbacks] = useState([]);
+  const [newFeedback, setNewFeedback] = useState({
+    comment: "",
+    rating: "",
+  });
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchProductDetails = async () => {
       try {
-        const response = await fetch(
+        const productResponse = await fetch(
           `http://localhost:8080/products/${productId}`
         );
-        if (!response.ok) {
-          throw new Error(`HTTP Error: ${response.status}`);
+        const feedbackResponse = await fetch(
+          `http://localhost:8080/products/${productId}/feedback`
+        );
+
+        if (!productResponse.ok || !feedbackResponse.ok) {
+          throw new Error("Failed to fetch product or feedback data.");
         }
-        const data = await response.json();
-        setProduct(data);
+
+        const productData = await productResponse.json();
+        const feedbackData = await feedbackResponse.json();
+
+        setProduct(productData);
+        setFeedbacks(feedbackData);
       } catch (err) {
         setError(err.message);
       } finally {
@@ -28,6 +41,37 @@ export default function RTR() {
 
     fetchProductDetails();
   }, [productId]);
+
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await fetch(
+        `http://localhost:8080/products/${productId}/feedback`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(newFeedback),
+          credentials: "include", // Include cookies for authentication
+        }
+      );
+
+      if (response.status === 401) {
+        throw new Error("You are not authenticated");
+      }
+
+      if (!response.ok) {
+        throw new Error("Failed to submit feedback");
+      }
+
+      const feedback = await response.json();
+      setFeedbacks((prev) => [feedback, ...prev]);
+      setNewFeedback({ comment: "", rating: "" });
+    } catch (err) {
+      alert(err.message);
+    }
+  };
 
   if (loading) return <div>Loading...</div>;
   if (error) return <div>Error: {error}</div>;
@@ -133,7 +177,7 @@ export default function RTR() {
             </tr>
           </tbody>
         </table>
-        <div className="buttons d-flex justify-content-center align-items-center gap-4 px-5 mt-5">
+        <div className="buttons d-flex justify-content-center align-items-center gap-4 px-5 mt-5 w-100">
           <Link
             to="#"
             className="btn btn-light custom-btn w-50 d-flex justify-content-center align-items-center gap-2"
@@ -162,7 +206,7 @@ export default function RTR() {
             to="/placeorder"
             className="btn btn-light custom-btn w-50"
             state={{
-              product: {productId},
+              product: { productId },
               name: product.product_name,
             }}
           >
@@ -170,6 +214,89 @@ export default function RTR() {
           </Link>
         </div>
       </div>
+      {/* Display Feedback */}
+      <section className="child z-0">
+        <h1 className="text-center mt-5 mb-3">Feedbacks</h1>
+        {feedbacks.length === 0 ? (
+          <p>No feedback available yet.</p>
+        ) : (
+          <div className="container-fluid d-flex justify-content-center align-items-center gap-3 custom-width">
+            {feedbacks.map((f) => (
+              <div
+                key={f.feedback_id}
+                className="border border-dark px-3 py-3 rounded custom-bg custom-color"
+              >
+                <strong className="fw-bolder fs-5">{f.first_name}</strong>{" "}
+                <br /> <div className="text-white fs-4">{f.comment} </div>
+                {/* Render Stars for Rating */}
+                <div className="fs-5">
+                  {Array.from({ length: 5 }, (_, i) => (
+                    <span
+                      key={i}
+                      style={{
+                        color:
+                          i < parseInt(f.rating) ? "lightblue" : "lightgray",
+                      }}
+                      {...console.log(f.rating)}
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill={i < f.rating ? "#4084b4" : "black"}
+                        className="bi bi-star-fill custom-color m-1"
+                        viewBox="0 0 16 16"
+                      >
+                        <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
+                      </svg>
+                    </span>
+                  ))}
+                </div>
+                <small className="text-white">
+                  {new Date(f.created_at).toLocaleString()}
+                </small>
+              </div>
+            ))}
+          </div>
+        )}
+      </section>
+      {/* Feedback Section */}
+      <section>
+        <h1 className="text-center mt-5 mb-3">Submit Your Feedback</h1>
+        <div className="container w-100 text-center">
+          <form onSubmit={handleFeedbackSubmit} className=" w-100">
+            <select
+              required
+              className="w-50 text-center mt-3 mb-3 py-2 rounded"
+              value={newFeedback.rating}
+              onChange={(e) =>
+                setNewFeedback({ ...newFeedback, rating: e.target.value })
+              }
+            >
+              <option value="">Select Rating</option>
+              {[1, 2, 3, 4, 5].map((r) => (
+                <option key={r} value={r}>
+                  {r}
+                </option>
+              ))}
+            </select>{" "}
+            <br />
+            <textarea
+              required
+              className="rounded px-2 py-2 w-100 mobile"
+              placeholder="Write your feedback here..."
+              value={newFeedback.comment}
+              onChange={(e) =>
+                setNewFeedback({ ...newFeedback, comment: e.target.value })
+              }
+            />
+            <br />
+            <button type="submit" className="btn custom-btn w-50 mt-3">
+              Submit
+            </button>
+          </form>
+        </div>
+      </section>
     </div>
   );
 }
