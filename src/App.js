@@ -16,6 +16,7 @@ import PlaceOrder from "./Components/PlaceOrder";
 import Orders from "./Components/Orders";
 import ResetPassword from "./Components/ResetPassword";
 import ForgotPassword from "./Components/ForgotPassword";
+import Fabrication from "./Components/Fabrication";
 
 // Admin Dashboard
 import Admin from "./Components/Admin/Admin";
@@ -44,6 +45,7 @@ function App() {
         <Route path="/login" element={<Login />}></Route>
         <Route path="/products" element={<Products />}></Route>
         <Route path="/products/:productId" element={<RTR />}></Route>
+        <Route path="/fabrication" element={<Fabrication />}></Route>
         <Route path={`/creels`} element={<Creels />}></Route>
         <Route path="/profile" element={<User />} />
         <Route path="/placeorder" element={<PlaceOrder />} />

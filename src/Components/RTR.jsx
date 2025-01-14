@@ -220,7 +220,7 @@ export default function RTR() {
         {feedbacks.length === 0 ? (
           <p>No feedback available yet.</p>
         ) : (
-          <div className="container-fluid d-flex justify-content-center align-items-center gap-3 custom-width">
+          <div className="container-fluid d-flex justify-content-center align-items-center gap-3 custom-width flex-wrap">
             {feedbacks.map((f) => (
               <div
                 key={f.feedback_id}
