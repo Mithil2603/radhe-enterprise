@@ -291,7 +291,7 @@ export default function RTR() {
               }
             />
             <br />
-            <button type="submit" className="btn custom-btn w-50 mt-3">
+            <button type="submit" className="btn custom-btn mt-3">
               Submit
             </button>
           </form>

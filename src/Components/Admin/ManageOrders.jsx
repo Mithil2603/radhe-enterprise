@@ -2,10 +2,19 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { format } from "date-fns";
+import "./styles/Admin.css";
 
 const ManageOrders = () => {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [showPaymentModal, setShowPaymentModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [paymentDetails, setPaymentDetails] = useState({
+    payment_amount: "",
+    payment_method: "Online",
+    installment_number: "0",
+    payment_type: "Product",
+  });
 
   useEffect(() => {
     fetchOrders();
@@ -49,6 +58,44 @@ const ManageOrders = () => {
     }
   };
 
+  const handleCreatePayment = async () => {
+    try {
+      const totalAmount = parseFloat(paymentDetails.total_amount) || 0;
+      const paymentAmount = parseFloat(paymentDetails.payment_amount) || 0;
+
+      if (totalAmount <= 0) {
+        toast.error("Please specify a valid total amount.");
+        return;
+      }
+
+      if (paymentAmount <= 0 || paymentAmount > totalAmount) {
+        toast.error("Please specify a valid payment amount.");
+        return;
+      }
+
+      const payload = {
+        ...paymentDetails,
+        order_id: selectedOrder.order_id,
+        total_amount: totalAmount,
+        remaining_amount: totalAmount - paymentAmount,
+        installment_number: selectedOrder.installment_number
+          ? parseInt(selectedOrder.installment_number) + 1
+          : 1, // First installment
+      };
+
+      console.log("Payload being sent:", payload); // Debugging step
+
+      await axios.post("http://localhost:8080/admin/payments", payload);
+
+      toast.success("Payment created successfully.");
+      setShowPaymentModal(false);
+      fetchOrders();
+    } catch (error) {
+      console.error("Error creating payment:", error);
+      toast.error("Failed to create payment.");
+    }
+  };
+
   return (
     <div className="container-fluid pt-5 pb-5">
       <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center">
@@ -68,6 +115,7 @@ const ManageOrders = () => {
                 <th className="bg-dark text-white">Status</th>
                 <th className="bg-dark text-white">Details</th>
                 <th className="bg-dark text-white">Actions</th>
+                <th className="bg-dark text-white">Create</th>
               </tr>
             </thead>
             <tbody>
@@ -122,6 +170,17 @@ const ManageOrders = () => {
                         Delete
                       </button>
                     </td>
+                    <td>
+                      <button
+                        className="btn btn-primary btn-sm"
+                        onClick={() => {
+                          setSelectedOrder(order);
+                          setShowPaymentModal(true);
+                        }}
+                      >
+                        Create Payment
+                      </button>
+                    </td>
                   </tr>
                 ))
               ) : (
@@ -134,6 +193,109 @@ const ManageOrders = () => {
             </tbody>
           </table>
         </div>
+      )}
+      {showPaymentModal && selectedOrder && (
+        <>
+          <div
+            className="payment-modal-overlay"
+            onClick={() => setShowPaymentModal(false)}
+          ></div>
+          <div className="payment-modal">
+            <h1 className="text-center mb-3">
+              Create Payment for Order #{selectedOrder.order_id}
+            </h1>
+            <form>
+              <div className="form-group">
+                <label>Total Amount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={paymentDetails.total_amount}
+                  onChange={(e) =>
+                    setPaymentDetails({
+                      ...paymentDetails,
+                      total_amount: e.target.value,
+                    })
+                  }
+                  placeholder="Enter total amount"
+                />
+              </div>
+              <div className="form-group">
+                <label>Payment Amount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  value={paymentDetails.payment_amount}
+                  onChange={(e) =>
+                    setPaymentDetails({
+                      ...paymentDetails,
+                      payment_amount: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div className="form-group">
+                <label>Payment Method</label>
+                <select
+                  className="form-control"
+                  value={paymentDetails.payment_method}
+                  onChange={(e) =>
+                    setPaymentDetails({
+                      ...paymentDetails,
+                      payment_method: e.target.value,
+                    })
+                  }
+                >
+                  <option value="Online">Online</option>
+                  <option value="Cash">Cash</option>
+                </select>
+              </div>
+              <div className="form-group">
+                <label>Installment Number</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  value={
+                    selectedOrder.installment_number
+                      ? parseInt(selectedOrder.installment_number) + 1
+                      : 1
+                  }
+                  readOnly
+                />
+              </div>
+              <div className="form-group">
+                <label>Payment Type</label>
+                <select
+                  className="form-control"
+                  value={paymentDetails.payment_type}
+                  onChange={(e) =>
+                    setPaymentDetails({
+                      ...paymentDetails,
+                      payment_type: e.target.value,
+                    })
+                  }
+                >
+                  <option value="Product">Product</option>
+                  <option value="Service">Service</option>
+                </select>
+              </div>
+              <button
+                type="button"
+                className="btn btn-success"
+                onClick={handleCreatePayment}
+              >
+                Confirm Payment
+              </button>
+              <button
+                type="button"
+                className="btn btn-secondary"
+                onClick={() => setShowPaymentModal(false)}
+              >
+                Cancel
+              </button>
+            </form>
+          </div>
+        </>
       )}
     </div>
   );

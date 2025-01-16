@@ -172,3 +172,39 @@
     border: 2px solid #f1f1f1;
     /* Optional: adds space around thumb */
 }
+
+.payment-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    width: 400px;
+    max-width: 90%;
+}
+
+.payment-modal h2 {
+    margin-bottom: 20px;
+}
+
+.payment-modal .form-group {
+    margin-bottom: 15px;
+}
+
+.payment-modal .btn {
+    margin-right: 10px;
+}
+
+.payment-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+}

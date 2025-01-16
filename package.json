@@ -9,6 +9,7 @@
     "date-fns": "^4.1.0",
     "gsap": "^3.12.5",
     "jwt-decode": "^4.0.0",
+    "razorpay": "^2.9.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.1",
