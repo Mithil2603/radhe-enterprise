@@ -170,7 +170,7 @@
 
 .move {
     scrollbar-width: thin;
-    scrollbar-color: #ccc transparent;
+    scrollbar-color: #171d24 transparent;
 }
 
 .move::-webkit-scrollbar {
@@ -184,9 +184,9 @@
 .move::-webkit-scrollbar-thumb {
     background-color: #ccc;
     /* Color of the scrollbar thumb */
-    border-radius: 10px;
+    border-radius: 1rem;
     /* Rounded corners for the scrollbar thumb */
-    border: 2px solid #f1f1f1;
+    border: 1px solid #f1f1f1;
     /* Optional: adds space around thumb */
 }
 

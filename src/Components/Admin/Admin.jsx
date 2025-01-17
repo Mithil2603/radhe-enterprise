@@ -120,14 +120,6 @@ export default function Admin() {
                 </li>
                 <li className="nav-item w-100">
                   <Link
-                    className="nav-link custom-color border-bottom"
-                    to="/admin/feedback"
-                  >
-                    Manage Feedback
-                  </Link>
-                </li>
-                <li className="nav-item w-100">
-                  <Link
                     className="nav-link custom-color pb-5"
                     to="/admin/services"
                   >

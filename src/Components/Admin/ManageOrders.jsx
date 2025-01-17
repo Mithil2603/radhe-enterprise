@@ -46,17 +46,17 @@ const ManageOrders = () => {
     }
   };
 
-  const handleDeleteOrder = async (orderId) => {
-    if (window.confirm("Are you sure you want to delete this order?")) {
-      try {
-        await axios.delete(`http://localhost:8080/orders/${orderId}`);
-        toast.success("Order deleted successfully.");
-        fetchOrders();
-      } catch (error) {
-        toast.error("Failed to delete order.");
-      }
-    }
-  };
+  // const handleDeleteOrder = async (orderId) => {
+  //   if (window.confirm("Are you sure you want to delete this order?")) {
+  //     try {
+  //       await axios.delete(`http://localhost:8080/orders/${orderId}`);
+  //       toast.success("Order deleted successfully.");
+  //       fetchOrders();
+  //     } catch (error) {
+  //       toast.error("Failed to delete order.");
+  //     }
+  //   }
+  // };
 
   const handleCreatePayment = async () => {
     try {
@@ -163,12 +163,12 @@ const ManageOrders = () => {
                         <option value="Cancelled">Cancelled</option>
                         <option value="Delivered">Delivered</option>
                       </select>
-                      <button
+                      {/* <button
                         className="btn btn-danger btn-sm mt-2"
                         onClick={() => handleDeleteOrder(order.order_id)}
                       >
                         Delete
-                      </button>
+                      </button> */}
                     </td>
                     <td>
                       <button
