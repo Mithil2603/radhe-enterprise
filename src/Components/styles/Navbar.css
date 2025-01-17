@@ -18,6 +18,10 @@
     width: 12rem;
 }
 
+.flex-wrap-none {
+    flex-wrap: nowrap !important;
+}
+
 .nav-link {
     font-family: "Roboto Slab";
     /* font-family: "Lora"; */

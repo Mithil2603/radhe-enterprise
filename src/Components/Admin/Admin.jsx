@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Outlet, Link } from "react-router-dom";
+import { Outlet, Link, useNavigate } from "react-router-dom";
 import "./styles/Admin.css";
 import axios from "axios";
 
@@ -20,21 +20,33 @@ export default function Admin() {
         console.error(err);
       });
   }, []);
+
+  const [auth, setAuth] = useState(false);
+  const navigate = useNavigate();
+
+  axios.defaults.withCredentials = true;
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/")
+      .then((res) => {
+        if (res.data.status === "Success") {
+          setAuth(true);
+          setName(res.data.name);
+        } else {
+          setAuth(false);
+        }
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }, [navigate]);
   return (
     <>
       <div className="container-fluid pt-5 custom-bg-admin">
         <div className="container w-100">
-          <div className="d-flex justify-content-between align-items-center fw-bolder gap-3 shiny-box flex-wrap">
+          <div className="d-flex justify-content-center align-items-center fw-bolder gap-3 shiny-box flex-wrap">
             <div className="welcome text-dark">Welcome {name}!</div>
-            <button
-              className="btn custom-btn"
-              type="button"
-              data-bs-toggle="offcanvas"
-              data-bs-target="#offcanvasScrolling"
-              aria-controls="offcanvasScrolling"
-            >
-              Open Panel
-            </button>
           </div>
 
           <div
@@ -120,11 +132,49 @@ export default function Admin() {
                 </li>
                 <li className="nav-item w-100">
                   <Link
-                    className="nav-link custom-color pb-5"
+                    className="nav-link custom-color border-bottom"
                     to="/admin/services"
                   >
                     Manage Services
                   </Link>
+                </li>
+                <li className="nav-item w-100">
+                  <Link
+                    className="nav-link custom-color mb-2"
+                    aria-current="page"
+                    to="/"
+                  >
+                    Main Home
+                  </Link>
+                </li>
+                <li className="nav-item w-100">
+                  {auth ? (
+                    <div className="profile-icon">
+                      <Link className="nav-link w-full d-flex justify-content-center" to="/profile">
+                        <button className="btn custom-btn nav-btn d-flex align-items-center justify-content-center gap-2">
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="16"
+                            height="16"
+                            fill="white"
+                            className="bi bi-person-fill"
+                            viewBox="0 0 16 16"
+                          >
+                            <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                          </svg>
+                          <span className="text-white">{name}</span>
+                        </button>
+                      </Link>
+                    </div>
+                  ) : (
+                    <>
+                      <Link className="nav-link" to="/login">
+                        <button className="btn custom-btn nav-btn">
+                          Login
+                        </button>
+                      </Link>
+                    </>
+                  )}
                 </li>
               </ul>
             </div>

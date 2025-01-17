@@ -20,6 +20,7 @@ import Fabrication from "./Components/Fabrication";
 
 // Admin Dashboard
 import Admin from "./Components/Admin/Admin";
+import AdminNav from "./Components/Admin/AdminNav";
 
 import ManageUsers from "./Components/Admin/ManageUsers";
 import ManageCategories from "./Components/Admin/ManageCategories";
@@ -32,11 +33,14 @@ import ManageServices from "./Components/Admin/ManageServices";
 import PrivateRoute from "./PrivateRoute";
 import Unauthorized from "./Components/Unauthorized";
 import AdminHome from "./Components/Admin/AdminHome";
+import { useState } from "react";
 
 function App() {
+  const [role, setRole] = useState(localStorage.getItem("role") || "User");
   return (
     <>
-      <Navbar />
+      {/* Conditional Navbar */}
+      {role === "Owner" ? <AdminNav /> : <Navbar />}
       <Routes>
         <Route path="/" element={<Main />}></Route>
         <Route path="/about" element={<About />}></Route>
