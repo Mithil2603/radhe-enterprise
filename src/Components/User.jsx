@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "./styles/User.css";
 
-export default function User() {
+export default function User({ onLogout }) {
   const [profileData, setProfileData] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [message, setMessage] = useState("");
@@ -36,6 +36,7 @@ export default function User() {
     axios
       .get("http://localhost:8080/logout", { withCredentials: true })
       .then((res) => {
+        onLogout();
         navigate("/");
         window.location.reload(); // Refreshes the page
       })

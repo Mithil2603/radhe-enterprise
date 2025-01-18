@@ -36,22 +36,31 @@ import AdminHome from "./Components/Admin/AdminHome";
 import { useState } from "react";
 
 function App() {
-  const [role, setRole] = useState(localStorage.getItem("role") || "User");
+  const [role, setRole] = useState(localStorage.getItem("role") || "Customer");
+
+  const logout = () => {
+    localStorage.removeItem("role"); // Clear the role from localStorage
+    setRole("Customer"); // Set the role to Customer or whatever default you want
+  };
   return (
     <>
       {/* Conditional Navbar */}
-      {role === "Owner" ? <AdminNav /> : <Navbar />}
+      {role === "Owner" ? (
+        <AdminNav onLogout={logout} />
+      ) : (
+        <Navbar onLogout={logout} />
+      )}
       <Routes>
         <Route path="/" element={<Main />}></Route>
         <Route path="/about" element={<About />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/register" element={<Register />}></Route>
-        <Route path="/login" element={<Login />}></Route>
+        <Route path="/login" element={<Login setRole={setRole} />} />
         <Route path="/products" element={<Products />}></Route>
         <Route path="/products/:productId" element={<RTR />}></Route>
         <Route path="/fabrication" element={<Fabrication />}></Route>
         <Route path={`/creels`} element={<Creels />}></Route>
-        <Route path="/profile" element={<User />} />
+        <Route path="/profile" element={<User onLogout={logout} />} />
         <Route path="/placeorder" element={<PlaceOrder />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />

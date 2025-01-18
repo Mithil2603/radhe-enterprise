@@ -136,11 +136,11 @@ const Orders = () => {
     <div className="container-fluid custom-bg-orders min-vh-100">
       <div className="container pt-5 pb-5">
         <h1 className="mb-4 text-light text-center">Your Orders</h1>
-        <div className="d-flex justify-content-center align-items-center gap-4">
+        <div className="d-flex justify-content-center align-items-center gap-4 flex-wrap">
           {orders.length > 0 ? (
             orders.map((order) => (
               <div
-                className="card text-center bg-tertiary"
+                className="card text-center"
                 key={order.order_id}
               >
                 <div className="card-header custom-bg text-info">
@@ -153,7 +153,7 @@ const Orders = () => {
                   <p className="card-subtitle pt-2 mb-2 d-none text-muted">
                     Product ID: {order.product_id}
                   </p>
-                  <table className="table table-bordered table-striped table-hover text-start">
+                  <table className="table table-bordered table-striped table-hover text-start overflowx-scroll">
                     <tbody>
                       <tr>
                         <td>

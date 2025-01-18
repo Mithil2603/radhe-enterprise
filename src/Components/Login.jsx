@@ -3,7 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "./styles/Register.css";
 import axios from "axios";
 
-export default function Login() {
+export default function Login({ setRole }) {
   const [values, setValues] = useState({
     email: "",
     user_password: "",
@@ -27,6 +27,8 @@ export default function Login() {
           // Save the role in local storage
           localStorage.setItem("role", user_type);
           localStorage.setItem("token", res.data.token);
+
+          setRole(user_type);
           
           if (user_type === "Owner") {
             setSuccessMessage(
