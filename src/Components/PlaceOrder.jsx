@@ -50,6 +50,18 @@ const PlaceOrder = () => {
       alert("Product ID is missing.");
       return;
     }
+
+    // Client-side validation
+    if (
+      formData.quantity <= 0 ||
+      formData.no_of_ends <= 0 ||
+      formData.creel_pitch <= 0 ||
+      formData.bobin_length <= 0
+    ) {
+      alert("Only positive values are allowed for numeric fields.");
+      return;
+    }
+
     try {
       const orderResponse = await fetch("http://localhost:8080/place-order", {
         method: "POST",
@@ -61,7 +73,8 @@ const PlaceOrder = () => {
       });
 
       if (!orderResponse.ok) {
-        throw new Error("Failed to place the order");
+        const errorData = await orderResponse.json();
+        throw new Error(errorData.error || "Failed to place the order.");
       }
 
       const { orderId, whatsappURL } = await orderResponse.json();
@@ -75,8 +88,8 @@ const PlaceOrder = () => {
 
       navigate("/orders");
     } catch (error) {
-      console.error("Error placing order:", error);
-      alert("Error placing order. Please try again.");
+      console.error("Error placing order:", error.message);
+      alert(error.message);
     }
   };
 
@@ -120,15 +133,20 @@ const PlaceOrder = () => {
             <label htmlFor="creel_type" className="form-label">
               Creel Type
             </label>
-            <input
-              type="text"
-              className="form-control"
+            <select
+              className="form-select"
               id="creel_type"
               name="creel_type"
               value={formData.creel_type}
               onChange={handleInputChange}
               required
-            />
+            >
+              <option value="" disabled>
+                Select Creel Type
+              </option>
+              <option value="O">O</option>
+              <option value="U">U</option>
+            </select>
           </div>
           <div className="mb-3">
             <label htmlFor="creel_pitch" className="form-label">

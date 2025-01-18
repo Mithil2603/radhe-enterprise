@@ -111,7 +111,7 @@ export default function Navbar() {
                         xmlns="http://www.w3.org/2000/svg"
                         width="16"
                         height="16"
-                        fill="currentColor"
+                        fill="white"
                         className="bi bi-person-fill"
                         viewBox="0 0 16 16"
                       >

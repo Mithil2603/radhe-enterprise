@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { format } from "date-fns";
 import "./styles/Admin.css";
 
@@ -18,9 +17,24 @@ const ManagePayments = () => {
       const response = await axios.get("http://localhost:8080/admin/payments");
       setPayments(response.data);
     } catch (error) {
-      toast.error("Failed to fetch payments.");
+      alert("Failed to fetch payments.");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const createDelivery = async (paymentId) => {
+    try {
+      await axios.post(
+        "http://localhost:8080/admin/delivery",
+        {
+          paymentId,
+        }
+      );
+      alert("Delivery created successfully!");
+      // Optionally, refresh the payments list or navigate to another page
+    } catch (error) {
+      alert("Failed to create delivery.");
     }
   };
 
@@ -40,11 +54,13 @@ const ManagePayments = () => {
                 <th className="bg-dark text-white">Payment ID</th>
                 <th className="bg-dark text-white">Order ID</th>
                 <th className="bg-dark text-white">Payment Created Date</th>
-                <th className="bg-dark text-white">Amount</th>
+                <th className="bg-dark text-white">Total Amount</th>
+                <th className="bg-dark text-white">Paid Amount</th>
                 <th className="bg-dark text-white">Installment No</th>
                 <th className="bg-dark text-white">Payment Method</th>
                 <th className="bg-dark text-white">Payment Status</th>
                 <th className="bg-dark text-white">Payment Type</th>
+                <th className="bg-dark text-white">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -62,16 +78,25 @@ const ManagePayments = () => {
                           )
                         : "N/A"}
                     </td>
+                    <td>₹{payment.total_amount}</td>
                     <td>₹{payment.payment_amount}</td>
                     <td>{payment.installment_number}</td>
                     <td>{payment.payment_method}</td>
                     <td>{payment.payment_status}</td>
                     <td>{payment.payment_type}</td>
+                    <td>
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => createDelivery(payment.payment_id)}
+                      >
+                        Create Delivery
+                      </button>
+                    </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="7" className="text-center">
+                  <td colSpan="10" className="text-center">
                     No payments found.
                   </td>
                 </tr>

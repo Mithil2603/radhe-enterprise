@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { format } from "date-fns";
 import "./styles/Admin.css";
 
-const ManageOrders = () => {
+export default function ManageOrders() {
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
@@ -12,8 +11,8 @@ const ManageOrders = () => {
   const [paymentDetails, setPaymentDetails] = useState({
     payment_amount: "",
     payment_method: "Online",
-    installment_number: "0",
     payment_type: "Product",
+    total_amount: "", // Only for the first installment
   });
 
   useEffect(() => {
@@ -23,10 +22,10 @@ const ManageOrders = () => {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8080/admin/orders");
-      setOrders(response.data);
+      const { data } = await axios.get("http://localhost:8080/admin/orders");
+      setOrders(data);
     } catch (error) {
-      toast.error("Failed to fetch orders.");
+      alert("Failed to fetch orders.");
     } finally {
       setLoading(false);
     }
@@ -39,60 +38,42 @@ const ManageOrders = () => {
       await axios.put(`http://localhost:8080/orders/${orderId}`, {
         order_status: newStatus,
       });
-      toast.success("Order status updated successfully.");
+      alert("Order status updated successfully.");
       fetchOrders();
     } catch (error) {
-      toast.error("Failed to update order status.");
+      alert("Failed to update order status.");
     }
   };
-
-  // const handleDeleteOrder = async (orderId) => {
-  //   if (window.confirm("Are you sure you want to delete this order?")) {
-  //     try {
-  //       await axios.delete(`http://localhost:8080/orders/${orderId}`);
-  //       toast.success("Order deleted successfully.");
-  //       fetchOrders();
-  //     } catch (error) {
-  //       toast.error("Failed to delete order.");
-  //     }
-  //   }
-  // };
 
   const handleCreatePayment = async () => {
     try {
       const totalAmount = parseFloat(paymentDetails.total_amount) || 0;
       const paymentAmount = parseFloat(paymentDetails.payment_amount) || 0;
 
-      if (totalAmount <= 0) {
-        toast.error("Please specify a valid total amount.");
+      // Validation
+      if (selectedOrder.installment_number === 0 && totalAmount <= 0) {
+        alert("Total amount is required for the first installment.");
         return;
       }
 
       if (paymentAmount <= 0 || paymentAmount > totalAmount) {
-        toast.error("Please specify a valid payment amount.");
+        alert("Please specify a valid payment amount.");
         return;
       }
 
       const payload = {
         ...paymentDetails,
         order_id: selectedOrder.order_id,
-        total_amount: totalAmount,
-        remaining_amount: totalAmount - paymentAmount,
-        installment_number: selectedOrder.installment_number
-          ? parseInt(selectedOrder.installment_number) + 1
-          : 1, // First installment
       };
-
-      console.log("Payload being sent:", payload); // Debugging step
 
       await axios.post("http://localhost:8080/admin/payments", payload);
 
-      toast.success("Payment created successfully.");
+      alert("Payment created successfully.");
       setShowPaymentModal(false);
       fetchOrders();
     } catch (error) {
       console.error("Error creating payment:", error);
-      toast.error("Failed to create payment.");
+      alert("Failed to create payment.");
     }
   };
 
@@ -108,14 +89,14 @@ const ManageOrders = () => {
           <table className="table table-bordered table-hover table-striped rounded overflow-hidden">
             <thead className="bg-dark text-white">
               <tr>
-                <th className="bg-dark text-white">Order ID</th>
-                <th className="bg-dark text-white">Customer Name</th>
-                <th className="bg-dark text-white">Customer Email</th>
-                <th className="bg-dark text-white">Order Date</th>
-                <th className="bg-dark text-white">Status</th>
-                <th className="bg-dark text-white">Details</th>
-                <th className="bg-dark text-white">Actions</th>
-                <th className="bg-dark text-white">Create</th>
+                <th>Order ID</th>
+                <th>Customer Name</th>
+                <th>Customer Email</th>
+                <th>Order Date</th>
+                <th>Status</th>
+                <th>Details</th>
+                <th>Actions</th>
+                <th>Create</th>
               </tr>
             </thead>
             <tbody>
@@ -163,12 +144,6 @@ const ManageOrders = () => {
                         <option value="Cancelled">Cancelled</option>
                         <option value="Delivered">Delivered</option>
                       </select>
-                      {/* <button
-                        className="btn btn-danger btn-sm mt-2"
-                        onClick={() => handleDeleteOrder(order.order_id)}
-                      >
-                        Delete
-                      </button> */}
                     </td>
                     <td>
                       <button
@@ -185,7 +160,7 @@ const ManageOrders = () => {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="6" className="text-center">
+                  <td colSpan="8" className="text-center">
                     No orders found.
                   </td>
                 </tr>
@@ -217,7 +192,7 @@ const ManageOrders = () => {
                       total_amount: e.target.value,
                     })
                   }
-                  placeholder="Enter total amount"
+                  placeholder="Enter total amount (only for first installment)"
                 />
               </div>
               <div className="form-group">
@@ -232,6 +207,7 @@ const ManageOrders = () => {
                       payment_amount: e.target.value,
                     })
                   }
+                  placeholder="Enter payment amount"
                 />
               </div>
               <div className="form-group">
@@ -253,14 +229,16 @@ const ManageOrders = () => {
               <div className="form-group">
                 <label>Installment Number</label>
                 <input
-                  type="text"
+                  type="number"
                   className="form-control"
-                  value={
-                    selectedOrder.installment_number
-                      ? parseInt(selectedOrder.installment_number) + 1
-                      : 1
+                  value={paymentDetails.installment_number || ""}
+                  onChange={(e) =>
+                    setPaymentDetails({
+                      ...paymentDetails,
+                      installment_number: e.target.value,
+                    })
                   }
-                  readOnly
+                  placeholder="Enter installment number"
                 />
               </div>
               <div className="form-group">
@@ -299,6 +277,4 @@ const ManageOrders = () => {
       )}
     </div>
   );
-};
-
-export default ManageOrders;
+}

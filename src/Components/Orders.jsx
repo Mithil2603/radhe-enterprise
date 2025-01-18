@@ -39,8 +39,9 @@ const Orders = () => {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          amount: Math.round(order.remaining_amount * 100), // Convert to paise
+          amount: Math.round(order.payment_amount * 100), // Convert to paise
           order_id: order.order_id,
+          installment_number: order.installment_number, // Pass the installment number
         }),
       });
 
@@ -50,7 +51,7 @@ const Orders = () => {
 
       // Step 2: Get Razorpay order response
       const { key, order: razorpayOrder } = await response.json();
-      console.log("Razorpay order response:", razorpayOrder); // Log the Razorpay order response
+      console.log("Razorpay order response:", razorpayOrder);
 
       // Step 3: Prepare payment options
       const options = {
@@ -59,9 +60,9 @@ const Orders = () => {
         currency: razorpayOrder.currency,
         name: "Radhe Enterprise Pvt. Ltd.",
         description: "Order Payment",
-        order_id: razorpayOrder.id,
+        order_id: razorpayOrder.id, // Use the new order ID
         handler: async function (response) {
-          console.log("Payment response:", response); // Log payment response
+          console.log("Payment response:", response);
           alert("Payment successful!");
 
           // Step 4: Prepare payload for verification
@@ -70,7 +71,6 @@ const Orders = () => {
             order_id: response.razorpay_order_id,
             signature: response.razorpay_signature,
           };
-          // console.log("Payload for verification:", payload);
 
           // Step 5: Verify payment on the backend
           const verifyResponse = await fetch(
@@ -81,22 +81,13 @@ const Orders = () => {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(payload), // Send the payload
+              body: JSON.stringify(payload),
             }
           );
 
           if (!verifyResponse.ok) {
             throw new Error("Payment verification failed");
           }
-
-          // Update order status immediately on frontend
-          // setOrders((prevOrders) =>
-          //   prevOrders.map((o) =>
-          //     o.order_id === order.order_id
-          //       ? { ...o, order_status: "Completed", remaining_amount: 0 } // Update status and amount
-          //       : o
-          //   )
-          // );
 
           // Reload orders to reflect updated payment status
           await fetchOrders();
@@ -111,16 +102,7 @@ const Orders = () => {
         },
       };
 
-      // Step 6: Check if Razorpay SDK is loaded
-      if (typeof window.Razorpay === "undefined") {
-        console.error("Razorpay SDK not loaded.");
-        alert(
-          "Razorpay SDK is not loaded. Please ensure that the Razorpay script is included in your HTML."
-        );
-        return;
-      }
-
-      // Step 7: Open Razorpay payment modal
+      // Step 6: Open Razorpay payment modal
       var rzp1 = new window.Razorpay(options);
       rzp1.on("payment.failed", function (response) {
         alert("Payment failed: " + response.error.description);
@@ -139,10 +121,7 @@ const Orders = () => {
         <div className="d-flex justify-content-center align-items-center gap-4 flex-wrap">
           {orders.length > 0 ? (
             orders.map((order) => (
-              <div
-                className="card text-center"
-                key={order.order_id}
-              >
+              <div className="card text-center" key={order.order_id}>
                 <div className="card-header custom-bg text-info">
                   Order Status: {order.order_status}
                 </div>
@@ -193,27 +172,27 @@ const Orders = () => {
                       </tr>
                       <tr>
                         <td>
-                          <strong>Remaining Amount:</strong>
-                        </td>
-                        <td>{order.remaining_amount || "N/A"}</td>
-                      </tr>
-                      <tr>
-                        <td>
                           <strong>Payment Status:</strong>
                         </td>
                         <td>{order.payment_status || "Pending"}</td>
                       </tr>
+                      <tr>
+                        <td>
+                          <strong>Installment Number:</strong>
+                        </td>
+                        <td>{order.installment_number || "N/A"}</td>
+                      </tr>
                     </tbody>
                   </table>
-                  {order.order_status !== "Completed" &&
-                    order.remaining_amount > 0 && (
-                      <button
-                        className="btn btn-primary mt-3"
-                        onClick={() => handlePayment(order)}
-                      >
-                        Pay Now
-                      </button>
-                    )}
+                  {/* Show the Pay Now button only if the payment status is not 'Completed' */}
+                  {order.payment_status !== "Completed" && (
+                    <button
+                      className="btn btn-primary mt-3"
+                      onClick={() => handlePayment(order)}
+                    >
+                      Pay Now
+                    </button>
+                  )}
                 </div>
                 <div className="card-footer custom-bg text-info">
                   Ordered Date:{" "}
