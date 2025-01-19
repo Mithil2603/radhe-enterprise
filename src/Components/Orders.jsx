@@ -4,6 +4,12 @@ import "./styles/Orders.css";
 
 const Orders = () => {
   const [orders, setOrders] = useState([]);
+  const [showServiceModal, setShowServiceModal] = useState(false);
+  const [selectedOrder, setSelectedOrder] = useState(null);
+  const [serviceDetails, setServiceDetails] = useState({
+    service_type: "Maintenance",
+    service_notes: "",
+  });
 
   const fetchOrders = async () => {
     try {
@@ -36,6 +42,19 @@ const Orders = () => {
         alert("Payment is not required as the bill has been uploaded.");
         return;
       }
+
+      // Prepare payment details
+      // const paymentDetails = {
+      //   payment_amount:
+      //     order.service_cost > 0 ? order.service_cost : order.payment_amount,
+      //   payment_method: "Service", // You can customize this as needed
+      //   payment_type:
+      //     order.service_cost > 0 ? "Service Cost" : "Product Payment", // Specify the payment type
+      //   order_id: order.order_id,
+      //   total_amount:
+      //     order.service_cost > 0 ? order.service_cost : order.payment_amount,
+      //   installment_number: 1, // Adjust as necessary
+      // };
 
       // Step 1: Create an order on the backend
       const response = await fetch("http://localhost:8080/create-order", {
@@ -99,9 +118,9 @@ const Orders = () => {
           await fetchOrders();
         },
         prefill: {
-          name: "Customer Name",
-          email: "customer@example.com",
-          contact: "9999999999",
+          name: order.user_first_name,
+          email: order.user_email,
+          contact: order.user_phone_number,
         },
         theme: {
           color: "#3399cc",
@@ -120,7 +139,7 @@ const Orders = () => {
     }
   };
 
-  const handleRequestService = async (orderId) => {
+  const handleRequestService = async () => {
     try {
       const response = await fetch(`http://localhost:8080/request-service`, {
         method: "POST",
@@ -128,7 +147,11 @@ const Orders = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ order_id: orderId }),
+        body: JSON.stringify({
+          order_id: selectedOrder.order_id,
+          service_type: serviceDetails.service_type,
+          service_notes: serviceDetails.service_notes,
+        }),
       });
 
       if (!response.ok) {
@@ -136,6 +159,8 @@ const Orders = () => {
       }
 
       alert("Service request submitted successfully!");
+      setShowServiceModal(false);
+      fetchOrders(); // Refresh orders to reflect the new service request
     } catch (error) {
       console.error("Error requesting service:", error);
       alert("Failed to request service.");
@@ -209,24 +234,38 @@ const Orders = () => {
                       </tr>
                       <tr>
                         <td>
-                          <strong>Installment Number:</strong>
+                          <strong>Payment Type:</strong>
                         </td>
-                        <td>{order.installment_number || "N/A"}</td>
+                        <td>{order.payment_type || "N/A"}</td>
                       </tr>
-                      {/* Conditionally render delivery status based on payment status */}
-                      {order.payment_status === "Completed" ? (
+
+                      {/* Remove Installment Number for Service Payments */}
+                      {order.payment_type !== "Service" && (
                         <tr>
                           <td>
-                            <strong>Delivery Status:</strong>
+                            <strong>Installment Number:</strong>
                           </td>
-                          <td>{order.delivery_status || "N/A"}</td>
+                          <td>{order.installment_number || "N/A"}</td>
                         </tr>
-                      ) : (
+                      )}
+                      {/* Conditionally render delivery status based on payment status */}
+                      {/* Remove Delivery Status for Service Payments */}
+                      {order.payment_type !== "Payment for Service" &&
+                        order.payment_status === "Completed" && (
+                          <tr>
+                            <td>
+                              <strong>Delivery Status:</strong>
+                            </td>
+                            <td>{order.delivery_status || "N/A"}</td>
+                          </tr>
+                        )}
+                      {/* Show Service Status for Service Payments */}
+                      {order.payment_type === "Service" && (
                         <tr>
                           <td>
-                            <strong>Delivery Status:</strong>
+                            <strong>Service Status:</strong>
                           </td>
-                          <td>Payment not completed</td>
+                          <td>{order.service_status || "N/A"}</td>
                         </tr>
                       )}
                     </tbody>
@@ -245,15 +284,19 @@ const Orders = () => {
                       </button>
                     )}
 
-                  {/* Show the Request Service button only if the delivery status is 'Delivered' */}
-                  {order.delivery_status === "Delivered" && (
-                    <button
-                      className="btn btn-warning mt-3"
-                      onClick={() => handleRequestService(order.order_id)}
-                    >
-                      Request Service
-                    </button>
-                  )}
+                  {/* Show the Request Service button only if the delivery status is 'Delivered' and service status is 'Pending' */}
+                  {order.delivery_status === "Delivered" &&
+                    order.service_status === "Pending" && (
+                      <button
+                        className="btn btn-warning mt-3"
+                        onClick={() => {
+                          setSelectedOrder(order);
+                          setShowServiceModal(true);
+                        }}
+                      >
+                        Request Service
+                      </button>
+                    )}
                 </div>
                 <div className="card-footer custom-bg text-info">
                   Ordered Date:{" "}
@@ -268,6 +311,66 @@ const Orders = () => {
           )}
         </div>
       </div>
+      {/* Service Request Modal */}
+      {showServiceModal && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={() => setShowServiceModal(false)}>
+              &times;
+            </span>
+            <h1 className="mt-2 mb-3 text-center">Request Service</h1>
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleRequestService();
+              }}
+            >
+              <div className="mb-3">
+                <label htmlFor="serviceType" className="form-label">
+                  Service Type
+                </label>
+                <select
+                  id="serviceType"
+                  className="form-select"
+                  value={serviceDetails.service_type}
+                  onChange={(e) =>
+                    setServiceDetails({
+                      ...serviceDetails,
+                      service_type: e.target.value,
+                    })
+                  }
+                >
+                  <option value="Maintenance">Maintenance</option>
+                  <option value="Repair">Repair</option>
+                  <option value="Modification">Modification</option>
+                  <option value="Installment">Installment</option>
+                </select>
+              </div>
+              <div className="mb-3">
+                <label htmlFor="serviceNotes" className="form-label">
+                  Service Notes
+                </label>
+                <textarea
+                  id="serviceNotes"
+                  className="form-control"
+                  rows="4"
+                  value={serviceDetails.service_notes}
+                  onChange={(e) =>
+                    setServiceDetails({
+                      ...serviceDetails,
+                      service_notes: e.target.value,
+                    })
+                  }
+                  placeholder="Describe the issue..."
+                ></textarea>
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Submit Request
+              </button>
+            </form>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
