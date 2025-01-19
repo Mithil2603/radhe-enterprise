@@ -31,6 +31,12 @@ const Orders = () => {
 
   const handlePayment = async (order) => {
     try {
+      // Check if the payment method is Cash and if a bill is uploaded
+      if (order.payment_method === "Cash" && order.bill_uploaded) {
+        alert("Payment is not required as the bill has been uploaded.");
+        return;
+      }
+
       // Step 1: Create an order on the backend
       const response = await fetch("http://localhost:8080/create-order", {
         method: "POST",
@@ -111,6 +117,28 @@ const Orders = () => {
     } catch (error) {
       console.error("Error processing payment:", error);
       alert("Payment failed.");
+    }
+  };
+
+  const handleRequestService = async (orderId) => {
+    try {
+      const response = await fetch(`http://localhost:8080/request-service`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ order_id: orderId }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to request service");
+      }
+
+      alert("Service request submitted successfully!");
+    } catch (error) {
+      console.error("Error requesting service:", error);
+      alert("Failed to request service.");
     }
   };
 
@@ -203,13 +231,27 @@ const Orders = () => {
                       )}
                     </tbody>
                   </table>
-                  {/* Show the Pay Now button only if the payment status is not 'Completed' */}
-                  {order.payment_status !== "Completed" && order.payment_amount > 0 && (
+                  {/* Show the Pay Now button only if the payment status is not 'Completed' and payment method is not Cash with uploaded bill */}
+                  {order.payment_status !== "Completed" &&
+                    order.payment_amount > 0 &&
+                    !(
+                      order.payment_method === "Cash" && order.bill_uploaded
+                    ) && (
+                      <button
+                        className="btn btn-primary mt-3"
+                        onClick={() => handlePayment(order)}
+                      >
+                        Pay Now
+                      </button>
+                    )}
+
+                  {/* Show the Request Service button only if the delivery status is 'Delivered' */}
+                  {order.delivery_status === "Delivered" && (
                     <button
-                      className="btn btn-primary mt-3"
-                      onClick={() => handlePayment(order)}
+                      className="btn btn-warning mt-3"
+                      onClick={() => handleRequestService(order.order_id)}
                     >
-                      Pay Now
+                      Request Service
                     </button>
                   )}
                 </div>

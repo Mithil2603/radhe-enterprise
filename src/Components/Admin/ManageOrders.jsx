@@ -8,6 +8,7 @@ export default function ManageOrders() {
   const [loading, setLoading] = useState(false);
   const [showPaymentModal, setShowPaymentModal] = useState(false);
   const [selectedOrder, setSelectedOrder] = useState(null);
+  const [billFile, setBillFile] = useState(null);
   const [paymentDetails, setPaymentDetails] = useState({
     payment_amount: "",
     payment_method: "Online",
@@ -66,7 +67,20 @@ export default function ManageOrders() {
         order_id: selectedOrder.order_id,
       };
 
-      await axios.post("http://localhost:8080/admin/payments", payload);
+      // If payment method is Cash, include the bill file
+      if (paymentDetails.payment_method === "Cash" && billFile) {
+        const formData = new FormData();
+        formData.append("paymentDetails", JSON.stringify(payload));
+        formData.append("billFile", billFile);
+
+        await axios.post("http://localhost:8080/admin/payments", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+      } else {
+        await axios.post("http://localhost:8080/admin/payments", payload);
+      }
 
       alert("Payment created successfully.");
       setShowPaymentModal(false);
@@ -87,16 +101,16 @@ export default function ManageOrders() {
       ) : (
         <div className="container-fluid user-table w-100">
           <table className="table table-bordered table-hover table-striped rounded overflow-hidden">
-            <thead className="bg-dark text-white">
+            <thead>
               <tr>
-                <th>Order ID</th>
-                <th>Customer Name</th>
-                <th>Customer Email</th>
-                <th>Order Date</th>
-                <th>Status</th>
-                <th>Details</th>
-                <th>Actions</th>
-                <th>Create</th>
+                <th className="bg-dark text-white">Order ID</th>
+                <th className="bg-dark text-white">Customer Name</th>
+                <th className="bg-dark text-white">Customer Email</th>
+                <th className="bg-dark text-white">Order Date</th>
+                <th className="bg-dark text-white">Status</th>
+                <th className="bg-dark text-white">Details</th>
+                <th className="bg-dark text-white">Actions</th>
+                <th className="bg-dark text-white">Create</th>
               </tr>
             </thead>
             <tbody>
@@ -215,12 +229,14 @@ export default function ManageOrders() {
                 <select
                   className="form-control"
                   value={paymentDetails.payment_method}
-                  onChange={(e) =>
+                  onChange={(e) => {
                     setPaymentDetails({
                       ...paymentDetails,
                       payment_method: e.target.value,
-                    })
-                  }
+                    });
+                    // Reset bill file when payment method changes
+                    setBillFile(null);
+                  }}
                 >
                   <option value="Online">Online</option>
                   <option value="Cash">Cash</option>
@@ -257,6 +273,17 @@ export default function ManageOrders() {
                   <option value="Service">Service</option>
                 </select>
               </div>
+              {/* Conditionally render the file input for bill upload */}
+              {paymentDetails.payment_method === "Cash" && (
+                <div className="form-group">
+                  <label>Upload Bill</label>
+                  <input
+                    type="file"
+                    className="form-control"
+                    onChange={(e) => setBillFile(e.target.files[0])}
+                  />
+                </div>
+              )}
               <button
                 type="button"
                 className="btn btn-success"
