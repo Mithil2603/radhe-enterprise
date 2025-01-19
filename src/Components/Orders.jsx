@@ -164,12 +164,15 @@ const Orders = () => {
                         </td>
                         <td>{order.bobin_length}</td>
                       </tr>
-                      <tr>
-                        <td>
-                          <strong>Payment Amount:</strong>
-                        </td>
-                        <td>{order.payment_amount || "N/A"}</td>
-                      </tr>
+                      {/* Only show Payment Amount if it exists */}
+                      {order.payment_amount ? (
+                        <tr>
+                          <td>
+                            <strong>Payment Amount:</strong>
+                          </td>
+                          <td>₹{order.payment_amount}</td>
+                        </tr>
+                      ) : null}
                       <tr>
                         <td>
                           <strong>Payment Status:</strong>
@@ -182,10 +185,26 @@ const Orders = () => {
                         </td>
                         <td>{order.installment_number || "N/A"}</td>
                       </tr>
+                      {/* Conditionally render delivery status based on payment status */}
+                      {order.payment_status === "Completed" ? (
+                        <tr>
+                          <td>
+                            <strong>Delivery Status:</strong>
+                          </td>
+                          <td>{order.delivery_status || "N/A"}</td>
+                        </tr>
+                      ) : (
+                        <tr>
+                          <td>
+                            <strong>Delivery Status:</strong>
+                          </td>
+                          <td>Payment not completed</td>
+                        </tr>
+                      )}
                     </tbody>
                   </table>
                   {/* Show the Pay Now button only if the payment status is not 'Completed' */}
-                  {order.payment_status !== "Completed" && (
+                  {order.payment_status !== "Completed" && order.payment_amount > 0 && (
                     <button
                       className="btn btn-primary mt-3"
                       onClick={() => handlePayment(order)}

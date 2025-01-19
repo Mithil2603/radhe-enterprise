@@ -33,15 +33,24 @@ import ManageServices from "./Components/Admin/ManageServices";
 import PrivateRoute from "./PrivateRoute";
 import Unauthorized from "./Components/Unauthorized";
 import AdminHome from "./Components/Admin/AdminHome";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 function App() {
-  const [role, setRole] = useState(localStorage.getItem("role") || "Customer");
+  const [role, setRole] = useState("Customer"); // Default role
 
   const logout = () => {
     localStorage.removeItem("role"); // Clear the role from localStorage
     setRole("Customer"); // Set the role to Customer or whatever default you want
   };
+
+  // Check local storage for role on initial load
+  useEffect(() => {
+    const storedRole = localStorage.getItem("role");
+    if (storedRole) {
+      setRole(storedRole);
+    }
+  }, []);
+
   return (
     <>
       {/* Conditional Navbar */}
