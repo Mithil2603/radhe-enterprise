@@ -26,14 +26,15 @@ export default function Register() {
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
 
-    const phoneNumberRegex = /^\+[1-9]\d{1,14}$/; // Basic regex to validate international phone number format
+    const cleanedPhoneNumber = values.phone_number.replace(/\s/g, "");
 
-    // Validate phone number format (e.g., +919876543210, +1 234 567 8901)
-    if (!phoneNumberRegex.test(values.phone_number)) {
-        setError("Invalid phone number format. Please include country code."
-      );
+    // Validate phone number format
+    const phoneNumberRegex = /^\+[1-9]\d{1,14}$/;
+    if (!phoneNumberRegex.test(cleanedPhoneNumber)) {
+      setError("Invalid phone number format. Please include country code.");
+      return;
     }
 
     // Email validation (simple regex for now)
@@ -147,12 +148,13 @@ export default function Register() {
               type="text"
               name="phone_number"
               className="form-control"
-              placeholder="+91 9876543210"
+              placeholder="+919876543210"
               id="phone_number"
               required
-              onChange={(e) =>
-                setValues({ ...values, phone_number: e.target.value })
-              }
+              onChange={(e) => {
+                const cleanedValue = e.target.value.replace(/\s/g, "");
+                setValues({ ...values, phone_number: cleanedValue });
+              }}
             />
           </div>
           <div className="mb-3">

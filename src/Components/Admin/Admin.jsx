@@ -132,7 +132,7 @@ export default function Admin() {
                 </li>
                 <li className="nav-item w-100">
                   <Link
-                    className="nav-link custom-color border-bottom"
+                    className="nav-link custom-color"
                     to="/admin/services"
                   >
                     Manage Services
