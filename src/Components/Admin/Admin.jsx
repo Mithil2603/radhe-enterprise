@@ -139,15 +139,6 @@ export default function Admin() {
                   </Link>
                 </li>
                 <li className="nav-item w-100">
-                  <Link
-                    className="nav-link custom-color mb-2"
-                    aria-current="page"
-                    to="/"
-                  >
-                    Main Home
-                  </Link>
-                </li>
-                <li className="nav-item w-100">
                   {auth ? (
                     <div className="profile-icon">
                       <Link className="nav-link w-full d-flex justify-content-center" to="/profile">
