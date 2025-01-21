@@ -11,6 +11,8 @@ const Orders = () => {
     service_notes: "",
   });
 
+  console.log("Orders:", orders);
+
   const fetchOrders = async () => {
     try {
       const response = await fetch("http://localhost:8080/orders", {
@@ -250,7 +252,7 @@ const Orders = () => {
                       )}
                       {/* Conditionally render delivery status based on payment status */}
                       {/* Remove Delivery Status for Service Payments */}
-                      {order.payment_type !== "Payment for Service" &&
+                      {order.payment_type !== "Service" &&
                         order.payment_status === "Completed" && (
                           <tr>
                             <td>
