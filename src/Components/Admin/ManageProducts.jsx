@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { format } from "date-fns";
 
 const ManageProducts = () => {
@@ -24,7 +23,7 @@ const ManageProducts = () => {
       const response = await axios.get("http://localhost:8080/products");
       setProducts(response.data);
     } catch (error) {
-      toast.error("Failed to fetch products.");
+      alert("Failed to fetch products.");
     } finally {
       setLoading(false);
     }
@@ -36,17 +35,32 @@ const ManageProducts = () => {
       const response = await axios.get("http://localhost:8080/categories");
       setCategories(response.data);
     } catch (error) {
-      toast.error("Failed to fetch categories.");
+      alert("Failed to fetch categories.");
     } finally {
       setLoading(false);
     }
   };
 
+  const isDuplicateProductName = (name) => {
+    return products.some(
+      (product) =>
+        product.product_name === name &&
+        product.product_id !==
+          (editingProduct ? editingProduct.product_id : null)
+    );
+  };
+
   const handleAddProduct = async () => {
     if (!productName.trim() || !categoryId) {
-      toast.error("Product name and category are required.");
+      alert("Product name and category are required.");
       return;
     }
+
+    if (isDuplicateProductName(productName)) {
+      alert("Product name already exists.");
+      return;
+    }
+    
     try {
       await axios.post("http://localhost:8080/products", {
         category_id: categoryId,
@@ -54,11 +68,11 @@ const ManageProducts = () => {
         product_description: productDescription,
         product_img: productImg,
       });
-      toast.success("Product added successfully.");
+      alert("Product added successfully.");
       resetForm();
       fetchProducts();
     } catch (error) {
-      toast.error("Failed to add product.");
+      alert("Failed to add product.");
     }
   };
 
@@ -83,11 +97,11 @@ const ManageProducts = () => {
           product_img: productImg,
         }
       );
-      toast.success("Product updated successfully.");
+      alert("Product updated successfully.");
       resetForm();
       fetchProducts();
     } catch (error) {
-      toast.error("Failed to update product.");
+      alert("Failed to update product.");
     }
   };
 
@@ -95,10 +109,10 @@ const ManageProducts = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
         await axios.delete(`http://localhost:8080/products/${productId}`);
-        toast.success("Product deleted successfully.");
+        alert("Product deleted successfully.");
         fetchProducts();
       } catch (error) {
-        toast.error("Failed to delete product.");
+        alert("Failed to delete product.");
       }
     }
   };
