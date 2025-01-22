@@ -7,6 +7,27 @@
     width: 100%;
 }
 
+.custom-bg-reset {
+    background-image: url("https://images.pexels.com/photos/14067331/pexels-photo-14067331.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    width: 100%;
+}
+
+.custom-bg-password {
+    padding: 2rem;
+    border: 2px solid black;
+    border-radius: 1rem;
+    background-color: #212529ad;
+    color: white;
+}
+
+.custom-bg-password a {
+    color: white;
+}
+
 .font-bold-2xl {
     font-size: 2.5rem;
     font-weight: bolder;

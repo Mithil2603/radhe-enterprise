@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 export default function ResetPassword() {
@@ -162,11 +162,6 @@ export default function ResetPassword() {
             <button type="submit" className="btn custom-btn mt-3 mb-3">
               Submit
             </button>
-            <div className="login-option d-flex gap-1 mt-2">
-              <p>Don't have an account?</p>
-              <Link to="/register">Register</Link>
-            </div>
-            <Link to="/reset-password">Forgot your password?</Link>
           </form>
         </div>
       </div>
