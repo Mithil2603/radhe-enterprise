@@ -60,7 +60,7 @@ const ManageProducts = () => {
       alert("Product name already exists.");
       return;
     }
-    
+
     try {
       await axios.post("http://localhost:8080/products", {
         category_id: categoryId,
@@ -82,6 +82,10 @@ const ManageProducts = () => {
     setProductDescription(product.product_description || []);
     setProductImg(product.product_img || []);
     setCategoryId(product.category_id);
+
+    // Show alert to inform the user that edit mode is on
+    alert("Edit Product Mode On");
+    window.scrollTo(0, 0);
   };
 
   const handleUpdateProduct = async () => {
@@ -93,11 +97,11 @@ const ManageProducts = () => {
         {
           category_id: categoryId,
           product_name: productName,
-          product_description: productDescription,
+          product_description: JSON.stringify(productDescription), // Ensure it's a valid JSON string
           product_img: productImg,
         }
       );
-      alert("Product updated successfully.");
+
       resetForm();
       fetchProducts();
     } catch (error) {
@@ -151,6 +155,8 @@ const ManageProducts = () => {
     setProductDescription([]);
     setProductImg([]);
     setCategoryId("");
+
+    alert("Edit Product Mode Off");
   };
 
   return (
