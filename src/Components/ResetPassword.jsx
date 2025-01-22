@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import logo from "./images/RadheEnterprise.svg";
 
 export default function ResetPassword() {
   const [values, setValues] = useState({
@@ -102,11 +103,22 @@ export default function ResetPassword() {
     <>
       <div className="container-fluid p-5 custom-bg-register">
         <div className="container">
-          <h1 className="text-center mb-5 font-bold-2xl">Reset Password</h1>
+          {/* <h1 className="text-center mb-5 font-bold-2xl">Reset Password</h1> */}
           <form
             onSubmit={handleSubmit}
-            className="form-container font-bold register"
+            className="form-container font-bold register custom-bg-password border border-black p-5"
           >
+            {/* Logo */}
+            <Link
+              className="navbar-brand custom-font-family w-100 d-inline-block text-center mb-5"
+              to="/"
+            >
+              <img
+                src={logo}
+                alt="Radhe Enterprise"
+                className="main-logo login-logo"
+              />
+            </Link>
             <div className="mb-3">
               <label htmlFor="exampleInputEmail1" className="form-label">
                 Email address
@@ -159,8 +171,8 @@ export default function ResetPassword() {
                 {error}
               </div>
             )}
-            <button type="submit" className="btn custom-btn mt-3 mb-3">
-              Submit
+            <button type="submit" className="btn custom-btn mt-3 mb-3 font-bold-xl">
+              Reset Password
             </button>
           </form>
         </div>

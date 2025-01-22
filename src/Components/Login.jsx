@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./styles/Register.css";
 import axios from "axios";
+import logo from "./images/RadheEnterprise.svg";
 
 export default function Login({ setRole }) {
   const [values, setValues] = useState({
@@ -29,7 +30,7 @@ export default function Login({ setRole }) {
           localStorage.setItem("token", res.data.token);
 
           setRole(user_type);
-          
+
           if (user_type === "Owner") {
             setSuccessMessage(
               "Login Successful! Redirecting to Admin Dashboard..."
@@ -55,13 +56,17 @@ export default function Login({ setRole }) {
   };
 
   return (
-    <div className="container-fluid p-5 custom-bg-register">
+    <div className="container-fluid custom-bg-reset d-flex justify-content-center align-items-center">
       <div className="container">
-        <h1 className="text-center mb-5 font-bold-2xl">Login</h1>
         <form
           onSubmit={handleSubmit}
-          className="form-container font-bold register"
+          className="form-container font-bold register border rounded border-dark p-5 custom-bg-password"
         >
+          {/* Logo */}
+          <Link className="navbar-brand custom-font-family w-100 d-inline-block text-center mb-5" to="/">
+            <img src={logo} alt="Radhe Enterprise" className="main-logo login-logo" />
+          </Link>
+          {/* <h1 className="text-center mb-5 mt-3 font-size-2xl fw-bolder">Login</h1> */}
           <div className="mb-3">
             <label htmlFor="exampleInputEmail1" className="form-label">
               Email address
@@ -98,8 +103,8 @@ export default function Login({ setRole }) {
               {error}
             </div>
           )}
-          <button type="submit" className="btn custom-btn mt-3 mb-3">
-            Submit
+          <button type="submit" className="btn custom-btn mt-3 mb-3 font-bold-xl">
+            Login
           </button>
           <div className="login-option d-flex gap-1 mt-2">
             <p>Don't have an account?</p>

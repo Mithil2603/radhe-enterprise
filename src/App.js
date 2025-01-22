@@ -1,5 +1,5 @@
 import "./App.css";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import Main from "./Components/Main";
 import Footer from "./Components/Footer";
@@ -36,6 +36,7 @@ import { useEffect, useState } from "react";
 
 function App() {
   const [role, setRole] = useState("Customer"); // Default role
+  const location = useLocation();
 
   const logout = () => {
     localStorage.removeItem("role"); // Clear the role from localStorage
@@ -50,14 +51,17 @@ function App() {
     }
   }, []);
 
+  // Hide Navbar and footer
+  const hideNavbarAndFooter = ["/login", "/register", "/reset-password"].includes(location.pathname);
+
   return (
     <>
       {/* Conditional Navbar */}
-      {role === "Owner" ? (
+      {!hideNavbarAndFooter && (role === "Owner" ? (
         <AdminNav onLogout={logout} />
       ) : (
         <Navbar onLogout={logout} />
-      )}
+      ))}
       <Routes>
         <Route path="/" element={<Main />}></Route>
         <Route path="/about" element={<About />}></Route>
@@ -98,7 +102,8 @@ function App() {
 
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {/* Conditional Footer */}
+      {!hideNavbarAndFooter && <Footer />}
     </>
   );
 }
