@@ -105,7 +105,7 @@ export default function Login({ setRole }) {
             <p>Don't have an account?</p>
             <Link to="/register">Register</Link>
           </div>
-          <Link to="/forgot-password">Forgot your password?</Link>
+          <Link to="/reset-password">Forgot your password?</Link>
         </form>
       </div>
     </div>

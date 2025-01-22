@@ -15,7 +15,6 @@ import User from "./Components/User";
 import PlaceOrder from "./Components/PlaceOrder";
 import Orders from "./Components/Orders";
 import ResetPassword from "./Components/ResetPassword";
-import ForgotPassword from "./Components/ForgotPassword";
 import Fabrication from "./Components/Fabrication";
 
 // Admin Dashboard
@@ -72,7 +71,6 @@ function App() {
         <Route path="/profile" element={<User onLogout={logout} />} />
         <Route path="/placeorder" element={<PlaceOrder />} />
         <Route path="/orders" element={<Orders />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
 
