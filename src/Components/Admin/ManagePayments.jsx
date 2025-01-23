@@ -62,7 +62,6 @@ const ManagePayments = () => {
                 <th className="bg-dark text-white">Payment ID</th>
                 <th className="bg-dark text-white">Order ID</th>
                 <th className="bg-dark text-white">Payment Created Date</th>
-                <th className="bg-dark text-white">Total Amount</th>
                 <th className="bg-dark text-white">Payment Amount</th>
                 <th className="bg-dark text-white">Installment No</th>
                 <th className="bg-dark text-white">Payment Method</th>
@@ -85,7 +84,6 @@ const ManagePayments = () => {
                           )
                         : "N/A"}
                     </td>
-                    <td>₹{payment.total_amount}</td>
                     <td>₹{payment.payment_amount}</td>
                     <td>{payment.installment_number}</td>
                     <td>{payment.payment_method}</td>
@@ -105,12 +103,19 @@ const ManagePayments = () => {
                         <option value="Pending">Pending</option>
                         <option value="Completed">Completed</option>
                       </select>
-                      <button
+                      {
+                        payment.payment_status === 'Completed' ? (
+                          <button
                         className="btn btn-primary"
                         onClick={() => createDelivery(payment.payment_id)}
                       >
                         Create Delivery
                       </button>
+                        ) : (
+                          ""
+                        )
+                      }
+                      
                     </td>
                   </tr>
                 ))
