@@ -20,7 +20,10 @@ const ManageProducts = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8080/products");
+      const response = await axios.get(
+        "http://localhost:8080/products"
+      );
+      console.log("Fetched products from API:", response.data);
       setProducts(response.data);
     } catch (error) {
       alert("Failed to fetch products.");
@@ -112,11 +115,17 @@ const ManageProducts = () => {
   const handleDeleteProduct = async (productId) => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
-        await axios.delete(`http://localhost:8080/products/${productId}`);
-        alert("Product deleted successfully.");
+        const response = await axios.put(
+          `http://localhost:8080/products/${productId}/soft-delete`
+        );
+        alert(response.data.message);
         fetchProducts();
       } catch (error) {
-        alert("Failed to delete product.");
+        if (error.response && error.response.status === 400) {
+          alert(error.response.data.message); // Show error message if there are orders
+        } else {
+          alert("Failed to soft delete product.");
+        }
       }
     }
   };

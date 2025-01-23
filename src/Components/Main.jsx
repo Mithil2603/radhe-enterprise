@@ -28,7 +28,7 @@ export default function Main() {
   useEffect(() => {
     // Fetch products from the backend
     axios
-      .get("http://localhost:8080/products")
+      .get("http://localhost:8080/products/all")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);

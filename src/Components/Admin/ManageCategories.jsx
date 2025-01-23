@@ -9,7 +9,6 @@ const ManageCategories = () => {
   const [categoryImg, setCategoryImg] = useState([]); // Initialize as an array
   const [editingCategory, setEditingCategory] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [editingProduct, setEditingProduct] = useState(null);
 
   useEffect(() => {
     fetchCategories();
@@ -99,7 +98,11 @@ const ManageCategories = () => {
         alert("Category deleted successfully.");
         fetchCategories();
       } catch (error) {
-        alert("Failed to delete category.");
+        if (error.response) {
+          alert(error.response.data.message);
+        } else {
+          alert("Failed to delete category.");
+        }
       }
     }
   };

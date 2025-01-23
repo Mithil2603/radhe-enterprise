@@ -59,7 +59,6 @@ const ManagePayments = () => {
           <table className="table table-bordered table-hover table-striped rounded overflow-hidden">
             <thead className="bg-dark text-white">
               <tr>
-                <th className="bg-dark text-white">RazorPay ID</th>
                 <th className="bg-dark text-white">Payment ID</th>
                 <th className="bg-dark text-white">Order ID</th>
                 <th className="bg-dark text-white">Payment Created Date</th>
@@ -76,7 +75,6 @@ const ManagePayments = () => {
               {payments.length > 0 ? (
                 payments.map((payment) => (
                   <tr key={payment.payment_id}>
-                    <td>{payment.razorpay_order_id}</td>
                     <td>{payment.payment_id}</td>
                     <td>{payment.order_id}</td>
                     <td>
