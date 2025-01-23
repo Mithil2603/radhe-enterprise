@@ -15,7 +15,7 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch("http://localhost:8080/orders", {
+      const response = await fetch("https://machinery-backend-login-part.onrender.com/orders", {
         method: "GET",
         credentials: "include",
       });
@@ -59,7 +59,7 @@ const Orders = () => {
       // };
 
       // Step 1: Create an order on the backend
-      const response = await fetch("http://localhost:8080/create-order", {
+      const response = await fetch("https://machinery-backend-login-part.onrender.com/create-order", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -101,7 +101,7 @@ const Orders = () => {
 
           // Step 5: Verify payment on the backend
           const verifyResponse = await fetch(
-            "http://localhost:8080/verify-payment",
+            "https://machinery-backend-login-part.onrender.com/verify-payment",
             {
               method: "POST",
               credentials: "include",
@@ -143,7 +143,7 @@ const Orders = () => {
 
   const handleRequestService = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/request-service`, {
+      const response = await fetch(`https://machinery-backend-login-part.onrender.com/request-service`, {
         method: "POST",
         credentials: "include",
         headers: {

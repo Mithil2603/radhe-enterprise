@@ -22,7 +22,7 @@ const ManageService = () => {
   const fetchServices = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8080/admin/services");
+      const response = await axios.get("https://machinery-backend-login-part.onrender.com/admin/services");
       setServices(response.data);
     } catch (error) {
       alert("Failed to fetch services.");
@@ -51,7 +51,7 @@ const ManageService = () => {
 
       // Send payment request to the new service payment route
       const response = await axios.post(
-        "http://localhost:8080/admin/service-payments",
+        "https://machinery-backend-login-part.onrender.com/admin/service-payments",
         {
           paymentDetails: JSON.stringify(payload),
         }
@@ -71,7 +71,7 @@ const ManageService = () => {
   const handleChangeServiceStatus = async (serviceId, newStatus) => {
     try {
       const response = await axios.put(
-        `http://localhost:8080/admin/services/${serviceId}`,
+        `https://machinery-backend-login-part.onrender.com/admin/services/${serviceId}`,
         {
           service_status: newStatus,
         }

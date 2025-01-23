@@ -21,7 +21,7 @@ const ManageProducts = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "http://localhost:8080/products"
+        "https://machinery-backend-login-part.onrender.com/products"
       );
       console.log("Fetched products from API:", response.data);
       setProducts(response.data);
@@ -35,7 +35,7 @@ const ManageProducts = () => {
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8080/categories");
+      const response = await axios.get("https://machinery-backend-login-part.onrender.com/categories");
       setCategories(response.data);
     } catch (error) {
       alert("Failed to fetch categories.");
@@ -65,7 +65,7 @@ const ManageProducts = () => {
     }
 
     try {
-      await axios.post("http://localhost:8080/products", {
+      await axios.post("https://machinery-backend-login-part.onrender.com/products", {
         category_id: categoryId,
         product_name: productName,
         product_description: productDescription,
@@ -96,7 +96,7 @@ const ManageProducts = () => {
 
     try {
       await axios.put(
-        `http://localhost:8080/products/${editingProduct.product_id}`,
+        `https://machinery-backend-login-part.onrender.com/products/${editingProduct.product_id}`,
         {
           category_id: categoryId,
           product_name: productName,
@@ -116,7 +116,7 @@ const ManageProducts = () => {
     if (window.confirm("Are you sure you want to delete this product?")) {
       try {
         const response = await axios.put(
-          `http://localhost:8080/products/${productId}/soft-delete`
+          `https://machinery-backend-login-part.onrender.com/products/${productId}/soft-delete`
         );
         alert(response.data.message);
         fetchProducts();

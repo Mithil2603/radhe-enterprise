@@ -17,11 +17,11 @@ export default function AdminHome() {
       try {
         const [usersRes, ordersRes, revenueRes, feedbackRes, recentOrdersRes] =
           await Promise.all([
-            axios.get("http://localhost:8080/admin/total-users"),
-            axios.get("http://localhost:8080/admin/pending-orders"),
-            axios.get("http://localhost:8080/admin/revenue"),
-            axios.get("http://localhost:8080/admin/feedback-count"),
-            axios.get("http://localhost:8080/admin/recent-orders"),
+            axios.get("https://machinery-backend-login-part.onrender.com/admin/total-users"),
+            axios.get("https://machinery-backend-login-part.onrender.com/admin/pending-orders"),
+            axios.get("https://machinery-backend-login-part.onrender.com/admin/revenue"),
+            axios.get("https://machinery-backend-login-part.onrender.com/admin/feedback-count"),
+            axios.get("https://machinery-backend-login-part.onrender.com/admin/recent-orders"),
           ]);
 
         setStats({

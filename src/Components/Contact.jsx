@@ -10,7 +10,7 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:8080/send-inquiry", {
+      await axios.post("https://machinery-backend-login-part.onrender.com/send-inquiry", {
         email,
         inquiry,
       });

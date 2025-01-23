@@ -93,7 +93,7 @@ export default function Register() {
 
     // Proceed with the API call
     axios
-      .post("http://localhost:8080/register", values)
+      .post("https://machinery-backend-login-part.onrender.com/register", values)
       .then((res) => {
         if (res.data.status === "Success") {
           setSuccessMessage("Registration successful! Redirecting to login...");

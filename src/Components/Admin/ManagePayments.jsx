@@ -14,7 +14,7 @@ const ManagePayments = () => {
   const fetchPayments = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("http://localhost:8080/admin/payments");
+      const response = await axios.get("https://machinery-backend-login-part.onrender.com/admin/payments");
       setPayments(response.data);
     } catch (error) {
       alert("Failed to fetch payments.");
@@ -25,7 +25,7 @@ const ManagePayments = () => {
 
   const createDelivery = async (paymentId) => {
     try {
-      await axios.post("http://localhost:8080/admin/delivery", {
+      await axios.post("https://machinery-backend-login-part.onrender.com/admin/delivery", {
         paymentId,
       });
       alert("Delivery created successfully!");
@@ -37,7 +37,7 @@ const ManagePayments = () => {
 
   const updatePaymentStatus = async (paymentId, newStatus) => {
     try {
-      await axios.put(`http://localhost:8080/admin/payments/${paymentId}`, {
+      await axios.put(`https://machinery-backend-login-part.onrender.com/admin/payments/${paymentId}`, {
         payment_status: newStatus,
       });
       alert("Payment status updated successfully!");

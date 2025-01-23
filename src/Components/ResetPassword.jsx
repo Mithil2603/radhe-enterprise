@@ -80,7 +80,7 @@ export default function ResetPassword() {
     }
 
     axios
-      .post("http://localhost:8080/reset-password", values)
+      .post("https://machinery-backend-login-part.onrender.com/reset-password", values)
       .then((res) => {
         if (res.data.status === "Success") {
           setSuccessMessage(res.data.message);

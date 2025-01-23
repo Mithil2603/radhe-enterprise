@@ -23,7 +23,7 @@ export default function ManageOrders() {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get("http://localhost:8080/admin/orders");
+      const { data } = await axios.get("https://machinery-backend-login-part.onrender.com/admin/orders");
       setOrders(data);
     } catch (error) {
       alert("Failed to fetch orders.");
@@ -36,7 +36,7 @@ export default function ManageOrders() {
     if (!window.confirm(`Change status to "${newStatus}"?`)) return;
 
     try {
-      await axios.put(`http://localhost:8080/orders/${orderId}`, {
+      await axios.put(`https://machinery-backend-login-part.onrender.com/orders/${orderId}`, {
         order_status: newStatus,
       });
       alert("Order status updated successfully.");
@@ -73,13 +73,13 @@ export default function ManageOrders() {
         formData.append("paymentDetails", JSON.stringify(payload));
         formData.append("billFile", billFile);
 
-        await axios.post("http://localhost:8080/admin/payments", formData, {
+        await axios.post("https://machinery-backend-login-part.onrender.com/admin/payments", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
       } else {
-        await axios.post("http://localhost:8080/admin/payments", payload);
+        await axios.post("https://machinery-backend-login-part.onrender.com/admin/payments", payload);
       }
 
       alert("Payment created successfully.");
