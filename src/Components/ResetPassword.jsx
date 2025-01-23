@@ -37,7 +37,7 @@ export default function ResetPassword() {
       return "Password field cannot be empty.";
     }
     if (password.length < minLength) {
-      return "Password must be at least 8 characters long.";
+      return "Password must be at least 8 characters long, contain a number and a special character.";
     }
     if (!hasUpperCase) {
       return "Password must contain at least one uppercase letter.";
@@ -127,7 +127,7 @@ export default function ResetPassword() {
                 type="email"
                 name="email"
                 className="form-control"
-                required
+                
                 onChange={(e) =>
                   setValues({ ...values, email: e.target.value })
                 }
@@ -141,7 +141,7 @@ export default function ResetPassword() {
                 type="password"
                 name="user_password"
                 className="form-control"
-                required
+                
                 onChange={(e) =>
                   setValues({ ...values, user_password: e.target.value })
                 }
@@ -155,7 +155,7 @@ export default function ResetPassword() {
                 type="password"
                 name="confirmPassword"
                 className="form-control"
-                required
+                
                 onChange={(e) =>
                   setValues({ ...values, confirmPassword: e.target.value })
                 }

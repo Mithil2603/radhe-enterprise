@@ -19,6 +19,24 @@ export default function Login({ setRole }) {
     e.preventDefault();
 
     setError(""); // Clear any previous errors
+    
+    if (!values.email) {
+      setError("Email is required!");
+      return;
+    }
+
+    // Email validation
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(values.email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    
+    if (!values.user_password) {
+      setError("Password field is required!");
+      return;
+    }
+
     axios
       .post("http://localhost:8080/login", values)
       .then((res) => {
@@ -68,26 +86,26 @@ export default function Login({ setRole }) {
           </Link>
           {/* <h1 className="text-center mb-5 mt-3 font-size-2xl fw-bolder">Login</h1> */}
           <div className="mb-3">
-            <label htmlFor="exampleInputEmail1" className="form-label">
+            <label htmlFor="email" className="form-label">
               Email address
             </label>
             <input
               type="email"
               name="email"
               className="form-control"
-              required
+              
               onChange={(e) => setValues({ ...values, email: e.target.value })}
             />
           </div>
           <div className="mb-3">
-            <label htmlFor="exampleInputPassword1" className="form-label">
+            <label htmlFor="user_password" className="form-label">
               Password
             </label>
             <input
               type="password"
               name="user_password"
               className="form-control"
-              required
+              
               onChange={(e) =>
                 setValues({ ...values, user_password: e.target.value })
               }

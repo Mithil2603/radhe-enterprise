@@ -46,6 +46,11 @@ function App() {
   // Check local storage for role on initial load
   useEffect(() => {
     const storedRole = localStorage.getItem("role");
+    const loggedIn = localStorage.getItem("isLoggedIn");
+    if(loggedIn !== true) {
+      setRole("Customer");
+    }
+
     if (storedRole) {
       setRole(storedRole);
     }

@@ -123,7 +123,6 @@ export default function Register() {
           onSubmit={handleSubmit}
           className="form-container font-bold register border border-black p-5 rounded custom-bg-password"
         >
-          {error && <div className="alert alert-danger mt-3 mb-3">{error}</div>}
           {/* Logo */}
           <Link
             className="navbar-brand custom-font-family w-100 d-inline-block text-center mb-5"
@@ -135,6 +134,7 @@ export default function Register() {
               className="main-logo login-logo"
             />
           </Link>
+          {error && <div className="alert alert-danger mt-3 mb-3">{error}</div>}
           {/* Input fields */}
           <div className="d-flex w-100 gap-4">
             <div className="mb-3 w-50">

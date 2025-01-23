@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { toast } from "react-toastify";
 import { format } from "date-fns";
 
 const ManageCategories = () => {
@@ -10,6 +9,7 @@ const ManageCategories = () => {
   const [categoryImg, setCategoryImg] = useState([]); // Initialize as an array
   const [editingCategory, setEditingCategory] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [editingProduct, setEditingProduct] = useState(null);
 
   useEffect(() => {
     fetchCategories();
@@ -21,30 +21,44 @@ const ManageCategories = () => {
       const response = await axios.get("http://localhost:8080/categories");
       setCategories(response.data);
     } catch (error) {
-      toast.error("Failed to fetch categories.");
+      alert("Failed to fetch categories.");
     } finally {
       setLoading(false);
     }
   };
 
+  const isDuplicateCategoryName = (name) => {
+    return categories.some(
+      (categories) =>
+        categories.category_name === name &&
+        categories.category_id !==
+          (editingCategory ? editingCategory.product_id : null)
+    );
+  };
+
   const handleAddCategory = async () => {
     if (!categoryName.trim()) {
-      toast.error("Category name cannot be empty.");
+      alert("Category name cannot be empty.");
       return;
     }
+    if (isDuplicateCategoryName(categoryName)) {
+      alert("Category name already exists!");
+      return;
+    }
+
     try {
       await axios.post("http://localhost:8080/categories", {
         category_name: categoryName,
         category_description: categoryDescription,
         category_img: categoryImg,
       });
-      toast.success("Category added successfully.");
+      alert("Category added successfully.");
       setCategoryName("");
       setCategoryDescription("");
       setCategoryImg([]);
       fetchCategories();
     } catch (error) {
-      toast.error("Failed to add category.");
+      alert("Failed to add category.");
     }
   };
 
@@ -53,6 +67,10 @@ const ManageCategories = () => {
     setCategoryName(category.category_name);
     setCategoryDescription(category.category_description);
     setCategoryImg(category.category_img || []); // Ensure it's an array
+
+    // Show alert to inform the user that edit mode is on
+    alert("Edit Product Mode On");
+    window.scrollTo(0, 0);
   };
 
   const handleUpdateCategory = async () => {
@@ -66,11 +84,11 @@ const ManageCategories = () => {
           category_img: categoryImg,
         }
       );
-      toast.success("Category updated successfully.");
+      alert("Category updated successfully.");
       resetForm();
       fetchCategories();
     } catch (error) {
-      toast.error("Failed to update category.");
+      alert("Failed to update category.");
     }
   };
 
@@ -78,10 +96,10 @@ const ManageCategories = () => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       try {
         await axios.delete(`http://localhost:8080/categories/${categoryId}`);
-        toast.success("Category deleted successfully.");
+        alert("Category deleted successfully.");
         fetchCategories();
       } catch (error) {
-        toast.error("Failed to delete category.");
+        alert("Failed to delete category.");
       }
     }
   };
@@ -105,11 +123,15 @@ const ManageCategories = () => {
     setCategoryName("");
     setCategoryDescription("");
     setCategoryImg([]);
+
+    alert("Edit Product Mode Off");
   };
 
   return (
     <div className="container-fluid pt-5 pb-5">
-      <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center">Manage Categories</h1>
+      <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center">
+        Manage Categories
+      </h1>
       <div className="container pb-4">
         <input
           type="text"
@@ -208,8 +230,18 @@ const ManageCategories = () => {
                           ))
                         : "No images"}
                     </td>
-                    <td>{format(new Date(category.created_at), "dd/MM/yyyy HH:mm:ss")}</td>
-                    <td>{format(new Date(category.update_at), "dd/MM/yyyy HH:mm:ss")}</td>
+                    <td>
+                      {format(
+                        new Date(category.created_at),
+                        "dd/MM/yyyy HH:mm:ss"
+                      )}
+                    </td>
+                    <td>
+                      {format(
+                        new Date(category.update_at),
+                        "dd/MM/yyyy HH:mm:ss"
+                      )}
+                    </td>
                     <td>
                       <button
                         className="btn btn-warning btn-sm me-2"
