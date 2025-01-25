@@ -14,7 +14,7 @@ const ManageUsers = () => {
   const fetchUsers = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("https://machinery-backend-login-part.onrender.com/users");
+      const response = await axios.get("http://localhost:8000/users");
       setUsers(response.data);
     } catch (error) {
       toast.error("Failed to fetch users.");
@@ -26,7 +26,7 @@ const ManageUsers = () => {
   const handleDeleteUser = async (userId) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`https://machinery-backend-login-part.onrender.com/users/${userId}`);
+        await axios.delete(`http://localhost:8000/users/${userId}`);
         toast.success("User deleted successfully.");
         fetchUsers(); // Refresh the user list
       } catch (error) {

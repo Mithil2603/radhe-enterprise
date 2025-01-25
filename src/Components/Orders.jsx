@@ -15,7 +15,7 @@ const Orders = () => {
 
   const fetchOrders = async () => {
     try {
-      const response = await fetch("https://machinery-backend-login-part.onrender.com/orders", {
+      const response = await fetch("http://localhost:8000/orders", {
         method: "GET",
         credentials: "include",
       });
@@ -59,7 +59,7 @@ const Orders = () => {
       // };
 
       // Step 1: Create an order on the backend
-      const response = await fetch("https://machinery-backend-login-part.onrender.com/create-order", {
+      const response = await fetch("http://localhost:8000/create-order", {
         method: "POST",
         credentials: "include",
         headers: {
@@ -101,7 +101,7 @@ const Orders = () => {
 
           // Step 5: Verify payment on the backend
           const verifyResponse = await fetch(
-            "https://machinery-backend-login-part.onrender.com/verify-payment",
+            "http://localhost:8000/verify-payment",
             {
               method: "POST",
               credentials: "include",
@@ -143,7 +143,7 @@ const Orders = () => {
 
   const handleRequestService = async () => {
     try {
-      const response = await fetch(`https://machinery-backend-login-part.onrender.com/request-service`, {
+      const response = await fetch(`http://localhost:8000/request-service`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -230,6 +230,12 @@ const Orders = () => {
                       ) : null}
                       <tr>
                         <td>
+                          <strong>Payment Method:</strong>
+                        </td>
+                        <td>{order.payment_method || "N/A"}</td>
+                      </tr>
+                      <tr>
+                        <td>
                           <strong>Payment Status:</strong>
                         </td>
                         <td>{order.payment_status || "Pending"}</td>
@@ -288,7 +294,7 @@ const Orders = () => {
 
                   {/* Show the Request Service button only if the delivery status is 'Delivered' and service status is 'Pending' */}
                   {order.delivery_status === "Delivered" &&
-                    order.service_status === "Pending" && (
+                    order.service_status === "Completed" && (
                       <button
                         className="btn btn-warning mt-3"
                         onClick={() => {

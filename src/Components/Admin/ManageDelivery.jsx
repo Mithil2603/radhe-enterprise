@@ -16,7 +16,7 @@ const ManageDelivery = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://machinery-backend-login-part.onrender.com/admin/deliveries"
+        "http://localhost:8000/admin/deliveries"
       );
       setDeliveries(response.data);
     } catch (error) {
@@ -28,7 +28,7 @@ const ManageDelivery = () => {
 
   const updateDeliveryStatus = async (deliveryId) => {
     try {
-      await axios.put(`https://machinery-backend-login-part.onrender.com/admin/delivery/${deliveryId}`, {
+      await axios.put(`http://localhost:8000/admin/delivery/${deliveryId}`, {
         delivery_status: statusUpdate[deliveryId], // Get the new status from state
       });
       alert("Delivery status updated successfully!");

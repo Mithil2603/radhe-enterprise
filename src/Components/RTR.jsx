@@ -17,10 +17,10 @@ export default function RTR() {
     const fetchProductDetails = async () => {
       try {
         const productResponse = await fetch(
-          `https://machinery-backend-login-part.onrender.com/products/${productId}`
+          `http://localhost:8000/products/${productId}`
         );
         const feedbackResponse = await fetch(
-          `https://machinery-backend-login-part.onrender.com/products/${productId}/feedback`
+          `http://localhost:8000/products/${productId}/feedback`
         );
 
         if (!productResponse.ok || !feedbackResponse.ok) {
@@ -46,7 +46,7 @@ export default function RTR() {
     e.preventDefault();
     try {
       const response = await fetch(
-        `https://machinery-backend-login-part.onrender.com/products/${productId}/feedback`,
+        `http://localhost:8000/products/${productId}/feedback`,
         {
           method: "POST",
           headers: {

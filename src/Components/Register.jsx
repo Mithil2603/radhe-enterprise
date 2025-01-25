@@ -58,9 +58,11 @@ export default function Register() {
 
     // Validate phone number format
     const cleanedPhoneNumber = values.phone_number.replace(/\s/g, "");
-    const phoneNumberRegex = /^\+[1-9]\d{1,14}$/;
+    const phoneNumberRegex = /^\+[1-9]\d{11,11}$/;
     if (!phoneNumberRegex.test(cleanedPhoneNumber)) {
-      setError("Invalid phone number format. Please include country code.");
+      setError(
+        "Invalid phone number format. Please include country code and insert 10 numbers."
+      );
       return;
     }
 
@@ -89,14 +91,30 @@ export default function Register() {
 
     // Clear error if all validations pass
     setError("");
-    console.log("Form submitted:", values);
+    alert("Registration Successful! Welcome!");
 
     // Proceed with the API call
     axios
-      .post("https://machinery-backend-login-part.onrender.com/register", values)
+      .post("http://localhost:8000/register", values)
       .then((res) => {
         if (res.data.status === "Success") {
           setSuccessMessage("Registration successful! Redirecting to login...");
+
+          setValues({
+            first_name: "",
+            last_name: "",
+            email: "",
+            phone_number: "",
+            company_name: "",
+            company_address: "",
+            address_city: "",
+            address_state: "",
+            address_country: "",
+            pincode: "",
+            GST_no: "",
+            user_password: "",
+            confirmPassword: "",
+          });
           setTimeout(() => {
             navigate("/login");
           }, 1000);

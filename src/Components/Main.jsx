@@ -10,7 +10,7 @@ export default function Main() {
 
   useEffect(() => {
     axios
-      .get("https://machinery-backend-login-part.onrender.com/")
+      .get("http://localhost:8000/")
       .then((res) => {
         if (res.data.status === "Success") {
           setAuth(true);
@@ -28,7 +28,7 @@ export default function Main() {
   useEffect(() => {
     // Fetch products from the backend
     axios
-      .get("https://machinery-backend-login-part.onrender.com/products/all")
+      .get("http://localhost:8000/products/all")
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);

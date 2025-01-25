@@ -22,7 +22,7 @@ const ManageService = () => {
   const fetchServices = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("https://machinery-backend-login-part.onrender.com/admin/services");
+      const response = await axios.get("http://localhost:8000/admin/services");
       setServices(response.data);
     } catch (error) {
       alert("Failed to fetch services.");
@@ -51,7 +51,7 @@ const ManageService = () => {
 
       // Send payment request to the new service payment route
       const response = await axios.post(
-        "https://machinery-backend-login-part.onrender.com/admin/service-payments",
+        "http://localhost:8000/admin/service-payments",
         {
           paymentDetails: JSON.stringify(payload),
         }
@@ -71,7 +71,7 @@ const ManageService = () => {
   const handleChangeServiceStatus = async (serviceId, newStatus) => {
     try {
       const response = await axios.put(
-        `https://machinery-backend-login-part.onrender.com/admin/services/${serviceId}`,
+        `http://localhost:8000/admin/services/${serviceId}`,
         {
           service_status: newStatus,
         }
@@ -103,6 +103,7 @@ const ManageService = () => {
                 <th className="bg-dark text-white">Order ID</th>
                 <th className="bg-dark text-white">User ID</th>
                 <th className="bg-dark text-white">Payment ID</th>
+                <th className="bg-dark text-white">Payment Status</th>
                 <th className="bg-dark text-white">Requested Date</th>
                 <th className="bg-dark text-white">Service Type</th>
                 <th className="bg-dark text-white">Service Notes</th>
@@ -119,6 +120,7 @@ const ManageService = () => {
                     <td>{service.order_id}</td>
                     <td>{service.user_id}</td>
                     <td>{service.payment_id}</td>
+                    <td>{service.payment_status}</td>
                     <td>
                       {service.requested_date
                         ? format(

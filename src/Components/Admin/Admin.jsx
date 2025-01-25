@@ -10,7 +10,7 @@ export default function Admin() {
 
   useEffect(() => {
     axios
-      .get("https://machinery-backend-login-part.onrender.com/")
+      .get("http://localhost:8000/")
       .then((res) => {
         if (res.data.status === "Success") {
           setName(res.data.name);
@@ -28,7 +28,7 @@ export default function Admin() {
 
   useEffect(() => {
     axios
-      .get("https://machinery-backend-login-part.onrender.com/")
+      .get("http://localhost:8000/")
       .then((res) => {
         if (res.data.status === "Success") {
           setAuth(true);

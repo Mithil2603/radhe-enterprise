@@ -38,7 +38,7 @@ export default function Login({ setRole }) {
     }
 
     axios
-      .post("https://machinery-backend-login-part.onrender.com/login", values)
+      .post("http://localhost:8000/login", values)
       .then((res) => {
         if (res.data.status === "Success") {
           const { user_type } = res.data;

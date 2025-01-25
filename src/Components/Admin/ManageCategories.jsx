@@ -17,7 +17,7 @@ const ManageCategories = () => {
   const fetchCategories = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("https://machinery-backend-login-part.onrender.com/categories");
+      const response = await axios.get("http://localhost:8000/categories");
       setCategories(response.data);
     } catch (error) {
       alert("Failed to fetch categories.");
@@ -46,7 +46,7 @@ const ManageCategories = () => {
     }
 
     try {
-      await axios.post("https://machinery-backend-login-part.onrender.com/categories", {
+      await axios.post("http://localhost:8000/categories", {
         category_name: categoryName,
         category_description: categoryDescription,
         category_img: categoryImg,
@@ -76,7 +76,7 @@ const ManageCategories = () => {
     if (!editingCategory) return;
     try {
       await axios.put(
-        `https://machinery-backend-login-part.onrender.com/categories/${editingCategory.category_id}`,
+        `http://localhost:8000/categories/${editingCategory.category_id}`,
         {
           category_name: categoryName,
           category_description: categoryDescription,
@@ -94,7 +94,7 @@ const ManageCategories = () => {
   const handleDeleteCategory = async (categoryId) => {
     if (window.confirm("Are you sure you want to delete this category?")) {
       try {
-        await axios.delete(`https://machinery-backend-login-part.onrender.com/categories/${categoryId}`);
+        await axios.delete(`http://localhost:8000/categories/${categoryId}`);
         alert("Category deleted successfully.");
         fetchCategories();
       } catch (error) {

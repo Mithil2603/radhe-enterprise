@@ -14,7 +14,7 @@ const ManagePayments = () => {
   const fetchPayments = async () => {
     setLoading(true);
     try {
-      const response = await axios.get("https://machinery-backend-login-part.onrender.com/admin/payments");
+      const response = await axios.get("http://localhost:8000/admin/payments");
       setPayments(response.data);
     } catch (error) {
       alert("Failed to fetch payments.");
@@ -25,7 +25,7 @@ const ManagePayments = () => {
 
   const createDelivery = async (paymentId) => {
     try {
-      await axios.post("https://machinery-backend-login-part.onrender.com/admin/delivery", {
+      await axios.post("http://localhost:8000/admin/delivery", {
         paymentId,
       });
       alert("Delivery created successfully!");
@@ -37,7 +37,7 @@ const ManagePayments = () => {
 
   const updatePaymentStatus = async (paymentId, newStatus) => {
     try {
-      await axios.put(`https://machinery-backend-login-part.onrender.com/admin/payments/${paymentId}`, {
+      await axios.put(`http://localhost:8000/admin/payments/${paymentId}`, {
         payment_status: newStatus,
       });
       alert("Payment status updated successfully!");
@@ -90,32 +90,31 @@ const ManagePayments = () => {
                     <td>{payment.payment_status}</td>
                     <td>{payment.payment_type}</td>
                     <td>
-                      <select
-                        className="form-select"
-                        onChange={(e) =>
-                          updatePaymentStatus(
-                            payment.payment_id,
-                            e.target.value
-                          )
-                        }
-                      >
-                        <option value="">Update Status</option>
-                        <option value="Pending">Pending</option>
-                        <option value="Completed">Completed</option>
-                      </select>
-                      {
-                        payment.payment_status === 'Completed' ? (
-                          <button
-                        className="btn btn-primary"
-                        onClick={() => createDelivery(payment.payment_id)}
-                      >
-                        Create Delivery
-                      </button>
-                        ) : (
-                          ""
-                        )
-                      }
-                      
+                      {payment.payment_method === "Cash" && (
+                        <select
+                          className="form-select"
+                          onChange={(e) =>
+                            updatePaymentStatus(
+                              payment.payment_id,
+                              e.target.value
+                            )
+                          }
+                        >
+                          <option value="">Update Status</option>
+                          <option value="Pending">Pending</option>
+                          <option value="Completed">Completed</option>
+                        </select>
+                      )}
+                      {payment.payment_status === "Completed" ? (
+                        <button
+                          className="btn btn-primary"
+                          onClick={() => createDelivery(payment.payment_id)}
+                        >
+                          Create Delivery
+                        </button>
+                      ) : (
+                        ""
+                      )}
                     </td>
                   </tr>
                 ))

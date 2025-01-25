@@ -20,7 +20,7 @@ const PlaceOrder = () => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const authResponse = await fetch("https://machinery-backend-login-part.onrender.com/auth/status", {
+        const authResponse = await fetch("http://localhost:8000/auth/status", {
           credentials: "include",
         });
 
@@ -63,7 +63,7 @@ const PlaceOrder = () => {
     }
 
     try {
-      const orderResponse = await fetch("https://machinery-backend-login-part.onrender.com/place-order", {
+      const orderResponse = await fetch("http://localhost:8000/place-order", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

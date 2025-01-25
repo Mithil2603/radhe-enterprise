@@ -14,6 +14,7 @@ export default function ManageOrders() {
     payment_method: "Online",
     payment_type: "Product",
     total_amount: "", // Only for the first installment
+    installment_number: "",
   });
 
   useEffect(() => {
@@ -23,7 +24,7 @@ export default function ManageOrders() {
   const fetchOrders = async () => {
     setLoading(true);
     try {
-      const { data } = await axios.get("https://machinery-backend-login-part.onrender.com/admin/orders");
+      const { data } = await axios.get("http://localhost:8000/admin/orders");
       setOrders(data);
     } catch (error) {
       alert("Failed to fetch orders.");
@@ -36,7 +37,7 @@ export default function ManageOrders() {
     if (!window.confirm(`Change status to "${newStatus}"?`)) return;
 
     try {
-      await axios.put(`https://machinery-backend-login-part.onrender.com/orders/${orderId}`, {
+      await axios.put(`http://localhost:8000/orders/${orderId}`, {
         order_status: newStatus,
       });
       alert("Order status updated successfully.");
@@ -70,16 +71,17 @@ export default function ManageOrders() {
       // If payment method is Cash, include the bill file
       if (paymentDetails.payment_method === "Cash" && billFile) {
         const formData = new FormData();
+        console.log("Payload being sent:", payload);
         formData.append("paymentDetails", JSON.stringify(payload));
         formData.append("billFile", billFile);
 
-        await axios.post("https://machinery-backend-login-part.onrender.com/admin/payments", formData, {
+        await axios.post("http://localhost:8000/admin/payments", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
           },
         });
       } else {
-        await axios.post("https://machinery-backend-login-part.onrender.com/admin/payments", payload);
+        await axios.post("http://localhost:8000/admin/payments", payload);
       }
 
       alert("Payment created successfully.");
@@ -88,6 +90,32 @@ export default function ManageOrders() {
     } catch (error) {
       console.error("Error creating payment:", error);
       alert("Failed to create payment.");
+    }
+  };
+
+  const handleOpenPaymentModal = (order) => {
+    setSelectedOrder(order);
+    setShowPaymentModal(true);
+
+    // Prefill payment details if there are existing installments
+    if (order.installments && order.installments.length > 0) {
+      const lastInstallment = order.installments[order.installments.length - 1];
+      setPaymentDetails({
+        payment_amount: lastInstallment.payment_amount || "",
+        payment_method: lastInstallment.payment_method || "Online",
+        payment_type: lastInstallment.payment_type || "Product",
+        total_amount: lastInstallment.total_amount || "",
+        installment_number: lastInstallment.installment_number + 1 || "", // Increment for new installment
+      });
+    } else {
+      // Reset payment details if no previous installments exist
+      setPaymentDetails({
+        payment_amount: "",
+        payment_method: "Online",
+        payment_type: "Product",
+        total_amount: "",
+        installment_number: 1, // Start with the first installment
+      });
     }
   };
 
@@ -159,17 +187,20 @@ export default function ManageOrders() {
                         <option value="Delivered">Delivered</option>
                       </select>
                     </td>
-                    <td>
-                      <button
-                        className="btn btn-primary btn-sm"
-                        onClick={() => {
-                          setSelectedOrder(order);
-                          setShowPaymentModal(true);
-                        }}
-                      >
-                        Create Payment
-                      </button>
-                    </td>
+                    {order.order_status === "Confirmed" && (
+                      <td>
+                        <button
+                          className="btn btn-primary btn-sm"
+                          onClick={() => {
+                            setSelectedOrder(order);
+                            setShowPaymentModal(true);
+                            handleOpenPaymentModal(order);
+                          }}
+                        >
+                          Create Payment
+                        </button>
+                      </td>
+                    )}
                   </tr>
                 ))
               ) : (

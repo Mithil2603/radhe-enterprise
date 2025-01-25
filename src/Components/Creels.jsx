@@ -9,7 +9,7 @@ export default function Products() {
   useEffect(() => {
     // Fetch products from the backend
     axios
-      .get(`https://machinery-backend-login-part.onrender.com/products/category/3`)
+      .get(`http://localhost:8000/products/category/3`)
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);

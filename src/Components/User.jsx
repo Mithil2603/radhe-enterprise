@@ -13,7 +13,7 @@ export default function User({ onLogout }) {
   useEffect(() => {
     // Fetch user profile data from the backend
     axios
-      .get("https://machinery-backend-login-part.onrender.com/profile", { withCredentials: true })
+      .get("http://localhost:8000/profile", { withCredentials: true })
       .then((response) => {
         if (response.data.status === "Success") {
           setProfileData(response.data.data); // Populate the data
@@ -34,7 +34,7 @@ export default function User({ onLogout }) {
 
   const handleLogout = () => {
     axios
-      .get("https://machinery-backend-login-part.onrender.com/logout", { withCredentials: true })
+      .get("http://localhost:8000/logout", { withCredentials: true })
       .then((res) => {
         onLogout();
         navigate("/");
@@ -73,7 +73,7 @@ export default function User({ onLogout }) {
     }
 
     axios
-      .put("https://machinery-backend-login-part.onrender.com/updateProfile", profileData, {
+      .put("http://localhost:8000/updateProfile", profileData, {
         withCredentials: true,
       })
       .then((response) => {
