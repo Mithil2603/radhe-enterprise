@@ -168,7 +168,7 @@ export default function RTR() {
               <td>{product.product_description[1]}</td>
             </tr>
             <tr>
-              <td>Pitch</td>
+              <td>Creel Pitch</td>
               <td>{product.product_description[2]}</td>
             </tr>
             <tr>

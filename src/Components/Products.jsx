@@ -9,7 +9,7 @@ export default function Products() {
   useEffect(() => {
     // Fetch products from the backend
     axios
-      .get(`http://localhost:8000/products`)
+      .get(`http://localhost:8000/products/all`)
       .then((response) => setProducts(response.data))
       .catch((error) => console.error("Error fetching products:", error));
   }, []);
@@ -50,8 +50,6 @@ export default function Products() {
               );
             })}
           </div>
-          <h1 className="mt-5">Yarn Tensioners</h1>
-          <hr />
         </div>
       </div>
     </>

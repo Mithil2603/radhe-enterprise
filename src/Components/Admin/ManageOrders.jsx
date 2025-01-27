@@ -72,8 +72,19 @@ export default function ManageOrders() {
       if (paymentDetails.payment_method === "Cash" && billFile) {
         const formData = new FormData();
         console.log("Payload being sent:", payload);
-        formData.append("paymentDetails", JSON.stringify(payload));
-        formData.append("billFile", billFile);
+        formData.append("payment_amount", paymentDetails.payment_amount);
+        formData.append("payment_method", paymentDetails.payment_method);
+        formData.append("payment_type", paymentDetails.payment_type);
+        formData.append("order_id", selectedOrder.order_id);
+        formData.append("total_amount", paymentDetails.total_amount);
+        formData.append(
+          "installment_number",
+          paymentDetails.installment_number
+        );
+
+        if (paymentDetails.payment_method === "Cash" && billFile) {
+          formData.append("billFile", billFile);
+        }
 
         await axios.post("http://localhost:8000/admin/payments", formData, {
           headers: {

@@ -74,11 +74,6 @@ export default function Navbar() {
                     </Link>
                   </li>
                   <li>
-                    <Link className="dropdown-item" to="#">
-                      Tensioners
-                    </Link>
-                  </li>
-                  <li>
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
