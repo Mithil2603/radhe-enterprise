@@ -91,7 +91,6 @@ export default function Register() {
 
     // Clear error if all validations pass
     setError("");
-    alert("Registration Successful! Welcome!");
 
     // Proceed with the API call
     axios
@@ -99,6 +98,7 @@ export default function Register() {
       .then((res) => {
         if (res.data.status === "Success") {
           setSuccessMessage("Registration successful! Redirecting to login...");
+          alert("Registration Successful! Welcome!");
 
           setValues({
             first_name: "",

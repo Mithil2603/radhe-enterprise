@@ -1,7 +1,8 @@
 .fabrication-bg {
-    /* background-image: url("https://images.pexels.com/photos/7819764/pexels-photo-7819764.jpeg"); */
+    background-image: url("https://static.wixstatic.com/media/baac51_a1800801553a41e4b95e214079fef63e~mv2.jpg/v1/fill/w_1899,h_625,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/Light%20-%20Big%20Horizontal%20image%204.jpg");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    /* background-attachment: fixed; */
+    font-family: "Roboto Slab";
+    background-attachment: fixed;
 }

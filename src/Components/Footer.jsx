@@ -18,13 +18,17 @@ export default function Footer() {
                 <img src={logo} alt="main-logo" className="main-logo" />
               </Link>
               <ul className="list-unstyled small">
-                <li className="mb-2 text-light">
+                {/* <li className="mb-2 text-light">
                   We are greatly thankful to the person who developed this
                   website our developer{" "}
                   <Link to="https://linkedin.com/in/sutharmithil">
                     Mithil Suthar
                   </Link>
                   .
+                </li> */}
+                <li className="mb-2 text-light">
+                  
+                  
                 </li>
                 <li className="text-light">&copy; From 2024 to {currentYear} - Radhe Enterprise Pvt. Ltd.</li>
               </ul>
@@ -51,7 +55,7 @@ export default function Footer() {
                 </li>
               </ul>
             </div>
-            <div className="col-6 col-lg-2 mb-3 text-light">
+            {/* <div className="col-6 col-lg-2 mb-3 text-light">
               <h5>Our Developers</h5>
               <ul className="list-unstyled">
                 <li className="mb-2">
@@ -78,7 +82,7 @@ export default function Footer() {
                   </Link>
                 </li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
       </footer>

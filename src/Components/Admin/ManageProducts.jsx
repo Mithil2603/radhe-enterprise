@@ -20,9 +20,7 @@ const ManageProducts = () => {
   const fetchProducts = async () => {
     setLoading(true);
     try {
-      const response = await axios.get(
-        "http://localhost:8000/products"
-      );
+      const response = await axios.get("http://localhost:8000/products");
       console.log("Fetched products from API:", response.data);
       setProducts(response.data);
     } catch (error) {
@@ -174,6 +172,7 @@ const ManageProducts = () => {
         Manage Products
       </h1>
       <div className="container pb-4">
+        <h5 className="pt-3 fw-bold">Product Name</h5>
         <input
           type="text"
           className="form-control"
@@ -181,7 +180,7 @@ const ManageProducts = () => {
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
         />
-        <h5 className="pt-3">Product Description</h5>
+        <h5 className="pt-3 fw-bold">Product Description</h5>
         {productDescription.map((desc, index) => (
           <div key={index} className="d-flex align-items-center mb-2">
             <input
@@ -200,13 +199,13 @@ const ManageProducts = () => {
           </div>
         ))}
         <button
-          className="btn btn-primary mt-3 mx-2"
+          className="btn btn-primary mt-3 mx-2 fw-bold"
           onClick={handleAddDescriptionField}
         >
           Add Description Point
         </button>
         <select
-          className="form-control my-2"
+          className="form-control my-2 fw-bold"
           value={categoryId}
           onChange={(e) => setCategoryId(e.target.value)}
         >
@@ -217,7 +216,7 @@ const ManageProducts = () => {
             </option>
           ))}
         </select>
-        <h5>Images</h5>
+        <h5 className="fw-bold">Images</h5>
         {productImg.map((img, index) => (
           <div key={index} className="d-flex align-items-center mb-2">
             <input

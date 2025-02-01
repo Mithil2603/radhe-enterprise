@@ -7,6 +7,7 @@ export default function User({ onLogout }) {
   const [profileData, setProfileData] = useState({});
   const [editMode, setEditMode] = useState(false);
   const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
 
   const navigate = useNavigate();
 
@@ -48,30 +49,72 @@ export default function User({ onLogout }) {
   };
 
   const handleSave = () => {
-     // Validate phone number format
-     const phoneRegex = /^\+?[1-9]\d{1,14}$/;
-     if (!phoneRegex.test(profileData.phone_number)) {
-       setMessage("Invalid phone number format. Please include the country code.");
-       return;
-     }
- 
-     // Validate email format
-     const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-     if (!emailRegex.test(profileData.email)) {
-       setMessage("Invalid email format.");
-       return;
-     }
+    setMessage(""); // Clear previous messages
+    setError(""); // Clear previous errors
 
-    // Additional validation checks for other fields, if necessary
-    if (
-      !profileData.first_name ||
-      !profileData.last_name ||
-      !profileData.email
-    ) {
-      setMessage("Please fill in all required fields.");
+    // Required field validation
+    if (!profileData.first_name) {
+      setError("First Name is required!");
+      return;
+    }
+    if (!profileData.last_name) {
+      setError("Last Name is required!");
+      return;
+    }
+    if (!profileData.email) {
+      setError("Email is required!");
+      return;
+    }
+    if (!profileData.phone_number) {
+      setError("Phone Number is required!");
       return;
     }
 
+    // Validate phone number format
+    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+    if (!phoneRegex.test(profileData.phone_number)) {
+      setError("Invalid phone number format. Please include the country code.");
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailRegex.test(profileData.email)) {
+      setError("Invalid email format.");
+      return;
+    }
+
+    // Additional validation checks for other fields, if necessary
+    if (!profileData.company_name) {
+      setError("Company Name is required!");
+      return;
+    }
+    if (!profileData.company_address) {
+      setError("Company Address is required!");
+      return;
+    }
+    if (!profileData.address_city) {
+      setError("City is required!");
+      return;
+    }
+    if (!profileData.address_state) {
+      setError("State is required!");
+      return;
+    }
+    if (!profileData.address_country) {
+      setError("Country is required!");
+      return;
+    }
+    if (!profileData.pincode) {
+      setError("Pincode is required!");
+      return;
+    }
+    if (!profileData.GST_no) {
+      setError("GST No is required!");
+      return;
+    }
+
+    // Proceed with the API call if all validations pass
     axios
       .put("http://localhost:8000/updateProfile", profileData, {
         withCredentials: true,
@@ -102,7 +145,6 @@ export default function User({ onLogout }) {
                   name="first_name"
                   className="form-control"
                   id="first_name"
-                  required
                   value={profileData.first_name || ""}
                   onChange={handleChange}
                 />
@@ -116,7 +158,6 @@ export default function User({ onLogout }) {
                   name="last_name"
                   className="form-control"
                   id="last_name"
-                  required
                   value={profileData.last_name || ""}
                   onChange={handleChange}
                 />
@@ -131,7 +172,6 @@ export default function User({ onLogout }) {
                 name="email"
                 className="form-control"
                 id="email"
-                required
                 value={profileData.email || ""}
                 onChange={handleChange}
               />
@@ -145,7 +185,6 @@ export default function User({ onLogout }) {
                 name="phone_number"
                 className="form-control"
                 id="phone_number"
-                required
                 value={profileData.phone_number || ""}
                 onChange={handleChange}
               />
@@ -245,9 +284,8 @@ export default function User({ onLogout }) {
                 onChange={handleChange}
               />
             </div>
-            {message && message.includes("Invalid phone number") && (
-              <div className="text-danger">{message}</div>
-            )}
+            {error && <div className="alert alert-danger text-danger">{error}</div>}
+            {message && <div className="alert alert-success text-success">{message}</div>}
             <div className="d-flex align-items-center justify-content-center gap-3">
               <button className="btn custom-btn nav-btn" onClick={handleSave}>
                 Save
@@ -379,7 +417,15 @@ export default function User({ onLogout }) {
               <label htmlFor="GST_no">GST Number</label>
             </div>
 
-            {message && <div className={`alert ${message.includes("Error") ? "alert-danger" : "alert-success"}`}>{message}</div>}
+            {message && (
+              <div
+                className={`alert ${
+                  message.includes("Error") ? "alert-danger" : "alert-success"
+                }`}
+              >
+                {message}
+              </div>
+            )}
             <div className="d-flex align-items-center justify-content-center gap-3">
               <Link className="nav-link" to="/logout" onClick={handleLogout}>
                 <button className="btn custom-btn nav-btn">Logout</button>
