@@ -45,16 +45,17 @@ export default function Footer() {
                 <li className="mb-2">
                   <Link to="/contact">Contact Us</Link>
                 </li>
-              </ul>
-            </div>
-            <div className="col-6 col-lg-2 mb-3 text-light">
-              <h5>Our Products</h5>
-              <ul className="list-unstyled">
                 <li className="mb-2">
                   <Link to="/creels">Creels</Link>
                 </li>
               </ul>
             </div>
+            {/* <div className="col-6 col-lg-2 mb-3 text-light">
+              <h5>Our Products</h5>
+              <ul className="list-unstyled">
+                
+              </ul>
+            </div> */}
             {/* <div className="col-6 col-lg-2 mb-3 text-light">
               <h5>Our Developers</h5>
               <ul className="list-unstyled">

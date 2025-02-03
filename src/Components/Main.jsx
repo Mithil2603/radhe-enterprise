@@ -38,13 +38,13 @@ export default function Main() {
       image:
         "https://res.cloudinary.com/drpcouvle/image/upload/v1735539093/Machinery_3_ofsl2x.jpg",
       heading: "Creel Manufacturing",
-      text: "Our machinery modification solutions are customized to enhance your equipment's performance.",
+      text: "Our ensures smooth, tangle-free operation with durable, precision-engineered design, for maximum efficiency and minimal downtime.",
     },
     {
       image:
         "https://res.cloudinary.com/drpcouvle/image/upload/v1735539093/Machinery_2_rskqva.jpg",
       heading: "Machinery Modifications",
-      text: "Tailored product support to ensure optimal machinery performance and client satisfaction.",
+      text: "We specialize in modifying and upgrading creels, tensiors and more to maximize efficiency, performance and to extend machinery lifespan.",
     },
     {
       image:

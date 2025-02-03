@@ -293,8 +293,7 @@ const Orders = () => {
                     )}
 
                   {/* Show the Request Service button only if the delivery status is 'Delivered' and service status is 'Pending' */}
-                  {order.delivery_status === "Delivered" &&
-                    order.service_status === "Completed" && (
+                  {order.delivery_status === "Delivered" && (
                       <button
                         className="btn btn-warning mt-3"
                         onClick={() => {
