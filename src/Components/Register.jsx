@@ -97,7 +97,8 @@ export default function Register() {
       .post("http://localhost:8000/register", values)
       .then((res) => {
         if (res.data.status === "Success") {
-          
+
+          alert("Otp sent successfully!");
           setValues({
             first_name: "",
             last_name: "",
@@ -113,6 +114,7 @@ export default function Register() {
             user_password: "",
             confirmPassword: "",
           });
+          setSuccessMessage("Otp send!");
           // Navigate to OTP verification page
           navigate("/verify-otp", { state: { email: values.email } });
         } else {
