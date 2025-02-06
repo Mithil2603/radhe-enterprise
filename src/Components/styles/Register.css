@@ -104,3 +104,13 @@
     text-decoration: none;
     cursor: pointer;
 }
+
+.notfound {
+    height: 85vh;
+    background-image: url("https://images.pexels.com/photos/534164/pexels-photo-534164.jpeg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    font-family: "Montserrat";
+}
