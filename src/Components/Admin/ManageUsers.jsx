@@ -39,7 +39,7 @@ const ManageUsers = () => {
     <>
       <div className="container-fluid pt-5 pb-5">
         <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center">
-          Manage Users
+          View Users
         </h1>
         {loading ? (
           <p>Loading users...</p>
@@ -49,6 +49,7 @@ const ManageUsers = () => {
               <thead className="bg-dark text-white">
                 <tr>
                   <th className="bg-dark text-white">#</th>
+                  <th className="bg-dark text-white">User ID</th>
                   <th className="bg-dark text-white">First Name</th>
                   <th className="bg-dark text-white">Last Name</th>
                   <th className="bg-dark text-white">Role</th>
@@ -61,6 +62,7 @@ const ManageUsers = () => {
                   users.map((user, index) => (
                     <tr key={user.user_id}>
                       <td>{index + 1}</td>
+                      <td>{user.user_id}</td>
                       <td>{user.first_name}</td>
                       <td>{user.last_name}</td>
                       <td>{user.user_type}</td>

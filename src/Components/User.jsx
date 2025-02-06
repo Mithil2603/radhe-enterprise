@@ -71,7 +71,7 @@ export default function User({ onLogout }) {
     }
 
     // Validate phone number format
-    const phoneRegex = /^\+?[1-9]\d{1,14}$/;
+    const phoneRegex = /^\+?[1-9]\d{11,11}$/;
     if (!phoneRegex.test(profileData.phone_number)) {
       setError("Invalid phone number format. Please include the country code.");
       return;
@@ -173,7 +173,7 @@ export default function User({ onLogout }) {
                 className="form-control"
                 id="email"
                 value={profileData.email || ""}
-                onChange={handleChange}
+                onChange={handleChange} disabled
               />
             </div>
             <div className="mb-3">
