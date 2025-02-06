@@ -33,6 +33,7 @@ import PrivateRoute from "./PrivateRoute";
 import Unauthorized from "./Components/Unauthorized";
 import AdminHome from "./Components/Admin/AdminHome";
 import { useEffect, useState } from "react";
+import VerifyOtp from "./Components/VerifyOtp";
 
 function App() {
   const [role, setRole] = useState("Customer"); // Default role
@@ -57,7 +58,7 @@ function App() {
   }, []);
 
   // Hide Navbar and footer
-  const hideNavbarAndFooter = ["/login", "/register", "/reset-password"].includes(location.pathname);
+  const hideNavbarAndFooter = ["/login", "/register", "/reset-password", "/verify-otp"].includes(location.pathname);
 
   return (
     <>
@@ -72,6 +73,7 @@ function App() {
         <Route path="/about" element={<About />}></Route>
         <Route path="/contact" element={<Contact />}></Route>
         <Route path="/register" element={<Register />}></Route>
+        <Route path="/verify-otp" element={<VerifyOtp />}></Route>
         <Route path="/login" element={<Login setRole={setRole} />} />
         <Route path="/products" element={<Products />}></Route>
         <Route path="/products/:productId" element={<RTR />}></Route>
