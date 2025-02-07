@@ -156,7 +156,7 @@ export default function Register() {
           <div className="d-flex w-100 gap-4">
             <div className="mb-3 w-50">
               <label htmlFor="first_name" className="form-label">
-                First Name
+                First Name<span>*</span>
               </label>
               <input
                 type="text"
@@ -170,7 +170,7 @@ export default function Register() {
             </div>
             <div className="mb-3 w-50">
               <label htmlFor="last_name" className="form-label">
-                Last Name
+                Last Name<span>*</span>
               </label>
               <input
                 type="text"
@@ -185,7 +185,7 @@ export default function Register() {
           </div>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
-              Email address
+              Email address<span>*</span>
             </label>
             <input
               type="email"
@@ -197,12 +197,13 @@ export default function Register() {
           </div>
           <div className="mb-3">
             <label htmlFor="phone_number" className="form-label">
-              Phone No.
+              Phone No.<span>*</span>
             </label>
             <input
               type="text"
               name="phone_number"
               className="form-control"
+              value={"+91"}
               placeholder="+919876543210"
               id="phone_number"
               onChange={(e) => {
@@ -313,7 +314,7 @@ export default function Register() {
           </div>
           <div className="mb-3">
             <label htmlFor="user_password" className="form-label">
-              Password
+              Password<span>*</span>
             </label>
             <input
               type="password"
@@ -327,7 +328,7 @@ export default function Register() {
           </div>
           <div className="mb-3">
             <label htmlFor="confirmPassword" className="form-label">
-              Confirm Password
+              Confirm Password<span>*</span>
             </label>
             <input
               type="password"
