@@ -33,9 +33,11 @@ export default function AdminNav() {
       <nav className="navbar navbar-expand-lg text-light position-sticky top-0 custom-bg z-index-full ">
         <div className="container d-flex justify-content-between align-items-center w-full flex-wrap-none">
           <div className="container-fluid d-flex justify-content-between align-items-center">
-            <span className="navbar-brand mb-0 h1">
-              <img src={logo} alt="Logo" className="main-logo" />
-            </span>
+            <Link className="navbar-brand mb-0 h1" to="/admin/">
+              <span>
+                <img src={logo} alt="Logo" className="main-logo" />
+              </span>
+            </Link>
           </div>
 
           <button
@@ -87,7 +89,7 @@ export default function AdminNav() {
                 className="nav-link custom-color border-bottom"
                 to="/admin/users"
               >
-                Manage Users
+                View Users
               </Link>
             </li>
             <li className="nav-item w-100">

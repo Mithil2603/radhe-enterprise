@@ -50,7 +50,7 @@ const ManagePayments = () => {
   return (
     <div className="container-fluid pt-5 pb-5">
       <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center">
-        View Payments
+        Manage Payments
       </h1>
       {loading ? (
         <p>Loading payments...</p>

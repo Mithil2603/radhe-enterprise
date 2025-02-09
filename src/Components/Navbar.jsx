@@ -99,7 +99,7 @@ export default function Navbar() {
                 </Link>
               </li>
               {auth ? (
-                <div className="profile-icon d-flex align-items-center justify-content-center">
+                <div className="profile-icon d-flex align-items-center justify-content-center gap-2">
                   <Link className="nav-link" to="/profile">
                     <button className="btn custom-btn nav-btn">
                       <svg

@@ -172,7 +172,7 @@ const Orders = () => {
   return (
     <div className="container-fluid custom-bg-orders min-vh-100">
       <div className="container pt-5 pb-5">
-        <h1 className="mb-4 text-light text-center">Your Orders</h1>
+        <h1 className="mb-4 text-light text-center fw-bold">Your Orders</h1>
         <div className="d-flex justify-content-center align-items-center gap-4 flex-wrap">
           {orders.length > 0 ? (
             orders.map((order) => (
@@ -293,7 +293,10 @@ const Orders = () => {
                     )}
 
                   {/* Show the Request Service button only if the delivery status is 'Delivered' and service status is 'Pending' */}
-                  {order.delivery_status === "Delivered" && (
+                  {order.delivery_status === "Delivered" &&
+                    (!order.service_status ||
+                      order.service_status === "Pending" ||
+                      order.service_status === "Completed") && (
                       <button
                         className="btn btn-warning mt-3"
                         onClick={() => {
@@ -312,7 +315,7 @@ const Orders = () => {
               </div>
             ))
           ) : (
-            <p className="text-white text-center">
+            <p className="text-center text-info bg-dark p-5 rounded fs-4">
               No orders found. <br /> <strong>Place Order Now!</strong>
             </p>
           )}

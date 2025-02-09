@@ -212,3 +212,11 @@
     background-size: cover;
     background-attachment: fixed;
 }
+
+.custom-bg-caurosal {
+    padding: 2rem;
+    border: 2px solid black;
+    border-radius: 1rem;
+    background-color: rgba(0, 0, 0, 0.547);
+    /* color: white; */
+}

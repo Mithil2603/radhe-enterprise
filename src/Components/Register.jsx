@@ -203,7 +203,6 @@ export default function Register() {
               type="text"
               name="phone_number"
               className="form-control"
-              value={"+91"}
               placeholder="+919876543210"
               id="phone_number"
               onChange={(e) => {

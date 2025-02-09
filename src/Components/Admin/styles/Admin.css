@@ -35,9 +35,11 @@
     position: relative;
     display: inline-block;
     padding: 20px;
-    background-color: #fff;
+    background-color: #ffffff;
     /* Box background color */
     border-radius: 10px;
+    width: 50%;
+    align-content: center;
     z-index: 1;
     overflow: hidden;
     /* To ensure the shine effect stays within the box */
@@ -131,7 +133,7 @@
 
 .custom-bg-admin {
     /* background-image: url("https://images.pexels.com/photos/355872/pexels-photo-355872.jpeg"); */
-    background-image: url("https://images.pexels.com/photos/7412072/pexels-photo-7412072.jpeg");
+    background-image: url("https://images.pexels.com/photos/3544567/pexels-photo-3544567.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2");
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -141,6 +143,10 @@
 
 .card-width {
     max-width: 18rem;
+}
+
+.custom-height {
+    min-height: 20rem;
 }
 
 .card-manual-width {

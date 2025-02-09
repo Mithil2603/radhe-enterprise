@@ -146,7 +146,7 @@ export default function Main() {
             className="carousel-slide"
             style={{ backgroundImage: `url(${slides[currentSlide].image})` }}
           >
-            <div className="carousel-text">
+            <div className="carousel-text custom-bg-caurosal">
               <h2>{slides[currentSlide].heading}</h2>
               <p>{slides[currentSlide].text}</p>
             </div>

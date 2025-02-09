@@ -4,6 +4,7 @@ import axios from "axios";
 import { format } from "date-fns";
 
 export default function AdminHome() {
+  const [pendingServices, setPendingServices] = useState([]);
   const [stats, setStats] = useState({
     totalUsers: 0,
     pendingOrders: 0,
@@ -15,18 +16,26 @@ export default function AdminHome() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [usersRes, ordersRes, revenueRes, feedbackRes, recentOrdersRes] =
-          await Promise.all([
-            axios.get("http://localhost:8000/admin/total-users"),
-            axios.get("http://localhost:8000/admin/pending-orders"),
-            axios.get("http://localhost:8000/admin/revenue"),
-            axios.get("http://localhost:8000/admin/feedback-count"),
-            axios.get("http://localhost:8000/admin/recent-orders"),
-          ]);
+        const [
+          usersRes,
+          ordersRes,
+          servicesRes,
+          revenueRes,
+          feedbackRes,
+          recentOrdersRes,
+        ] = await Promise.all([
+          axios.get("http://localhost:8000/admin/total-users"),
+          axios.get("http://localhost:8000/admin/pending-orders"),
+          axios.get("http://localhost:8000/admin/pending-services"),
+          axios.get("http://localhost:8000/admin/revenue"),
+          axios.get("http://localhost:8000/admin/feedback-count"),
+          axios.get("http://localhost:8000/admin/recent-orders"),
+        ]);
 
         setStats({
           totalUsers: usersRes.data.total_users,
           pendingOrders: ordersRes.data.pending_orders,
+          pendingServices: servicesRes.data.pending_services,
           revenue: revenueRes.data.total_revenue,
           feedbackCount: feedbackRes.data.feedback_count,
           recentOrders: recentOrdersRes.data,
@@ -37,6 +46,21 @@ export default function AdminHome() {
     };
 
     fetchStats();
+  }, []);
+
+  useEffect(() => {
+    const fetchPendingServices = async () => {
+      try {
+        const response = await axios.get(
+          "http://localhost:8000/admin/pending-services"
+        );
+        setPendingServices(response.data);
+      } catch (error) {
+        console.error("Error fetching pending services:", error);
+      }
+    };
+
+    fetchPendingServices();
   }, []);
 
   return (
@@ -54,7 +78,7 @@ export default function AdminHome() {
           </div>
 
           {/* Orders */}
-          <div className="card text-bg-info mb-3 card-width">
+          <div className="card text-bg-danger mb-3 card-width">
             <div className="card-header">Orders</div>
             <div className="card-body">
               <h5 className="card-title">Pending Orders</h5>
@@ -143,6 +167,67 @@ export default function AdminHome() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+        <div className="mt-4 text-center pb-5">
+          {/* Pending Services */}
+          <div className="mt-4 text-center pb-5">
+            <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-light p-3 rounded m-auto">
+              Pending Services
+            </h1>
+
+            <div className="w-100 d-flex align-items-center justify-content-center gap-4 flex-wrap">
+              {pendingServices.length === 0 ? (
+                <p className="text-muted">No pending services found.</p>
+              ) : (
+                pendingServices.map((service) => (
+                  <div
+                    className="card text-center bg-tertiary card-manual-width custom-height"
+                    key={service.service_id}
+                  >
+                    <div className="card-header custom-bg text-info d-flex justify-content-between flex-wrap align-items-center px-5">
+                      <span>Order ID: {service.order_id}</span> | 
+                      <span>Service ID: {service.service_id}</span>
+                    </div>
+                    <div className="card-body">
+                      <h3 className="card-title text-info-emphasis fw-bold">
+                        {service.product_name}
+                      </h3>
+                      <table className="table table-bordered table-striped table-hover text-start">
+                        <tbody>
+                          <tr>
+                            <td>
+                              <strong>Service Notes:</strong>
+                            </td>
+                            <td>{service.service_notes || "N/A"}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <strong>Service Cost:</strong>
+                            </td>
+                            <td>₹{service.service_cost || "N/A"}</td>
+                          </tr>
+                          <tr>
+                            <td>
+                              <strong>Requested Date:</strong>
+                            </td>
+                            <td>
+                              {format(
+                                new Date(service.requested_date),
+                                "dd/MM/yyyy HH:mm:ss"
+                              )}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                    <div className="card-footer custom-bg text-info">
+                      Service Type: {service.service_type}
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
           </div>
         </div>
       </div>

@@ -28,10 +28,19 @@
     font-weight: bold;
     font-size: 1.2rem;
     color: #39749f;
+}
 
-    :hover {
-        color: var(--dark-color);
-    }
+.nav-link:hover {
+    color: white;
+    /* Keep it white on hover */
+}
+
+.nav-link:focus,
+.nav-link:active {
+    color: white !important;
+    /* Force white when clicked */
+    outline: none;
+    /* Remove the focus outline if needed */
 }
 
 .menu {
