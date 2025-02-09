@@ -78,7 +78,7 @@ export default function Login({ setRole }) {
       <div className="container">
         <form
           onSubmit={handleSubmit}
-          className="form-container font-bold register border rounded border-dark p-5 custom-bg-password"
+          className="form-container font-bold register border rounded border-dark padding-5 custom-bg-password"
         >
           {/* Logo */}
           <Link className="navbar-brand custom-font-family w-100 d-inline-block text-center mb-5" to="/">

@@ -106,7 +106,7 @@ export default function ResetPassword() {
           {/* <h1 className="text-center mb-5 font-bold-2xl">Reset Password</h1> */}
           <form
             onSubmit={handleSubmit}
-            className="form-container font-bold register custom-bg-password border border-black p-5"
+            className="form-container font-bold register custom-bg-password border border-black padding-5"
           >
             {/* Logo */}
             <Link

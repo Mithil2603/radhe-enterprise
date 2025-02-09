@@ -138,7 +138,7 @@ export default function Register() {
       <div className="container">
         <form
           onSubmit={handleSubmit}
-          className="form-container font-bold register border border-black p-5 rounded custom-bg-password"
+          className="form-container font-bold register border border-black padding-5 rounded custom-bg-password"
         >
           {/* Logo */}
           <Link
