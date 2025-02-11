@@ -22,23 +22,23 @@ const ManageUsers = () => {
     }
   };
 
-  const handleDeleteUser = async (userId) => {
-    if (window.confirm("Are you sure you want to delete this user?")) {
-      try {
-        const response = await axios.delete(
-          `http://localhost:8000/users/${userId}`
-        );
-        alert(response.data.message);
-        fetchUsers(); // Refresh the user list
-      } catch (error) {
-        if (error.response && error.response.data.message) {
-          alert(error.response.data.message);
-        } else {
-          alert("Failed to delete user.");
-        }
-      }
-    }
-  };
+  // const handleDeleteUser = async (userId) => {
+  //   if (window.confirm("Are you sure you want to delete this user?")) {
+  //     try {
+  //       const response = await axios.delete(
+  //         `http://localhost:8000/users/${userId}`
+  //       );
+  //       alert(response.data.message);
+  //       fetchUsers(); // Refresh the user list
+  //     } catch (error) {
+  //       if (error.response && error.response.data.message) {
+  //         alert(error.response.data.message);
+  //       } else {
+  //         alert("Failed to delete user.");
+  //       }
+  //     }
+  //   }
+  // };
 
   return (
     <>
@@ -59,7 +59,7 @@ const ManageUsers = () => {
                   <th className="bg-dark text-white">Last Name</th>
                   <th className="bg-dark text-white">Role</th>
                   <th className="bg-dark text-white">Email</th>
-                  <th className="bg-dark text-white">Actions</th>
+                  {/* <th className="bg-dark text-white">Actions</th> */}
                 </tr>
               </thead>
               <tbody>
@@ -72,14 +72,14 @@ const ManageUsers = () => {
                       <td>{user.last_name}</td>
                       <td>{user.user_type}</td>
                       <td>{user.email}</td>
-                      <td>
+                      {/* <td>
                         <button
                           className="btn btn-danger btn-sm"
                           onClick={() => handleDeleteUser(user.user_id)}
                         >
                           Delete
                         </button>
-                      </td>
+                      </td> */}
                     </tr>
                   ))
                 ) : (
