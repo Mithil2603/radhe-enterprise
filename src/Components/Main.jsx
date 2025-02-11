@@ -103,7 +103,7 @@ export default function Main() {
         </div>
       </div>
 
-      <div className="container-fluid custom-bg-main pt-5 pb-5">
+      <div className="container-fluid pt-5 pb-5">
         {/* <hr className="first-hr" /> */}
         <div className="container mb-5">
           <h1 className="mb-5 custome-color text-xl">Our Famous Products</h1>

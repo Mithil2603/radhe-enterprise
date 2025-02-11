@@ -205,14 +205,6 @@
     text-transform: uppercase;
 }
 
-.custom-bg-main {
-    background-image: url("https://images.pexels.com/photos/1166643/pexels-photo-1166643.jpeg");
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-attachment: fixed;
-}
-
 .custom-bg-caurosal {
     padding: 2rem;
     border: 2px solid black;

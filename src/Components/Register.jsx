@@ -203,7 +203,7 @@ export default function Register() {
               type="text"
               name="phone_number"
               className="form-control"
-              placeholder="+919876543210"
+              placeholder="+91"
               id="phone_number"
               onChange={(e) => {
                 const cleanedValue = e.target.value.replace(/\s/g, "");
