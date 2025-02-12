@@ -214,3 +214,13 @@
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
 }
+
+.min-height-small {
+    min-height: 8rem;
+}
+
+@media (max-width: 600px) {
+    .overview {
+        flex-wrap: wrap;
+    }
+}

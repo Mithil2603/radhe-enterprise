@@ -138,6 +138,11 @@ export default function AdminNav() {
               </Link>
             </li>
             <li className="nav-item w-100">
+              <Link className="nav-link custom-color" to="/admin/reports">
+                Reports
+              </Link>
+            </li>
+            <li className="nav-item w-100">
               {auth ? (
                 <div className="profile-icon">
                   <Link

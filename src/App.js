@@ -29,6 +29,7 @@ import ManageDelivery from "./Components/Admin/ManageDelivery";
 import ManagePayments from "./Components/Admin/ManagePayments";
 import ManageFeedback from "./Components/Admin/ManageFeedback";
 import ManageServices from "./Components/Admin/ManageServices";
+import AdminReports from "./Components/Admin/AdminReports";
 import PrivateRoute from "./PrivateRoute";
 import Unauthorized from "./Components/Unauthorized";
 import AdminHome from "./Components/Admin/AdminHome";
@@ -105,6 +106,7 @@ function App() {
           <Route path="payments" element={<ManagePayments />} />
           <Route path="feedback" element={<ManageFeedback />} />
           <Route path="services" element={<ManageServices />} />
+          <Route path="reports" element={<AdminReports />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
