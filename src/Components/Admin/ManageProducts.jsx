@@ -172,7 +172,7 @@ const ManageProducts = () => {
         Manage Products
       </h1>
       <div className="container pb-4">
-        <h5 className="pt-3 fw-bold">Product Name</h5>
+        <h5 className="pt-3 fw-bold text-white">Product Name</h5>
         <input
           type="text"
           className="form-control"
@@ -180,7 +180,7 @@ const ManageProducts = () => {
           value={productName}
           onChange={(e) => setProductName(e.target.value)}
         />
-        <h5 className="pt-3 fw-bold">Product Description</h5>
+        <h5 className="pt-3 fw-bold text-white">Product Description</h5>
         {productDescription.map((desc, index) => (
           <div key={index} className="d-flex align-items-center mb-2">
             <input
@@ -216,7 +216,7 @@ const ManageProducts = () => {
             </option>
           ))}
         </select>
-        <h5 className="fw-bold">Images</h5>
+        <h5 className="fw-bold text-white">Images</h5>
         {productImg.map((img, index) => (
           <div key={index} className="d-flex align-items-center mb-2">
             <input

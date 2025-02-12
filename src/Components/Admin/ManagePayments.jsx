@@ -53,7 +53,7 @@ const ManagePayments = () => {
         Manage Payments
       </h1>
       {loading ? (
-        <p>Loading payments...</p>
+        <p className="text-warning">Loading payments...</p>
       ) : (
         <div className="container-fluid user-table w-100">
           <table className="table table-bordered table-hover table-striped rounded overflow-hidden">

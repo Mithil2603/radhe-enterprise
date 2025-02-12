@@ -156,7 +156,7 @@ export default function Register() {
           <div className="d-flex w-100 gap-4">
             <div className="mb-3 w-50">
               <label htmlFor="first_name" className="form-label">
-                First Name<span>*</span>
+                First Name<span className="text-danger">*</span>
               </label>
               <input
                 type="text"
@@ -170,7 +170,7 @@ export default function Register() {
             </div>
             <div className="mb-3 w-50">
               <label htmlFor="last_name" className="form-label">
-                Last Name<span>*</span>
+                Last Name<span className="text-danger">*</span>
               </label>
               <input
                 type="text"
@@ -185,7 +185,7 @@ export default function Register() {
           </div>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
-              Email address<span>*</span>
+              Email address<span className="text-danger">*</span>
             </label>
             <input
               type="email"
@@ -197,7 +197,7 @@ export default function Register() {
           </div>
           <div className="mb-3">
             <label htmlFor="phone_number" className="form-label">
-              Phone No.<span>*</span>
+              Phone No.<span className="text-danger">*</span>
             </label>
             <input
               type="text"
@@ -313,7 +313,7 @@ export default function Register() {
           </div>
           <div className="mb-3">
             <label htmlFor="user_password" className="form-label">
-              Password<span>*</span>
+              Password<span className="text-danger">*</span>
             </label>
             <input
               type="password"
@@ -327,7 +327,7 @@ export default function Register() {
           </div>
           <div className="mb-3">
             <label htmlFor="confirmPassword" className="form-label">
-              Confirm Password<span>*</span>
+              Confirm Password<span className="text-danger">*</span>
             </label>
             <input
               type="password"

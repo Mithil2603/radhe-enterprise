@@ -149,7 +149,7 @@ const ManageCategories = () => {
           value={categoryDescription}
           onChange={(e) => setCategoryDescription(e.target.value)}
         />
-        <h5>Images</h5>
+        <h5 className="text-white">Images</h5>
         {categoryImg.map((img, index) => (
           <div key={index} className="d-flex align-items-center mb-2">
             <input
