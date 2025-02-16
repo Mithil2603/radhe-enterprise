@@ -75,6 +75,23 @@ export default function AdminReports() {
 
   const pieColors = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AF19FF"];
 
+  const getColor = (rating) => {
+    switch (rating) {
+      case 5:
+        return "#28a745"; // Green for best rating
+      case 4:
+        return "#17a2b8"; // Blue
+      case 3:
+        return "#ffc107"; // Yellow
+      case 2:
+        return "#fd7e14"; // Orange
+      case 1:
+        return "#dc3545"; // Red for worst rating
+      default:
+        return "#8884d8"; // Default color
+    }
+  };
+
   return (
     <div className="container-fluid w-100 pb-4">
       <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center mt-5">
@@ -83,16 +100,16 @@ export default function AdminReports() {
 
       <div className="container w-100">
         {/* Stats Grid */}
-        <div className="d-flex justify-content-center align-items-center gap-3 mb-5 w-100 overview">
-          <div className="card p-3 shadow w-50 min-height-small">
+        <div className="d-flex justify-content-center align-items-center gap-3 mb-5 overview m-auto">
+          <div className="card p-3 shadow min-height-small">
             <h5>Total Users</h5>
             <h3 className="text-primary">{reports.users.length}</h3>
           </div>
-          <div className="card p-3 shadow w-50 min-height-small">
+          <div className="card p-3 shadow min-height-small">
             <h5>Pending Orders</h5>
             <h3 className="text-warning">{reports.pendingOrders.length}</h3>
           </div>
-          <div className="card p-3 shadow w-50 min-height-small">
+          <div className="card p-3 shadow min-height-small">
             <h5>Completed Orders</h5>
             <h3 className="text-success">{reports.completedOrders.length}</h3>
           </div>
@@ -135,63 +152,59 @@ export default function AdminReports() {
         </div>
 
         {/* Payment & Service Status */}
-        <div className="row mb-4 w-100">
-          <div className="col-md-6 mb-4 w-100">
-            <div className="card p-3 shadow w-100">
-              <h3 className="text-center">Payment Status</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={reports.paymentStatus}
-                    dataKey="total_payments"
-                    nameKey="payment_status"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={80}
-                  >
-                    {reports.paymentStatus.map((entry, index) => (
-                      <Cell
-                        key={index}
-                        fill={pieColors[index % pieColors.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
+        <div className="d-flex justify-content-between align-items-center gap-3 mb-5">
+          <div className="card p-3 shadow w-50">
+            <h3 className="text-center">Payment Status</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={reports.paymentStatus}
+                  dataKey="total_payments"
+                  nameKey="payment_status"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                >
+                  {reports.paymentStatus.map((entry, index) => (
+                    <Cell
+                      key={index}
+                      fill={pieColors[index % pieColors.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
-          <div className="col-md-6 mb-4 w-100">
-            <div className="card p-3 shadow w-100">
-              <h3 className="text-center">Service Status</h3>
-              <ResponsiveContainer width="100%" height={300}>
-                <PieChart>
-                  <Pie
-                    data={reports.serviceStatus}
-                    dataKey="total_services"
-                    nameKey="service_status"
-                    cx="50%"
-                    cy="50%"
-                    outerRadius={80}
-                  >
-                    {reports.serviceStatus.map((entry, index) => (
-                      <Cell
-                        key={index}
-                        fill={pieColors[index % pieColors.length]}
-                      />
-                    ))}
-                  </Pie>
-                  <Tooltip />
-                  <Legend />
-                </PieChart>
-              </ResponsiveContainer>
-            </div>
+          <div className="card p-3 shadow w-50">
+            <h3 className="text-center">Service Status</h3>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie
+                  data={reports.serviceStatus}
+                  dataKey="total_services"
+                  nameKey="service_status"
+                  cx="50%"
+                  cy="50%"
+                  outerRadius={80}
+                >
+                  {reports.serviceStatus.map((entry, index) => (
+                    <Cell
+                      key={index}
+                      fill={pieColors[index % pieColors.length]}
+                    />
+                  ))}
+                </Pie>
+                <Tooltip />
+                <Legend />
+              </PieChart>
+            </ResponsiveContainer>
           </div>
         </div>
 
         {/* Recent Users */}
-        <div className="card p-3 shadow mb-4 w-100">
+        <div className="card p-3 shadow mb-5 w-100">
           <h3 className="text-center">Recent Users</h3>
           <div className="table-responsive">
             <table className="table table-bordered table-striped text-center">
@@ -222,7 +235,7 @@ export default function AdminReports() {
         </div>
 
         {/* Pending Orders */}
-        <div className="card p-3 shadow mb-4 w-100">
+        <div className="card p-3 shadow mb-5 w-100">
           <h3 className="text-center">Pending Orders</h3>
           <div className="table-responsive">
             <table className="table table-bordered table-striped text-center">
@@ -252,9 +265,9 @@ export default function AdminReports() {
           </div>
         </div>
 
-        <div className="d-flex w-100 overview gap-3 justify-content-center mb-5">
+        <div className="w-100">
           {/* Feedback & Service Requests */}
-          <div className="card p-3 shadow w-100">
+          <div className="card p-3 shadow w-100 mb-5">
             <h3 className="text-center">Customer Feedback</h3>
             <ResponsiveContainer width="100%" height={300}>
               <BarChart data={reports.feedback}>
@@ -262,13 +275,21 @@ export default function AdminReports() {
                 <XAxis dataKey="rating" />
                 <YAxis />
                 <Tooltip />
-                <Bar dataKey="total_feedback" fill="#8884d8" />
+                <Bar dataKey="total_feedback">
+                  {reports.feedback.map((entry, index) => {
+                    // Convert rating to number if it's coming as string
+                    const rating = Number(entry.rating);
+                    return (
+                      <Cell key={`cell-${index}`} fill={getColor(rating)} />
+                    );
+                  })}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <div className="card p-3 shadow w-50">
+          <div className="card p-3 shadow w-100 mb-4">
             <h3 className="text-center">Service Requests</h3>
-            <ResponsiveContainer>
+            <ResponsiveContainer height={300}>
               <BarChart data={reports.serviceRequests}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="service_type" />
@@ -281,7 +302,7 @@ export default function AdminReports() {
         </div>
 
         {/* Completed Orders */}
-        <div className="card p-3 shadow mb-4 w-100">
+        <div className="card p-3 shadow mb-5 w-100">
           <h3 className="text-center">Completed Orders</h3>
           <div className="table-responsive">
             <table className="table table-bordered table-striped text-center">

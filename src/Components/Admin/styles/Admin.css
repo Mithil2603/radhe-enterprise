@@ -222,5 +222,6 @@
 @media (max-width: 600px) {
     .overview {
         flex-wrap: wrap;
+        width: 70%;
     }
 }
