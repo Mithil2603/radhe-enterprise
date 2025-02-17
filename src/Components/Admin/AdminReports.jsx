@@ -94,27 +94,11 @@ export default function AdminReports() {
 
   return (
     <div className="container-fluid w-100 pb-4">
-      <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center mt-5">
-        Admin Reports Dashboard
+      <h1 className="fw-bolder mb-5 w-50 text-bg-dark text-transparent p-3 rounded m-auto text-center mt-5">
+        Admin Graphical Reports
       </h1>
 
       <div className="container w-100">
-        {/* Stats Grid */}
-        <div className="d-flex justify-content-center align-items-center gap-3 mb-5 overview m-auto">
-          <div className="card p-3 shadow min-height-small">
-            <h5>Total Users</h5>
-            <h3 className="text-primary">{reports.users.length}</h3>
-          </div>
-          <div className="card p-3 shadow min-height-small">
-            <h5>Pending Orders</h5>
-            <h3 className="text-warning">{reports.pendingOrders.length}</h3>
-          </div>
-          <div className="card p-3 shadow min-height-small">
-            <h5>Completed Orders</h5>
-            <h3 className="text-success">{reports.completedOrders.length}</h3>
-          </div>
-        </div>
-
         {/* Top Products & Revenue */}
         <div className="row mb-4 w-100">
           <div className="col-md-6 mb-4 w-100">

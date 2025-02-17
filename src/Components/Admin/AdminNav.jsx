@@ -75,7 +75,7 @@ export default function AdminNav() {
         </div>
         <div className="offcanvas-body custom-bg-sidebar">
           <ul className="nav w-100">
-            <li className="nav-item w-100">
+            <li className="nav-item w-100 ">
               <Link
                 className="nav-link active custom-color border-bottom pt-5"
                 aria-current="page"
@@ -133,13 +133,8 @@ export default function AdminNav() {
               </Link>
             </li>
             <li className="nav-item w-100">
-              <Link className="nav-link custom-color border-bottom" to="/admin/services">
+              <Link className="nav-link custom-color" to="/admin/services">
                 Manage Services
-              </Link>
-            </li>
-            <li className="nav-item w-100">
-              <Link className="nav-link custom-color" to="/admin/reports">
-                Reports
               </Link>
             </li>
             <li className="nav-item w-100 text-center">

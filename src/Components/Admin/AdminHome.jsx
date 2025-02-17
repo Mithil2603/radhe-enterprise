@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./styles/Admin.css";
 import axios from "axios";
 import { format } from "date-fns";
+import AdminReports from "./AdminReports.jsx";
 
 export default function AdminHome() {
   const [pendingServices, setPendingServices] = useState([]);
@@ -231,6 +232,7 @@ export default function AdminHome() {
           </div>
         </div>
       </div>
+      <AdminReports></AdminReports>
     </>
   );
 }
