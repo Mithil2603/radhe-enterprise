@@ -49,7 +49,7 @@ export default function AdminReports() {
 
         const responses = await Promise.all(
           endpoints.map((endpoint) =>
-            axios.get(`http://localhost:8000/admin/reports/${endpoint}`)
+            axios.get(`http://localhost:8000/admin/static_reports/${endpoint}`)
           )
         );
 

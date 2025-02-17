@@ -35,6 +35,7 @@ import Unauthorized from "./Components/Unauthorized";
 import AdminHome from "./Components/Admin/AdminHome";
 import { useEffect, useState } from "react";
 import VerifyOtp from "./Components/VerifyOtp";
+import DynamicReports from "./Components/Admin/DynamicReports";
 
 function App() {
   const [role, setRole] = useState("Customer"); // Default role
@@ -107,6 +108,7 @@ function App() {
           <Route path="feedback" element={<ManageFeedback />} />
           <Route path="services" element={<ManageServices />} />
           <Route path="reports" element={<AdminReports />} />
+          <Route path="dynamic_reports" element={<DynamicReports />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />

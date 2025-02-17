@@ -63,6 +63,11 @@ export default function ManageOrders() {
         return;
       }
 
+      if (paymentAmount !== totalAmount) {
+        alert("Amount and Payment Amount did not match!");
+        return;
+      }
+
       const payload = {
         ...paymentDetails,
         order_id: selectedOrder.order_id,
@@ -237,7 +242,7 @@ export default function ManageOrders() {
             </h1>
             <form>
               <div className="form-group">
-                <label>Total Amount</label>
+                <label>Enter Amount</label>
                 <input
                   type="number"
                   className="form-control"

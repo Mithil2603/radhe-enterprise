@@ -87,6 +87,14 @@ export default function AdminNav() {
             <li className="nav-item w-100">
               <Link
                 className="nav-link custom-color border-bottom"
+                to="/admin/dynamic_reports"
+              >
+                Reports
+              </Link>
+            </li>
+            <li className="nav-item w-100">
+              <Link
+                className="nav-link custom-color border-bottom"
                 to="/admin/users"
               >
                 View Users
