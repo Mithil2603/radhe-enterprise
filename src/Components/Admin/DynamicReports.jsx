@@ -33,7 +33,7 @@ export default function DynamicReports() {
           params: {
             startDate,
             endDate,
-            ...(reportType === "complete" &&
+            ...((reportType === "complete" || reportType === "orders") &&
               orderStatusFilter !== "All" && { status: orderStatusFilter }),
           },
         }
@@ -175,13 +175,14 @@ export default function DynamicReports() {
           </select>
 
           {/* Status filter (only for complete reports) */}
-          {reportType === "complete" && (
+          {(reportType === "complete" || reportType === "orders") && (
             <select
               value={orderStatusFilter}
               onChange={(e) => setOrderStatusFilter(e.target.value)}
               className="p-1 rounded"
             >
               <option value="All">All Statuses</option>
+              <option value="Pending">Pending</option>
               <option value="Confirmed">Confirmed</option>
               <option value="Delivered">Delivered</option>
               <option value="Cancelled">Cancelled</option>
