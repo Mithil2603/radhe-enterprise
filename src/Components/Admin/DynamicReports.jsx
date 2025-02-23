@@ -21,6 +21,7 @@ export default function DynamicReports() {
   const [startDate, setStartDate] = useState(firstDay);
   const [endDate, setEndDate] = useState(today);
   const [reports, setReports] = useState({ data: [] }); // Initialize as object
+  const [orderStatusFilter, setOrderStatusFilter] = useState("All");
 
   const fetchReports = useCallback(async () => {
     if (!startDate || !endDate) return;
@@ -28,7 +29,14 @@ export default function DynamicReports() {
     try {
       const res = await axios.get(
         `http://localhost:8000/admin/reports/${reportType}`,
-        { params: { startDate, endDate } }
+        {
+          params: {
+            startDate,
+            endDate,
+            ...(reportType === "complete" &&
+              orderStatusFilter !== "All" && { status: orderStatusFilter }),
+          },
+        }
       );
 
       if (res.data.error) {
@@ -41,7 +49,7 @@ export default function DynamicReports() {
       console.error("Error fetching reports:", error);
       setReports({ data: [] });
     }
-  }, [reportType, startDate, endDate]);
+  }, [reportType, startDate, endDate, orderStatusFilter]);
 
   useEffect(() => {
     fetchReports();
@@ -165,6 +173,20 @@ export default function DynamicReports() {
             <option value="services">Services</option>
             <option value="complete">Complete Report</option>
           </select>
+
+          {/* Status filter (only for complete reports) */}
+          {reportType === "complete" && (
+            <select
+              value={orderStatusFilter}
+              onChange={(e) => setOrderStatusFilter(e.target.value)}
+              className="p-1 rounded"
+            >
+              <option value="All">All Statuses</option>
+              <option value="Confirmed">Confirmed</option>
+              <option value="Delivered">Delivered</option>
+              <option value="Cancelled">Cancelled</option>
+            </select>
+          )}
 
           <input
             type="date"
