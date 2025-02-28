@@ -68,9 +68,9 @@ export default function AdminHome() {
     <>
       <div className="container-fluid custom-bg-admin">
         {/* Show Stats */}
-        <div className="row d-flex justify-content-center align-items-center gap-4 flex-wrap mt-5">
+        <div className="row d-flex justify-content-center align-items-center gap-4 flex-wrap mt-5 mobile-w-100">
           {/* Users */}
-          <div className="card text-bg-success mb-3 card-width">
+          <div className="card text-bg-success mb-3 card-width flex-shrink-1">
             <div className="card-header">Users</div>
             <div className="card-body">
               <h5 className="card-title">Total Users</h5>
@@ -79,7 +79,7 @@ export default function AdminHome() {
           </div>
 
           {/* Orders */}
-          <div className="card text-bg-danger mb-3 card-width">
+          <div className="card text-bg-danger mb-3 card-width flex-shrink-1">
             <div className="card-header">Orders</div>
             <div className="card-body">
               <h5 className="card-title">Pending Orders</h5>
@@ -88,7 +88,7 @@ export default function AdminHome() {
           </div>
 
           {/* Revenue */}
-          <div className="card text-bg-warning mb-3 card-width">
+          <div className="card text-bg-warning mb-3 card-width flex-shrink-1">
             <div className="card-header">Revenue</div>
             <div className="card-body">
               <h5 className="card-title">Total Revenue</h5>
@@ -97,7 +97,7 @@ export default function AdminHome() {
           </div>
 
           {/* Feedback */}
-          <div className="card text-bg-primary mb-3 card-width">
+          <div className="card text-bg-primary mb-3 card-width flex-shrink-1">
             <div className="card-header">Feedbacks</div>
             <div className="card-body">
               <h5 className="card-title">Total Feedbacks</h5>
@@ -170,9 +170,9 @@ export default function AdminHome() {
             ))}
           </div>
         </div>
-        <div className="mt-4 text-center pb-5">
+        <div className="mt-4 text-center">
           {/* Pending Services */}
-          <div className="mt-4 text-center pb-5">
+          <div className="mt-4 text-center">
             <h1 className="fw-bolder mb-4 w-50 text-bg-dark text-light p-3 rounded m-auto">
               Pending Services
             </h1>

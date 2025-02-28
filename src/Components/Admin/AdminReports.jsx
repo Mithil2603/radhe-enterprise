@@ -136,8 +136,8 @@ export default function AdminReports() {
         </div>
 
         {/* Payment & Service Status */}
-        <div className="d-flex justify-content-between align-items-center gap-3 mb-5">
-          <div className="card p-3 shadow w-50">
+        <div className="d-flex justify-content-between align-items-center gap-3 mb-5 customer-service">
+          <div className="card p-3 shadow w-100">
             <h3 className="text-center">Payment Status</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
@@ -161,7 +161,7 @@ export default function AdminReports() {
               </PieChart>
             </ResponsiveContainer>
           </div>
-          <div className="card p-3 shadow w-50">
+          <div className="card p-3 shadow">
             <h3 className="text-center">Service Status</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>
@@ -249,7 +249,7 @@ export default function AdminReports() {
           </div>
         </div>
 
-        <div className="w-100">
+        <div className="w-100 d-flex justify-content-center align-items-center gap-3 customer-service">
           {/* Feedback & Service Requests */}
           <div className="card p-3 shadow w-100 mb-5">
             <h3 className="text-center">Customer Feedback</h3>
@@ -271,7 +271,7 @@ export default function AdminReports() {
               </BarChart>
             </ResponsiveContainer>
           </div>
-          <div className="card p-3 shadow w-100 mb-4">
+          <div className="card p-3 shadow w-100 mb-5">
             <h3 className="text-center">Service Requests</h3>
             <ResponsiveContainer height={300}>
               <BarChart data={reports.serviceRequests}>

@@ -25,7 +25,7 @@ export default function Admin() {
     <>
       <div className="container-fluid pt-5 custom-bg-admin">
         <div className="container w-100 d-flex justify-content-center">
-          <div className="d-flex justify-content-center align-items-center fw-bolder gap-3 shiny-box flex-wrap">
+          <div className="d-flex justify-content-center align-items-center fw-bolder gap-3 shiny-box flex-wrap mobile-w-100">
             <div className="welcome text-dark">Welcome {name}!</div>
           </div>
         </div>
