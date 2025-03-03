@@ -30,7 +30,7 @@ export default function AdminNav() {
   }, [navigate]);
   return (
     <>
-      <nav className="navbar navbar-expand-lg text-light position-sticky top-0 custom-bg z-index-full">
+      <nav className="navbar navbar-expand-lg text-light position-sticky top-0 custom-bg z-index-full  px-300">
         <div className="container d-flex justify-content-between align-items-center w-full">
           <span className="container-fluid d-flex justify-content-between align-items-center">
             <Link className="navbar-brand mb-0 h1 flex-shrink-1" to="/admin/">

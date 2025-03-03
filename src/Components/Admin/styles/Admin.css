@@ -239,3 +239,13 @@
         width: 100%; 
     }
 }
+
+.px-300 {
+    flex-wrap: nowrap;
+}
+
+@media (max-width: 300px) {
+    .px-300 {
+        flex-wrap: wrap;
+    }
+}
