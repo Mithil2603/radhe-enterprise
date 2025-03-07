@@ -36,6 +36,11 @@ import AdminHome from "./Components/Admin/AdminHome";
 import { useEffect, useState } from "react";
 import VerifyOtp from "./Components/VerifyOtp";
 import DynamicReports from "./Components/Admin/DynamicReports";
+import UsersReport from "./Components/Admin/UsersReport";
+import CompleteReport from "./Components/Admin/CompleteReport";
+import OrdersReport from "./Components/Admin/OrdersReport";
+import PaymentReport from "./Components/Admin/PaymentReport";
+import ServiceReports from "./Components/Admin/ServiceReports";
 
 function App() {
   const [role, setRole] = useState("Customer"); // Default role
@@ -108,6 +113,11 @@ function App() {
           <Route path="feedback" element={<ManageFeedback />} />
           <Route path="services" element={<ManageServices />} />
           <Route path="reports" element={<AdminReports />} />
+          <Route path="users_report" element={<UsersReport />} />
+          <Route path="orders_report" element={<OrdersReport />} />
+          <Route path="payment_report" element={<PaymentReport />} />
+          <Route path="service_report" element={<ServiceReports />} />
+          <Route path="complete_report" element={<CompleteReport />} />
           <Route path="dynamic_reports" element={<DynamicReports />} />
         </Route>
 

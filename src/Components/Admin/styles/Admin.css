@@ -249,3 +249,12 @@
         flex-wrap: wrap;
     }
 }
+
+.dropdown-custom{
+    border: none;
+    background-color: #171d24;
+}
+
+.dropdown-custom:hover {
+    color: white;
+}

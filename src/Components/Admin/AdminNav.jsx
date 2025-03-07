@@ -89,7 +89,43 @@ export default function AdminNav() {
                 className="nav-link custom-color border-bottom"
                 to="/admin/dynamic_reports"
               >
-                Reports
+                <div class="dropdown">
+                  <button
+                    className="custom-bg dropdown-custom dropdown-toggle custom-color fw-bold"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                  >
+                    Reports
+                  </button>
+                  <ul className="dropdown-menu">
+                    <li>
+                      <Link className="dropdown-item" to="/admin/users_report">
+                        Users
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/admin/orders_report">
+                        Orders
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/admin/payment_report">
+                        Payments
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/admin/service_report">
+                        Services
+                      </Link>
+                    </li>
+                    <li>
+                      <Link className="dropdown-item" to="/admin/complete_report">
+                        Complete Report
+                      </Link>
+                    </li>
+                  </ul>
+                </div>
               </Link>
             </li>
             <li className="nav-item w-100">

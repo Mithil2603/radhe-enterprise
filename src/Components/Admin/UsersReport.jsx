@@ -15,29 +15,22 @@ const getCurrentMonthDates = () => {
   return { firstDay, today };
 };
 
-export default function DynamicReports() {
-  const [reportType, setReportType] = useState("complete");
+export default function UsersReport() {
   const { firstDay, today } = getCurrentMonthDates();
   const [startDate, setStartDate] = useState(firstDay);
   const [endDate, setEndDate] = useState(today);
-  const [reports, setReports] = useState({ data: [] }); 
-  const [orderStatusFilter, setOrderStatusFilter] = useState("All");
+  const [reports, setReports] = useState({ data: [] });
 
   const fetchReports = useCallback(async () => {
     if (!startDate || !endDate) return;
 
     try {
-      const res = await axios.get(
-        `http://localhost:8000/admin/reports/${reportType}`,
-        {
-          params: {
-            startDate,
-            endDate,
-            ...((reportType === "complete" || reportType === "orders") &&
-              orderStatusFilter !== "All" && { status: orderStatusFilter }),
-          },
-        }
-      );
+      const res = await axios.get(`http://localhost:8000/admin/reports/users`, {
+        params: {
+          startDate,
+          endDate,
+        },
+      });
 
       if (res.data.error) {
         console.error("API Error:", res.data);
@@ -49,7 +42,7 @@ export default function DynamicReports() {
       console.error("Error fetching reports:", error);
       setReports({ data: [] });
     }
-  }, [reportType, startDate, endDate, orderStatusFilter]);
+  }, [startDate, endDate]);
 
   useEffect(() => {
     fetchReports();
@@ -158,37 +151,10 @@ export default function DynamicReports() {
   return (
     <div className="container-fluid">
       <h1 className="fw-bolder mb-5 text-bg-dark text-transparent p-3 rounded m-auto text-center mt-5 container w-50">
-        Admin Reports
+        Users Report
       </h1>
       <div className="mb-4 container border-none d-flex gap-3 justify-content-between align-items-center">
         <div className="filters d-flex gap-1 flex-wrap">
-          <select
-            value={reportType}
-            onChange={(e) => setReportType(e.target.value)}
-            className="p-1 rounded"
-          >
-            <option value="users">Users</option>
-            <option value="orders">Orders</option>
-            <option value="payments">Payments</option>
-            <option value="services">Services</option>
-            <option value="complete">Complete Report</option>
-          </select>
-
-          {/* Status filter (only for complete reports) */}
-          {(reportType === "complete" || reportType === "orders") && (
-            <select
-              value={orderStatusFilter}
-              onChange={(e) => setOrderStatusFilter(e.target.value)}
-              className="p-1 rounded"
-            >
-              <option value="All">All Statuses</option>
-              <option value="Pending">Pending</option>
-              <option value="Confirmed">Confirmed</option>
-              <option value="Delivered">Delivered</option>
-              <option value="Cancelled">Cancelled</option>
-            </select>
-          )}
-
           <input
             type="date"
             value={startDate}
@@ -212,22 +178,66 @@ export default function DynamicReports() {
           </button>
           <CSVLink
             data={
-              reports.data?.map((row) => {
-                const formattedRow = { ...row };
-                if (row.order_details && Array.isArray(row.order_details)) {
-                  formattedRow.order_details = row.order_details
-                    .map(
-                      (item) =>
-                        `${item.quantity}x ${item.creel_type || ""} (${
-                          item.bobin_length || "N/A"
-                        })`
-                    )
-                    .join(", ");
-                }
-                return formattedRow;
-              }) || []
+              reports.data?.length
+                ? (() => {
+                    const dateRange = `${format(
+                      new Date(reports.date_range.start),
+                      "dd MMM yyyy"
+                    )} - ${format(
+                      new Date(reports.date_range.end),
+                      "dd MMM yyyy"
+                    )}`;
+
+                    // Create header rows
+                    const headerRows = [
+                      ["Radhe Enterprise Pvt. Ltd."],
+                      [`${reports.type.toUpperCase()} REPORT`],
+                      [
+                        `Generated: ${format(
+                          new Date(reports.generated_at),
+                          "dd MMM yyyy HH:mm"
+                        )}`,
+                      ],
+                      [`Date Range: ${dateRange}`],
+                      [], // Empty row for spacing
+                      Object.keys(reports.data[0]).map((key) =>
+                        key.toUpperCase().replace(/_/g, " ")
+                      ),
+                    ];
+
+                    // Create data rows with formatting
+                    const dataRows = reports.data.map((row) => {
+                      return Object.keys(row).map((key) => {
+                        const value = row[key];
+
+                        if (key === "order_details" && Array.isArray(value)) {
+                          return value
+                            .map(
+                              (item) =>
+                                `${item.quantity}x ${item.creel_type || ""} (${
+                                  item.bobin_length || "N/A"
+                                })`
+                            )
+                            .join(", ");
+                        }
+
+                        if (typeof value === "string" && value.includes("-")) {
+                          try {
+                            return format(new Date(value), "dd MMM yyyy HH:mm");
+                          } catch {
+                            return value;
+                          }
+                        }
+
+                        return value;
+                      });
+                    });
+
+                    return [...headerRows, ...dataRows];
+                  })()
+                : []
             }
-            filename={`${reportType}_Report.csv`}
+            filename={`Complete_Report.csv`}
             className="btn btn-success"
             disabled={!reports.data?.length}
           >
