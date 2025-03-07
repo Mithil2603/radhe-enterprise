@@ -137,7 +137,7 @@ export default function AdminReports() {
 
         {/* Payment & Service Status */}
         <div className="d-flex justify-content-between align-items-center gap-3 mb-5 customer-service">
-          <div className="card p-3 shadow w-100">
+          <div className="card p-3 shadow">
             <h3 className="text-center">Payment Status</h3>
             <ResponsiveContainer width="100%" height={300}>
               <PieChart>

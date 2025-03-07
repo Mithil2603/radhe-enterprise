@@ -213,7 +213,7 @@ export default function UsersReport() {
                         key.toUpperCase().replace(/_/g, " ")
                       ),
                       ...(customerName
-                        ? [[`Customer Filter: ${customerName}`]]
+                        ? [[`Customer Name: ${customerName}`]]
                         : []),
                     ];
 
