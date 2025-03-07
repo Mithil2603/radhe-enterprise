@@ -16,6 +16,7 @@ const getCurrentMonthDates = () => {
 };
 
 export default function UsersReport() {
+  const [customerName, setCustomerName] = useState("");
   const { firstDay, today } = getCurrentMonthDates();
   const [startDate, setStartDate] = useState(firstDay);
   const [endDate, setEndDate] = useState(today);
@@ -29,6 +30,7 @@ export default function UsersReport() {
         params: {
           startDate,
           endDate,
+          ...(customerName && { customerName }),
         },
       });
 
@@ -42,7 +44,7 @@ export default function UsersReport() {
       console.error("Error fetching reports:", error);
       setReports({ data: [] });
     }
-  }, [startDate, endDate]);
+  }, [startDate, endDate, customerName]);
 
   useEffect(() => {
     fetchReports();
@@ -156,6 +158,13 @@ export default function UsersReport() {
       <div className="mb-4 container border-none d-flex gap-3 justify-content-between align-items-center">
         <div className="filters d-flex gap-1 flex-wrap">
           <input
+            type="text"
+            value={customerName}
+            onChange={(e) => setCustomerName(e.target.value)}
+            placeholder="Search customer..."
+            className="p-1 rounded"
+          />
+          <input
             type="date"
             value={startDate}
             onChange={(e) => setStartDate(e.target.value)}
@@ -203,6 +212,9 @@ export default function UsersReport() {
                       Object.keys(reports.data[0]).map((key) =>
                         key.toUpperCase().replace(/_/g, " ")
                       ),
+                      ...(customerName
+                        ? [[`Customer Filter: ${customerName}`]]
+                        : []),
                     ];
 
                     // Create data rows with formatting
