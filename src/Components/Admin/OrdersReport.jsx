@@ -254,7 +254,7 @@ export default function OrdersReport() {
                   })()
                 : []
             }
-            filename={`Complete_Report.csv`}
+            filename={`${reports.type}_report.csv`}
             className="btn btn-success"
             disabled={!reports.data?.length}
           >

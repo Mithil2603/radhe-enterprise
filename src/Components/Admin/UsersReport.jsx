@@ -21,6 +21,7 @@ export default function UsersReport() {
   const [startDate, setStartDate] = useState(firstDay);
   const [endDate, setEndDate] = useState(today);
   const [reports, setReports] = useState({ data: [] });
+  const [orderStatusFilter, setOrderStatusFilter] = useState("All");
 
   const fetchReports = useCallback(async () => {
     if (!startDate || !endDate) return;
@@ -31,6 +32,7 @@ export default function UsersReport() {
           startDate,
           endDate,
           ...(customerName && { customerName }),
+          ...(orderStatusFilter !== "All" && { status: orderStatusFilter }),
         },
       });
 
@@ -44,7 +46,7 @@ export default function UsersReport() {
       console.error("Error fetching reports:", error);
       setReports({ data: [] });
     }
-  }, [startDate, endDate, customerName]);
+  }, [startDate, endDate, customerName, orderStatusFilter]);
 
   useEffect(() => {
     fetchReports();
@@ -157,6 +159,17 @@ export default function UsersReport() {
       </h1>
       <div className="mb-4 container border-none d-flex gap-3 justify-content-between align-items-center">
         <div className="filters d-flex gap-1 flex-wrap">
+          <select
+            value={orderStatusFilter}
+            onChange={(e) => setOrderStatusFilter(e.target.value)}
+            className="p-1 rounded"
+          >
+            <option value="All">All Statuses</option>
+            <option value="Pending">Pending</option>
+            <option value="Confirmed">Confirmed</option>
+            <option value="Delivered">Delivered</option>
+            <option value="Cancelled">Cancelled</option>
+          </select>
           <input
             type="text"
             value={customerName}
@@ -249,7 +262,7 @@ export default function UsersReport() {
                   })()
                 : []
             }
-            filename={`Complete_Report.csv`}
+            filename={`${reports.type}_report.csv`}
             className="btn btn-success"
             disabled={!reports.data?.length}
           >
