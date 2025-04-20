@@ -96,7 +96,7 @@ export default function ResetPassword() {
   };
 
   return (
-    <div className="container-fluid p-5 custom-bg-register">
+    <div className="container-fluid p-5 custom-bg-register d-flex justify-content-center align-items-center">
       <div className="container">
         <form className="form-container font-bold register custom-bg-password border border-black padding-5">
           <Link

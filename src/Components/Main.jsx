@@ -6,6 +6,21 @@ import { Link } from "react-router-dom";
 // import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function Main() {
+
+  // function chatbot() {
+  //   window.watsonAssistantChatOptions = {
+  //     integrationID: "5fd7f29a-88d2-42be-9cae-b935c26c2948", // The ID of this integration.
+  //     region: "us-south", // The region your integration is hosted in.
+  //     serviceInstanceID: "00b99b7d-222d-4181-9c88-9fd4fe586d14", // The ID of your service instance.
+  //     onLoad: async (instance) => { await instance.render(); }
+  //   };
+  //   setTimeout(function(){
+  //     const t=document.createElement('script');
+  //     t.src="https://web-chat.global.assistant.watson.appdomain.cloud/versions/" + (window.watsonAssistantChatOptions.clientVersion || 'latest') + "/WatsonAssistantChatEntry.js";
+  //     document.head.appendChild(t);
+  //   });
+  // }
+
   const [auth, setAuth] = useState(false);
 
   useEffect(() => {
@@ -250,6 +265,9 @@ export default function Main() {
             </div>
           </div>
         </div>
+        {/* <div className="chatbot">
+          {chatbot()}
+        </div> */}
       </div>
     </>
   );
